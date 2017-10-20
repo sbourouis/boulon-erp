@@ -4,7 +4,8 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import {
   ErrorPageComponent,
-  HomeComponent
+  HomeComponent,
+  HeaderComponent
 } from './components';
 import {AppRoutingModule} from "./app-routing.module";
 
@@ -12,7 +13,8 @@ import {AppRoutingModule} from "./app-routing.module";
   declarations: [
     AppComponent,
     ErrorPageComponent,
-    HomeComponent
+    HomeComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
