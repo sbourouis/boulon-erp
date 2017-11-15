@@ -15,6 +15,7 @@ import { SuppliersComponent } from './components/suppliers/suppliers.component';
 import { InvoicesComponent } from './components/invoices/invoices.component';
 import { StocksComponent } from './components/stocks/stocks.component';
 import { ProductsComponent } from './components/products/products.component';
+import { AutomatesComponent } from './components/automates/automates.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ProductsComponent } from './components/products/products.component';
     SuppliersComponent,
     InvoicesComponent,
     StocksComponent,
-    ProductsComponent
+    ProductsComponent,
+    AutomatesComponent
   ],
   imports: [
     BrowserModule,
