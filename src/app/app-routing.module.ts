@@ -8,6 +8,7 @@ import {
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
+  { path: 'Customers', component: CustomerComponent },
   // { path: 'users', component: UsersComponent, children: [
   //   { path: ':id/:name', component: UserComponent }
   // ] },

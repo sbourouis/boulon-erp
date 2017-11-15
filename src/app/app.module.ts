@@ -10,13 +10,23 @@ import {
 import {AppRoutingModule} from "./app-routing.module";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatIconModule, MatToolbarModule, MatButtonModule} from "@angular/material";
+import { CustomerComponent } from './components/customer/customer.component';
+import { SuppliersComponent } from './components/suppliers/suppliers.component';
+import { InvoicesComponent } from './components/invoices/invoices.component';
+import { StocksComponent } from './components/stocks/stocks.component';
+import { ProductsComponent } from './components/products/products.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ErrorPageComponent,
     HomeComponent,
-    HeaderComponent
+    HeaderComponent,
+    CustomerComponent,
+    SuppliersComponent,
+    InvoicesComponent,
+    StocksComponent,
+    ProductsComponent
   ],
   imports: [
     BrowserModule,
