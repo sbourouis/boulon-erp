@@ -3,12 +3,23 @@ import { Routes, RouterModule } from '@angular/router';
 
 import {
   ErrorPageComponent,
-  HomeComponent
+  HomeComponent,
+  CustomerComponent,
+  SuppliersComponent,
+  InvoicesComponent,
+  StocksComponent,
+  ProductsComponent,
+  AutomatesComponent
 } from './components';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'Customers', component: CustomerComponent },
+  { path: 'customers', component: CustomerComponent },
+  { path: 'suppliers', component: SuppliersComponent },
+  { path: 'invoices', component: InvoicesComponent },
+  { path: 'stocks', component: StocksComponent },
+  { path: 'automates', component: AutomatesComponent },
+  { path: 'products', component: ProductsComponent },
   // { path: 'users', component: UsersComponent, children: [
   //   { path: ':id/:name', component: UserComponent }
   // ] },
