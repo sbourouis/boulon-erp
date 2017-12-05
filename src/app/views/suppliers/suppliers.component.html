@@ -1,25 +1,20 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-primary">
+<div class="col col-12">
+  <div class="card ">
+    <div class="card-header">
+      <button [routerLink]="['/suppliers']" class="btn btn-sm btn-primary" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <span class="fa fa-list-ul"></span>
+        List
+      </button>
 
-  <a style="min-width: 280px" class="navbar-brand" routerLink="/suppliers">
-    Suppliers
-  </a>
+      <button [routerLink]="['/suppliers', 'new']" routerLinkActive="active" class="btn btn-sm btn-success float-right">
+        <span class="fa fa-plus"></span>
+        Add
+      </button>
+    </div>
 
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+    <div class="card-block" style="padding: 0">
+      <router-outlet></router-outlet>
+    </div>
 
-<div class="collapse navbar-collapse" id="main-navbar">
-<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-  <li class="nav-item " [routerLink]="['/suppliers']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:
-true}">
-
-    <span class="nav-link" >  <i class="fa fa-list-ul" aria-hidden="true"></i> Index </span>
-  </li>
-
-  <li class="nav-item" [routerLink]="['/suppliers','new']" routerLinkActive="active">
-    <span class="nav-link" > <i class="fa fa-plus-square" aria-hidden="true"></i> New </span>
-  </li>
-</ul>
+  </div>
 </div>
-</nav>
-<router-outlet></router-outlet>
