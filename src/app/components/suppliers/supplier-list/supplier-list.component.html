@@ -2,9 +2,9 @@
   <thead>
   <tr>
     <th>#</th>
-    <th>Name</th>
-    <th>Email</th>
-    <th>Phone</th>
+    <th>Nom</th>
+    <th>E-mail</th>
+    <th>Téléphone</th>
     <th></th>
   </tr>
   </thead>
@@ -21,11 +21,11 @@
         </button>
 
         <button (click)="editSupplier(s)" class="btn btn-outline-warning mb-1 btn-sm">
-          EDIT
+          MODIFIER
         </button>
 
         <button (click)="deleteSupplier(s)" class="btn btn-outline-danger mb-1 btn-sm">
-          DELETE
+          SUPPRIMER
         </button>
       </span>
     </td>
@@ -35,5 +35,5 @@
 </table>
 
 <ng-template #loading>
-  <span>loading suppliers...</span>
+  <span>chargement...</span>
 </ng-template>
