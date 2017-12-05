@@ -1,6 +1,8 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import { Supplier } from '@app-models';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import * as fromRoot from '@app-root-store';
+import {Store} from '@ngrx/store';
 
 @Component({
   selector: 'app-supplier-form',
@@ -16,6 +18,7 @@ export class SupplierFormComponent implements OnInit, OnChanges {
     name: '',
     address: '',
     email: '',
+    isCustomer: false,
     phoneNumber: '',
     position: '',
     comment: ''
@@ -25,7 +28,8 @@ export class SupplierFormComponent implements OnInit, OnChanges {
 
   form: FormGroup;
 
-  constructor(public formBuilder: FormBuilder) {
+  constructor(public formBuilder: FormBuilder, private store: Store<fromRoot.State>) {
+    this.store.select(fromRoot.getIsCustomer).subscribe(isCustomer => this.supplier.isCustomer = isCustomer);
     this.form = this.formBuilder.group({
       'id': [this.supplier.id],
       'tyoe': [this.supplier.type],
@@ -35,7 +39,7 @@ export class SupplierFormComponent implements OnInit, OnChanges {
       'address': [this.supplier.address],
       'position': [this.supplier.position],
       'comment': [this.supplier.comment]
-    })
+    });
   }
 
   ngOnInit() {

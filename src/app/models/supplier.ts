@@ -5,6 +5,7 @@ export interface Supplier {
   address?: string;
   position?: string;
   phoneNumber?: string;
+  isCustomer?: boolean;
   email?: string;
   comment?: string;
 }

@@ -27,7 +27,6 @@ export class SupplierEditComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private actionsSubject: ActionsSubject
-
   ) { }
 
   ngOnInit() {

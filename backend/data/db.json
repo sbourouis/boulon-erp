@@ -5,7 +5,7 @@
     "ACL": 1,
     "RoleMapping": 1,
     "Role": 1,
-    "Supplier": 24
+    "Supplier": 25
   },
   "models": {
     "User": {},
@@ -14,8 +14,10 @@
     "RoleMapping": {},
     "Role": {},
     "Supplier": {
-      "22": "{\"name\":\"John Appleseed\",\"email\":\"john.appleseed@example.com\",\"phone\":\"555-555-555\",\"id\":22}",
       "23": "{\"name\":\"John Doe\",\"email\":\"john.doe@example.com\",\"phone\":\"555-666-666\",\"id\":23}"
+    },
+    "Customer": {
+      "22": "{\"name\":\"Customer\",\"email\":\"john.doe@example.com\",\"phone\":\"555-666-666\",\"id\":22}"
     }
   }
 }

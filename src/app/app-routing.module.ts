@@ -4,7 +4,6 @@ import { Routes, RouterModule } from '@angular/router';
 import {
   ErrorPageComponent,
   HomeComponent,
-  CustomerComponent,
   InvoicesComponent,
   StocksComponent,
   ProductsComponent,
@@ -13,9 +12,9 @@ import {
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
-  { path: 'customers', component: CustomerComponent, pathMatch: 'full' },
+  { path: 'customers', loadChildren: 'app/views/suppliers/suppliers.module#SuppliersModule', data: {isCustomer: true} },
   {
-    path: 'suppliers', loadChildren: 'app/views/suppliers/suppliers.module#SuppliersModule',
+    path: 'suppliers', loadChildren: 'app/views/suppliers/suppliers.module#SuppliersModule', data: {isCustomer: false}
   },
   { path: 'invoices', component: InvoicesComponent, pathMatch: 'full' },
   { path: 'stocks', component: StocksComponent, pathMatch: 'full' },

@@ -6,6 +6,9 @@
     "validateUpsert": true
   },
   "properties": {
+    "type": {
+      "type": "string"
+    },
     "name": {
       "type": "string",
       "required": true
@@ -13,7 +16,16 @@
     "email": {
       "type": "string"
     },
-    "phone": {
+    "phoneNumber": {
+      "type": "string"
+    },
+    "address": {
+      "type": "string"
+    },
+    "position": {
+      "type": "string"
+    },
+    "comment": {
       "type": "string"
     }
   },

@@ -10,13 +10,13 @@ import {
 import {AppRoutingModule} from "./app-routing.module";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatIconModule, MatToolbarModule, MatButtonModule} from "@angular/material";
-import { CustomerComponent } from './components/customer/customer.component';
 import { InvoicesComponent } from './components/invoices/invoices.component';
 import { StocksComponent } from './components/stocks/stocks.component';
 import { ProductsComponent } from './components/products/products.component';
 import { AutomatesComponent } from './components/automates/automates.component';
 import {StoreModule} from "@ngrx/store";
 import {EffectsModule} from "@ngrx/effects";
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import * as fromRoot from './store';
 import {SharedModule} from './modules/shared.module';
 
@@ -26,7 +26,6 @@ import {SharedModule} from './modules/shared.module';
     ErrorPageComponent,
     HomeComponent,
     HeaderComponent,
-    CustomerComponent,
     InvoicesComponent,
     StocksComponent,
     ProductsComponent,
@@ -42,6 +41,7 @@ import {SharedModule} from './modules/shared.module';
     SharedModule,
     StoreModule.forRoot(fromRoot.reducers), /* Initialise the Central Store with Application's main reducer*/
     EffectsModule.forRoot([]), /* Start monitoring app's side effects */
+    StoreDevtoolsModule.instrument({ maxAge: 50 })
   ],
   providers: [],
   bootstrap: [AppComponent]

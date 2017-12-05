@@ -27,14 +27,14 @@ export class SupplierIndexComponent implements OnInit {
     this.store.dispatch(new suppliersActions.LoadAll());
   }
 
-  editSupplier(supplier: Supplier) {
-    this.store.dispatch(new suppliersActions.SetCurrentSupplierId(supplier.id));
-    this.router.navigate(['/suppliers', supplier.id, 'edit'])
+  editSupplier(obj: {type: string, data: Supplier}) {
+    this.store.dispatch(new suppliersActions.SetCurrentSupplierId(obj.data.id));
+    this.router.navigate([`/${obj.type}`, obj.data.id, 'edit']);
   }
 
-  showSupplier(supplier: Supplier) {
-    this.store.dispatch(new suppliersActions.SetCurrentSupplierId(supplier.id));
-    this.router.navigate(['/suppliers', supplier.id])
+  showSupplier(obj: {type: string, data: Supplier}) {
+    this.store.dispatch(new suppliersActions.SetCurrentSupplierId(obj.data.id));
+    this.router.navigate([`/${obj.type}`, obj.data.id]);
   }
 
   deleteSupplier(supplier: Supplier) {

@@ -1,12 +1,12 @@
 <div class="col col-12">
   <div class="card ">
     <div class="card-header">
-      <button [routerLink]="['/suppliers']" class="btn btn-sm btn-primary" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+      <button [routerLink]="[route]" class="btn btn-sm btn-primary" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
         <span class="fa fa-list-ul"></span>
         List
       </button>
 
-      <button [routerLink]="['/suppliers', 'new']" routerLinkActive="active" class="btn btn-sm btn-success float-right">
+      <button [routerLink]="[route, 'new']" routerLinkActive="active" class="btn btn-sm btn-success float-right">
         <span class="fa fa-plus"></span>
         Add
       </button>

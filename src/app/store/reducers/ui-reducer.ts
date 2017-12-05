@@ -1,11 +1,11 @@
 import * as uiActions from '../actions/ui-actions';
 
 export interface UiState {
-  currentTitle: string;
+  isCustomer: boolean;
 }
 
 export const INIT_UI_STATE: UiState = {
-  currentTitle: undefined
+  isCustomer: undefined
 };
 
 
@@ -13,8 +13,8 @@ export function reducer(state: UiState = INIT_UI_STATE, {type, payload}: uiActio
 
   switch (type) {
 
-    case uiActions.SET_CURRENT_TITLE : {
-      return Object.assign({}, state, {currentTitle: payload})
+    case uiActions.SET_IS_CUSTOMER : {
+      return Object.assign({}, state, {isCustomer: payload});
     }
 
     default : {
@@ -26,4 +26,4 @@ export function reducer(state: UiState = INIT_UI_STATE, {type, payload}: uiActio
 
 
 // SELECTORS
-export const getCurrentTitle = (state: UiState) => state.currentTitle;
+export const getIsCustomer = (state: UiState) => state.isCustomer;

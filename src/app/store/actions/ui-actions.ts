@@ -1,13 +1,11 @@
 import {Action} from '@ngrx/store';
 
+export const SET_IS_CUSTOMER = '[UI] SET IS CUSTOMER';
 
-export const SET_CURRENT_TITLE = '[UI] SET CURRENT TITLE';
+export class SetIsCustomer implements Action {
+  readonly type = SET_IS_CUSTOMER;
 
-export class SetCurrentTitle implements Action {
-  readonly type = SET_CURRENT_TITLE;
-
-
-  constructor(public payload?: string) {}
+  constructor(public payload?: boolean) {}
 }
 
-export type All = SetCurrentTitle;
+export type All = SetIsCustomer;

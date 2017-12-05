@@ -1,17 +1,55 @@
-<form (submit)="submit()"  class="form" [formGroup]="form">
+<form (submit)="submit()" class="form" [formGroup]="form">
+
+  <h5>Type</h5>
+  <div style="margin: 30px auto" class="row bordered-row">
+    <div class="form-check col-sm-6">
+      <label class="form-check-label">
+      <input class="form-check-input"
+             type="radio"
+             name="type-radio"
+             (click)="supplier.type = 'Particulier'">
+          Particulier
+      </label>
+    </div>
+    <div class="form-check col-sm-6">
+      <label class="form-check-label">
+        <input class="form-check-input"
+               type="radio"
+               name="type-radio"
+               (click)="supplier.type = 'Société'">
+        Société
+      </label>
+    </div>
+  </div>
+
   <div class="form-group">
-    <label for="name-input">Name:</label>
+    <label for="name-input">Nom:</label>
     <input id="name-input" type="text" class="form-control" formControlName="name">
   </div>
 
   <div class="form-group">
-    <label for="email-input">Email:</label>
+    <label for="email-input">E-mail:</label>
     <input id="email-input" type="email" class="form-control" formControlName="email">
   </div>
 
   <div class="form-group">
-    <label for="phone-input">Phone:</label>
+    <label for="phone-input">Téléphone:</label>
     <input id="phone-input" type="tel" class="form-control" formControlName="phoneNumber">
+  </div>
+
+  <div class="form-group">
+    <label for="address-input">Adresse:</label>
+    <input id="address-input" type="text" class="form-control" formControlName="address">
+  </div>
+
+  <div class="form-group">
+    <label for="position-input">Poste:</label>
+    <input id="position-input" type="text" class="form-control" formControlName="position">
+  </div>
+
+  <div class="form-group">
+    <label for="comment-input">Note:</label>
+    <input id="comment-input" type="text" class="form-control" formControlName="comment">
   </div>
 
   <div class="form-group">

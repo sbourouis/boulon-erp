@@ -2,12 +2,16 @@
 
   <div class="card">
     <div class="card-header">
-      Supplier
+      {{ type }}
     </div>
     <div class="card-body">
-      <p>Name: <span class="badge badge-primary">{{supplier.name}}</span></p>
+      <p>Type: <span class="badge badge-primary">{{supplier.type}}</span></p>
+      <p>Nom: <span class="badge badge-primary">{{supplier.name}}</span></p>
       <p>Email:  <span class="badge badge-primary">{{supplier.email}}</span></p>
-      <p>Phone:  <span class="badge badge-primary">{{supplier.phoneNumber}}</span></p>
+      <p>Téléphone:  <span class="badge badge-primary">{{supplier.phoneNumber}}</span></p>
+      <p>Adresse: <span class="badge badge-primary">{{supplier.address}}</span></p>
+      <p>Poste:  <span class="badge badge-primary">{{supplier.position}}</span></p>
+      <p>Notes:  <span class="badge badge-primary">{{supplier.comment}}</span></p>
     </div>
     <div class="card-footer text-muted">
       <span class="float-md-right ">
