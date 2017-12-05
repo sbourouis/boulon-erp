@@ -8,7 +8,9 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "erp:backend": "cd backend && npm i && npm start",
+    "erp:frontend": "npm i && ng serve"
   },
   "private": true,
   "dependencies": {
