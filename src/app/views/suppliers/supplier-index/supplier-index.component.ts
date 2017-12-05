@@ -4,8 +4,8 @@ import {Observable} from 'rxjs/Observable';
 import {Store} from '@ngrx/store';
 import {ActivatedRoute, Router} from '@angular/router';
 
-import * as suppliersActions from '../../../store/actions/suppliers-actions'
-import * as fromRoot from '../../../store';
+import * as suppliersActions from '../store/actions/suppliers-actions'
+import * as fromRoot from '../store';
 
 
 @Component({
@@ -18,7 +18,7 @@ export class SupplierIndexComponent implements OnInit {
 
   suppliers$: Observable<Supplier[]>;
 
-  constructor(public store: Store<fromRoot.AppState>, private router: Router, private actR: ActivatedRoute) { }
+  constructor(public store: Store<fromRoot.State>, private router: Router, private actR: ActivatedRoute) { }
 
   ngOnInit() {
     // getAllSuppliers selector from the main store allows us to monitor changes only on id list from the main state

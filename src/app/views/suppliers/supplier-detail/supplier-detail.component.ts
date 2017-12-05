@@ -5,8 +5,8 @@ import {Observable} from 'rxjs/Observable';
 import { Supplier } from '@app-models';
 import {Subscription} from 'rxjs/Subscription';
 
-import * as suppliersActions from '../../../store/actions/suppliers-actions'
-import * as fromRoot from '../../../store';
+import * as suppliersActions from '../store/actions/suppliers-actions'
+import * as fromRoot from '../store';
 
 @Component({
   selector: 'app-supplier-details',
@@ -20,7 +20,7 @@ export class SupplierDetailComponent implements OnInit, OnDestroy {
   redirectSub: Subscription;
 
   constructor(
-    private store: Store<fromRoot.AppState>,
+    private store: Store<fromRoot.State>,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private actionsSubject: ActionsSubject
@@ -39,7 +39,7 @@ export class SupplierDetailComponent implements OnInit, OnDestroy {
     this.activatedRoute.params.subscribe(params => {
       // update our id from the backend in case it was modified by another client
       this.store.dispatch(new suppliersActions.Load(+params['supplierId']));
-    })
+    });
   }
 
   editSupplier(supplier: Supplier) {

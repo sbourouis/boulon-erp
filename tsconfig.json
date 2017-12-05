@@ -20,6 +20,7 @@
       "@app-services/*": ["app/services/*"],
       "@app-services": ["app/services"],
       "@app-models/*": ["app/models/*"],
+      "@app-modules/*": ["app/modules/*"],
       "@app-models": ["app/models"],
 
       "@app-root-store/*": ["app/store/*"],

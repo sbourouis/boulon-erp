@@ -4,8 +4,8 @@ import {ActionsSubject, Store} from '@ngrx/store';
 import {Subscription} from 'rxjs/Subscription';
 import {Router} from '@angular/router';
 
-import * as suppliersActions from '../../../store/actions/suppliers-actions'
-import * as fromRoot from '../../../store';
+import * as suppliersActions from '../store/actions/suppliers-actions'
+import * as fromRoot from '../store';
 
 import 'rxjs/add/operator/filter';
 
@@ -20,7 +20,7 @@ export class SupplierNewComponent implements OnInit, OnDestroy {
   redirectSub: Subscription;
 
   constructor(
-    private store: Store<fromRoot.AppState>,
+    private store: Store<fromRoot.State>,
     private router: Router,
     private actionsSubject: ActionsSubject
   ) { }

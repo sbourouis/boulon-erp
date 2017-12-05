@@ -1,37 +1,16 @@
-import * as fromSuppliers from './reducers/suppliers-reducer'
-import {createFeatureSelector, createSelector} from '@ngrx/store';
+import {ActionReducerMap, createFeatureSelector, createSelector} from '@ngrx/store';
 
-export interface SuppliersState {
-  suppliers: fromSuppliers.State
+import * as fromUi from './reducers/ui-reducer';
+
+export interface State {
+  ui: fromUi.UiState;
 }
 
-// This is a lazy loaded state, so we need to extend from the App Root State
-export interface AppState {
-  suppliers: SuppliersState
-}
-
-export const reducers = {
-  suppliers: fromSuppliers.reducer
+export const reducers: ActionReducerMap<State> = {
+  ui: fromUi.reducer
 };
 
-export const getSuppliersRootState = createFeatureSelector<SuppliersState>('suppliers');
-export const getSuppliersState = createSelector(
-    getSuppliersRootState,
-    state => state.suppliers
-);
 
-export const getSelectedSupplierId = createSelector(
-  getSuppliersState,
-  fromSuppliers.getCurrentSupplierId
-);
-
-export const {
-  selectAll: getAllSuppliers,
-  selectEntities: getSupplierEntities
-} = fromSuppliers.suppliersAdapter.getSelectors(getSuppliersState);
-
-export const getCurrentSupplier = createSelector(
-  getSupplierEntities,
-  getSelectedSupplierId,
-  (entities, id) => id && entities[id]
-);
+/// selectors
+export const getUiState = createFeatureSelector<fromUi.UiState>('ui');
+export const getCurrentTitle = createSelector(getUiState, fromUi.getCurrentTitle);

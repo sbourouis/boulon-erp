@@ -5,5 +5,5 @@ export * from "./customer/customer.component";
 export * from "./stocks/stocks.component";
 export * from "./products/products.component";
 export * from "./automates/automates.component";
-export * from "./suppliers/suppliers.component";
+export * from "../views/suppliers/suppliers.component";
 export * from "./invoices/invoices.component";

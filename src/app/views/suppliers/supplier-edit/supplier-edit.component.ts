@@ -3,12 +3,12 @@ import {Observable} from 'rxjs/Observable';
 import { Supplier } from '@app-models';
 import {Store, ActionsSubject} from '@ngrx/store';
 
-import {AppState} from '../../../store';
+import {State} from '../store';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
 
-import * as fromRoot from '../../../store'
-import * as suppliersActions from '../../../store/actions/suppliers-actions'
+import * as fromRoot from '../store'
+import * as suppliersActions from '../store/actions/suppliers-actions'
 
 
 @Component({
@@ -23,7 +23,7 @@ export class SupplierEditComponent implements OnInit, OnDestroy {
   redirectSub: Subscription;
 
   constructor(
-    public store: Store<AppState>,
+    public store: Store<State>,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private actionsSubject: ActionsSubject

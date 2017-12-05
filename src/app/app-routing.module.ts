@@ -5,44 +5,17 @@ import {
   ErrorPageComponent,
   HomeComponent,
   CustomerComponent,
-  SuppliersComponent,
   InvoicesComponent,
   StocksComponent,
   ProductsComponent,
   AutomatesComponent
 } from './components';
-import {SupplierIndexComponent} from "./views/suppliers/supplier-index/supplier-index.component";
-import {SupplierNewComponent} from "./views/suppliers/supplier-new/supplier-new.component";
-import {SupplierEditComponent} from "./views/suppliers/supplier-edit/supplier-edit.component";
-import {SupplierDetailComponent} from "./views/suppliers/supplier-detail/supplier-detail.component";
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
   { path: 'customers', component: CustomerComponent, pathMatch: 'full' },
   {
-    path: 'suppliers',
-    component: SuppliersComponent,
-    children: [
-      {
-        path: '',
-        component: SupplierIndexComponent,
-        pathMatch: 'full'
-      },
-      {
-        path: 'new',
-        component: SupplierNewComponent,
-        pathMatch: 'full',
-      },
-      {
-        path: ':supplierId',
-        component: SupplierDetailComponent,
-        pathMatch: 'full'
-      },
-      {
-        path: ':supplierId/edit',
-        component: SupplierEditComponent,
-        pathMatch: 'full'
-      }]
+    path: 'suppliers', loadChildren: 'app/views/suppliers/suppliers.module#SuppliersModule',
   },
   { path: 'invoices', component: InvoicesComponent, pathMatch: 'full' },
   { path: 'stocks', component: StocksComponent, pathMatch: 'full' },
