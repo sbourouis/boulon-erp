@@ -1,0 +1,7 @@
+<h1> Supplier list</h1>
+
+<app-supplier-list [suppliers]="suppliers$ | async"
+                  (onShow)="showSupplier($event)"
+                  (onDelete)="deleteSupplier($event)"
+                  (onEdit)="editSupplier($event)"
+></app-supplier-list>

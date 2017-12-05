@@ -1,0 +1,22 @@
+<div class="supplier-details-container" *ngIf="supplier">
+
+  <div class="card">
+    <div class="card-header">
+      Supplier
+    </div>
+    <div class="card-body">
+      <p>Name: <span class="badge badge-primary">{{supplier.name}}</span></p>
+      <p>Email:  <span class="badge badge-primary">{{supplier.email}}</span></p>
+      <p>Phone:  <span class="badge badge-primary">{{supplier.phoneNumber}}</span></p>
+    </div>
+    <div class="card-footer text-muted">
+      <span class="float-md-right ">
+        <button (click)="onEdit.emit(supplier)" class="btn btn-sm btn-outline-warning"> EDIT</button>
+        <button (click)="onDelete.emit(supplier)"  class="btn btn-sm btn-outline-danger"> DELETE</button>
+      </span>
+
+    </div>
+  </div>
+
+</div>
+

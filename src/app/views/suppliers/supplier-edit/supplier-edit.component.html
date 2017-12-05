@@ -1,0 +1,8 @@
+<div class="card">
+  <div class="card-header">
+    Edit Supplier
+  </div>
+  <div class="card-body">
+    <app-supplier-form [supplier]="supplier$ | async" (onSubmit)="submitted($event)"> </app-supplier-form>
+  </div>
+</div>
