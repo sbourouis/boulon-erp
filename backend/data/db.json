@@ -5,7 +5,8 @@
     "ACL": 1,
     "RoleMapping": 1,
     "Role": 1,
-    "Supplier": 25
+    "Supplier": 28,
+    "Customer": 8
   },
   "models": {
     "User": {},
@@ -17,7 +18,7 @@
       "23": "{\"name\":\"John Doe\",\"email\":\"john.doe@example.com\",\"phone\":\"555-666-666\",\"id\":23}"
     },
     "Customer": {
-      "22": "{\"name\":\"Customer\",\"email\":\"john.doe@example.com\",\"phone\":\"555-666-666\",\"id\":22}"
+      "1": "{\"name\":\"IRCAD\",\"email\":\"contact@ircad.fr\",\"phoneNumber\":\"03 88 11 90 01\",\"address\":\"1, place de l’Hôpital 67091 Strasbourg Cedex\",\"position\":\"\",\"comment\":\"\",\"id\":1,\"tyoe\":\"Particulier\",\"type\":\"Particulier\",\"isCustomer\":true}"
     }
   }
 }

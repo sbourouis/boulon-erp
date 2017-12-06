@@ -32,12 +32,13 @@ export class SupplierFormComponent implements OnInit, OnChanges {
     this.store.select(fromRoot.getIsCustomer).subscribe(isCustomer => this.supplier.isCustomer = isCustomer);
     this.form = this.formBuilder.group({
       'id': [this.supplier.id],
-      'tyoe': [this.supplier.type],
+      'type': [this.supplier.type],
       'name': [this.supplier.name, Validators.required],
       'email': [this.supplier.email],
       'phoneNumber': [this.supplier.phoneNumber],
       'address': [this.supplier.address],
       'position': [this.supplier.position],
+      'isCustomer': [this.supplier.isCustomer],
       'comment': [this.supplier.comment]
     });
   }

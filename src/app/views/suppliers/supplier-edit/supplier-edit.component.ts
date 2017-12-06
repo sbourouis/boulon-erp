@@ -21,6 +21,7 @@ export class SupplierEditComponent implements OnInit, OnDestroy {
 
   supplier$: Observable<Supplier>;
   redirectSub: Subscription;
+  route = '/suppliers';
 
   constructor(
     public store: Store<State>,
@@ -32,12 +33,17 @@ export class SupplierEditComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
     this.supplier$ = this.store.select(fromRoot.getCurrentSupplier);
+    this.supplier$.subscribe(supplier => {
+      if (supplier) {
+        this.route = supplier.isCustomer ? '/customers' : '/suppliers';
+      }
+    });
 
     // If the update effect fires, we check if the current id is the one being updated, and redirect to its details
     this.redirectSub = this.actionsSubject
       .filter(action => action.type === suppliersActions.PATCH_SUCCESS)
       .filter((action: suppliersActions.PatchSuccess) => action.payload.id === +this.activatedRoute.snapshot.params['supplierId'])
-      .subscribe((action: suppliersActions.PatchSuccess) => this.router.navigate(['/suppliers', action.payload.id]));
+      .subscribe((action: suppliersActions.PatchSuccess) => this.router.navigate([this.route, action.payload.id]));
 
     this.activatedRoute.params.subscribe(params => {
       // update our id from the backend in case it was modified by another client

@@ -18,6 +18,7 @@ export class SupplierDetailComponent implements OnInit, OnDestroy {
 
   supplier$: Observable<Supplier>;
   redirectSub: Subscription;
+  route = '/suppliers';
 
   constructor(
     private store: Store<fromRoot.State>,
@@ -27,14 +28,18 @@ export class SupplierDetailComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-
     this.supplier$ = this.store.select(fromRoot.getCurrentSupplier);
+    this.supplier$.subscribe(supplier => {
+      if (supplier) {
+        this.route = supplier.isCustomer ? '/customers' : '/suppliers';
+      }
+    });
 
     // If the destroy effect fires, we check if the current id is the one being viewed, and redirect to index
     this.redirectSub = this.actionsSubject
       .filter(action => action.type === suppliersActions.DELETE_SUCCESS)
       .filter((action: suppliersActions.DeleteSuccess) => action.payload === +this.activatedRoute.snapshot.params['supplierId'])
-      .subscribe(_ => this.router.navigate(['/suppliers']));
+      .subscribe(_ => this.router.navigate([this.route]));
 
     this.activatedRoute.params.subscribe(params => {
       // update our id from the backend in case it was modified by another client
@@ -44,7 +49,7 @@ export class SupplierDetailComponent implements OnInit, OnDestroy {
 
   editSupplier(supplier: Supplier) {
     this.store.dispatch(new suppliersActions.SetCurrentSupplierId(supplier.id));
-    this.router.navigate(['/suppliers', supplier.id, 'edit']);
+    this.router.navigate([this.route, supplier.id, 'edit']);
   }
 
   deleteSupplier(supplier: Supplier) {

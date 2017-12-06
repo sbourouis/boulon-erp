@@ -42,13 +42,13 @@ export class SuppliersEffects {
   create$: Observable<Action> = this.actions$
       .ofType(suppliersActions.CREATE)
       .map((action: suppliersActions.Create) => action.payload)
-      .switchMap((supplier) =>
-          this.suppliersService.create(supplier)
+      .switchMap((supplier) => {
+          return this.suppliersService.create(supplier)
               .map( (createdSupplier: Supplier) => new suppliersActions.CreateSuccess(createdSupplier))
               .catch(err => {
                 alert(err['error']['error']['message']);
                 return Observable.of(new suppliersActions.Failure({concern: 'CREATE', error: err}));
-              })
+              })}
       );
 
   @Effect()

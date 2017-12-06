@@ -23,14 +23,16 @@ export class SupplierNewComponent implements OnInit, OnDestroy {
     private store: Store<fromRoot.State>,
     private router: Router,
     private actionsSubject: ActionsSubject
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.redirectSub = this.actionsSubject
       .asObservable()
       .filter(action => action.type === suppliersActions.CREATE_SUCCESS)
-      .subscribe((action: suppliersActions.CreateSuccess) => this.router.navigate(['/suppliers', action.payload.id]));
-
+      .subscribe((action: suppliersActions.CreateSuccess) => {
+        const route = action.payload.isCustomer ? '/customers' : '/suppliers';
+        this.router.navigate([route, action.payload.id]);
+      });
   }
 
   ngOnDestroy() {
