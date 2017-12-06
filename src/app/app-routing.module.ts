@@ -5,8 +5,6 @@ import {
   ErrorPageComponent,
   HomeComponent,
   InvoicesComponent,
-  StocksComponent,
-  ProductsComponent,
   AutomatesComponent
 } from './components';
 
@@ -17,9 +15,8 @@ const appRoutes: Routes = [
     path: 'suppliers', loadChildren: 'app/views/suppliers/suppliers.module#SuppliersModule', data: {isCustomer: false}
   },
   { path: 'invoices', component: InvoicesComponent, pathMatch: 'full' },
-  { path: 'stocks', component: StocksComponent, pathMatch: 'full' },
   { path: 'automates', component: AutomatesComponent, pathMatch: 'full' },
-  { path: 'products', component: ProductsComponent, pathMatch: 'full' },
+  { path: 'products', loadChildren: 'app/views/products/products.module#ProductsModule' },
   // { path: 'users', component: UsersComponent, children: [
   //   { path: ':id/:name', component: UserComponent }
   // ] },

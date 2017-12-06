@@ -7,13 +7,14 @@ import {SuppliersService} from '../services/suppliers.service';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
+import {ProductsService} from '../services/products.service';
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RouterModule
+    RouterModule,
   ],
   declarations: [
     SupplierListComponent,
@@ -26,6 +27,6 @@ import {RouterModule} from '@angular/router';
     SupplierFormComponent,
     RouterModule
   ],
-  providers: [SuppliersService]
+  providers: [SuppliersService, ProductsService]
 })
 export class SharedModule { }
