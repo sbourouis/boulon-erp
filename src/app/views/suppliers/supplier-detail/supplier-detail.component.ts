@@ -33,7 +33,7 @@ export class SupplierDetailComponent implements OnInit, OnDestroy {
     // If the destroy effect fires, we check if the current id is the one being viewed, and redirect to index
     this.redirectSub = this.actionsSubject
       .filter(action => action.type === suppliersActions.DELETE_SUCCESS)
-      .filter((action: suppliersActions.DeleteSuccess) => action.payload === (+this.activatedRoute.snapshot.params['supplierId']).toString())
+      .filter((action: suppliersActions.DeleteSuccess) => action.payload === +this.activatedRoute.snapshot.params['supplierId'])
       .subscribe(_ => this.router.navigate(['/suppliers']));
 
     this.activatedRoute.params.subscribe(params => {

@@ -68,7 +68,7 @@ export class SuppliersEffects {
   destroy$: Observable<Action> = this.actions$
       .ofType(suppliersActions.DELETE)
       .map((action: suppliersActions.Delete) => action.payload)
-      .switchMap((id: string) =>
+      .switchMap((id: number) =>
           this.suppliersService.destroy(id)
               .map( () => new suppliersActions.DeleteSuccess(id))
       );

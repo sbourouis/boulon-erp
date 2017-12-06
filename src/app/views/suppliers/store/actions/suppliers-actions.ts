@@ -23,7 +23,7 @@ export const SET_CURRENT_SUPPLIER_ID = '[Suppliers] SET CURRENT SUPPLIER ID';
 
 export class SetCurrentSupplierId implements Action {
   readonly type = SET_CURRENT_SUPPLIER_ID;
-  constructor(public payload: string) {}
+  constructor(public payload: number) {}
 }
 
 export class LoadAll implements Action {
@@ -48,7 +48,7 @@ export class Patch implements Action {
 
 export class Delete implements Action {
   readonly type = DELETE;
-  constructor(public payload: string) {}
+  constructor(public payload: number) {}
 }
 
 export class LoadAllSuccess implements Action {
@@ -73,7 +73,7 @@ export class PatchSuccess implements Action {
 
 export class DeleteSuccess implements Action {
   readonly type = DELETE_SUCCESS;
-  constructor(public payload: string) {}
+  constructor(public payload: number) {}
 }
 
 export class Failure implements Action {

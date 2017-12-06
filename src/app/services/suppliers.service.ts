@@ -37,7 +37,7 @@ export class SuppliersService {
     return this.http.patch<Supplier>(`${environment.appApi.baseUrl}/${this.route}/${supplier.id}`, supplier);
   }
 
-  destroy(id: string): Observable<Supplier> {
+  destroy(id: number): Observable<Supplier> {
     return this.http.delete<Supplier>(`${environment.appApi.baseUrl}/${this.route}/${id}`);
   }
 }

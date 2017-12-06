@@ -1,5 +1,5 @@
 export interface Supplier {
-  id?: string;
+  id?: number;
   type: 'Particulier'|'Société';
   name: string;
   address?: string;
