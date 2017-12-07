@@ -35,9 +35,6 @@
     "dataSource": "db",
     "public": false
   },
-  "Note": {
-    "dataSource": "db"
-  },
   "customer": {
     "dataSource": "db",
     "public": true
