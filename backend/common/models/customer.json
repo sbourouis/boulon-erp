@@ -1,17 +1,19 @@
 {
-  "name": "Customer",
+  "name": "customer",
+  "plural": "customers",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
   "properties": {
-    "type": {
-      "type": "string"
-    },
     "name": {
       "type": "string",
       "required": true
+    },
+    "type": {
+      "type": "string",
+      "default": "paticulier"
     },
     "email": {
       "type": "string"
@@ -22,16 +24,15 @@
     "address": {
       "type": "string"
     },
-    "position": {
+    "comment": {
       "type": "string"
     },
-    "comment": {
+    "position": {
       "type": "string"
     }
   },
   "validations": [],
-  "relations": {
-  },
+  "relations": {},
   "acls": [],
   "methods": {}
 }
