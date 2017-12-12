@@ -29,6 +29,11 @@
     },
     "position": {
       "type": "string"
+    },
+    "deliveryTime": {
+      "type": "number",
+      "default": 0,
+      "required": true
     }
   },
   "validations": [],

@@ -28,6 +28,10 @@
     },
     "comment": {
       "type": "string"
+    },
+    "deliveryTime": {
+      "type": "number",
+      "default": 0
     }
   },
   "validations": [],
