@@ -1,0 +1,5 @@
+<app-product-list [products]="products$ | async"
+                   (onShow)="showProduct($event)"
+                   (onDelete)="deleteProduct($event)"
+                   (onEdit)="editProduct($event)"
+></app-product-list>

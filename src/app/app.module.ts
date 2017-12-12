@@ -12,13 +12,19 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatIconModule, MatToolbarModule, MatButtonModule} from "@angular/material";
 import { InvoicesComponent } from './components/invoices/invoices.component';
 import { StocksComponent } from './components/stocks/stocks.component';
-import { ProductsComponent } from './components/products/products.component';
 import { AutomatesComponent } from './components/automates/automates.component';
 import {StoreModule} from "@ngrx/store";
 import {EffectsModule} from "@ngrx/effects";
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import * as fromRoot from './store';
 import {SharedModule} from './modules/shared.module';
+import { ProductDetailsComponent } from './components/products/product-details/product-details.component';
+import { ProductListComponent } from './components/products/product-list/product-list.component';
+import { ProductFormComponent } from './components/products/product-form/product-form.component';
+import { ProductIndexComponent } from './views/products/product-index/product-index.component';
+import { ProductEditComponent } from './views/products/product-edit/product-edit.component';
+import { ProductDetailComponent } from './views/products/product-detail/product-detail.component';
+import { ProductNewComponent } from './views/products/product-new/product-new.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +34,6 @@ import {SharedModule} from './modules/shared.module';
     HeaderComponent,
     InvoicesComponent,
     StocksComponent,
-    ProductsComponent,
     AutomatesComponent
   ],
   imports: [

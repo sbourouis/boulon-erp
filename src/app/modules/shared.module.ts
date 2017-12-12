@@ -8,6 +8,9 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
 import {ProductsService} from '../services/products.service';
+import {ProductListComponent} from "../components/products/product-list/product-list.component";
+import {ProductFormComponent} from "../components/products/product-form/product-form.component";
+import {ProductDetailsComponent} from "../components/products/product-details/product-details.component";
 
 @NgModule({
   imports: [
@@ -19,13 +22,19 @@ import {ProductsService} from '../services/products.service';
   declarations: [
     SupplierListComponent,
     SupplierDetailsContainerComponent,
-    SupplierFormComponent
+    SupplierFormComponent,
+    ProductListComponent,
+    ProductDetailsComponent,
+    ProductFormComponent
   ],
   exports: [
     SupplierListComponent,
     SupplierDetailsContainerComponent,
     SupplierFormComponent,
-    RouterModule
+    RouterModule,
+    ProductListComponent,
+    ProductDetailsComponent,
+    ProductFormComponent
   ],
   providers: [SuppliersService, ProductsService]
 })

@@ -15,6 +15,7 @@ const appRoutes: Routes = [
     path: 'suppliers', loadChildren: 'app/views/suppliers/suppliers.module#SuppliersModule', data: {isCustomer: false}
   },
   { path: 'invoices', component: InvoicesComponent, pathMatch: 'full' },
+  { path: 'orders', component: InvoicesComponent, pathMatch: 'full' },
   { path: 'automates', component: AutomatesComponent, pathMatch: 'full' },
   { path: 'products', loadChildren: 'app/views/products/products.module#ProductsModule' },
   // { path: 'users', component: UsersComponent, children: [

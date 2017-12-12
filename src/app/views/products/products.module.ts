@@ -9,6 +9,11 @@ import {EffectsModule} from '@ngrx/effects';
 import {ProductsEffects} from './store/effects/products-effects';
 import {ProductsMenuComponent} from './products-menu/products-menu.component';
 import {MatButtonModule, MatIconModule} from '@angular/material';
+import {ProductNewComponent} from "./product-new/product-new.component";
+import {ProductIndexComponent} from "./product-index/product-index.component";
+import {ProductDetailComponent} from "./product-detail/product-detail.component";
+import {ProductEditComponent} from "./product-edit/product-edit.component";
+
 
 @NgModule({
   imports: [
@@ -22,7 +27,12 @@ import {MatButtonModule, MatIconModule} from '@angular/material';
   ],
   declarations: [
     ProductsComponent,
-    ProductsMenuComponent
+    ProductsMenuComponent,
+    ProductEditComponent,
+    ProductDetailComponent,
+    ProductNewComponent,
+    ProductIndexComponent
   ]
 })
 export class ProductsModule { }
+
