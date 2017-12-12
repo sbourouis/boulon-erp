@@ -6,7 +6,7 @@ export class UtilsService {
 
   IsOrderPossible(commands: Command[] ): boolean {
     let quantity = 0;
-    let tmpCommands = sortCommands(commands);
+    let tmpCommands = this.sortCommands(commands);
     for (const command of commands) {
       // change to dateCommande
       let numberOfDays = this.businessDaysBetweenDates(command.date, command.dateLivraison);
@@ -42,7 +42,7 @@ export class UtilsService {
     }
 
     let holidays = [
-      8
+      '8'
       // '12/31+5', // New Year's Day on a saturday celebrated on previous friday
       // '1/2+1',   // New Year's Day on a sunday celebrated on next monday
       // '1-3/1',   // Birthday of Martin Luther King, third Monday in January

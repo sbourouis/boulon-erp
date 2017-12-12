@@ -2,8 +2,6 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnIn
 import { Product } from '@app-models';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
-
-
 @Component({
   selector: 'app-product-form',
   templateUrl: './product-form.component.html',
@@ -18,7 +16,8 @@ export class ProductFormComponent implements OnInit, OnChanges {
     article: '',
     quantity: 0,
     price: 0,
-    materials: undefined
+    materials: [],
+    manufacturingTasks: []
   };
 
   @Output() onSubmit = new EventEmitter<Product>();
@@ -33,7 +32,8 @@ export class ProductFormComponent implements OnInit, OnChanges {
       'quantity': [this.product.quantity],
       'price': [this.product.price],
       'article': [this.product.article],
-      'materials': [this.product.materials]
+      'materials': [this.product.materials],
+      'manufacturingTasks': [this.product.manufacturingTasks],
     });
   }
 

@@ -21,7 +21,8 @@ export class SupplierFormComponent implements OnInit, OnChanges {
     isCustomer: false,
     phoneNumber: '',
     position: '',
-    comment: ''
+    comment: '',
+    deliveryTime: 0
   };
 
   @Output() onSubmit = new EventEmitter<Supplier>();
@@ -39,7 +40,8 @@ export class SupplierFormComponent implements OnInit, OnChanges {
       'address': [this.supplier.address],
       'position': [this.supplier.position],
       'isCustomer': [this.supplier.isCustomer],
-      'comment': [this.supplier.comment]
+      'comment': [this.supplier.comment],
+      'deliveryTime': [this.supplier.deliveryTime, Validators.required]
     });
   }
 
