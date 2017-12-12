@@ -8,4 +8,5 @@ export interface Supplier {
   isCustomer?: boolean;
   email?: string;
   comment?: string;
+  deliveryTime: number;
 }

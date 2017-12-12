@@ -4,6 +4,8 @@ import { Product } from '@app-models';
 import {ActionsSubject, Store} from '@ngrx/store';
 import {Subscription} from 'rxjs/Subscription';
 import {Router} from '@angular/router';
+import * as fromProducts from '../store';
+import * as productsActions from '../store/actions/products-actions';
 
 @Component({
   selector: 'app-product-new',
@@ -15,7 +17,7 @@ export class ProductNewComponent implements OnInit, OnDestroy {
 
   redirectSub: Subscription;
 
-  constructor  (private store: Store<fromRoot.State>,
+  constructor  (private store: Store<fromProducts.State>,
   private router: Router,
   private actionsSubject: ActionsSubject) {
 
@@ -26,8 +28,8 @@ export class ProductNewComponent implements OnInit, OnDestroy {
       .asObservable()
       .filter(action => action.type === productsActions.CREATE_SUCCESS)
       .subscribe((action: productsActions.CreateSuccess) => {
-        const route = action.payload.isCustomer ? '/customers' : '/suppliers';
-        this.router.navigate([route, action.payload.id]);
+        // const route = action.payload.isCustomer ? '/customers' : '/suppliers';
+        // this.router.navigate([route, action.payload.id]);
       });
   }
 

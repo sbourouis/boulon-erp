@@ -17,7 +17,8 @@ export class ProductFormComponent implements OnInit, OnChanges {
     name: '',
     article: '',
     quantity: 0,
-    price: 0
+    price: 0,
+    materials: undefined
   };
 
   @Output() onSubmit = new EventEmitter<Product>();
@@ -32,6 +33,7 @@ export class ProductFormComponent implements OnInit, OnChanges {
       'quantity': [this.product.quantity],
       'price': [this.product.price],
       'article': [this.product.article],
+      'materials': [this.product.materials]
     });
   }
 

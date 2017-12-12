@@ -1,4 +1,5 @@
 import {Material} from "./material";
+import {ManufacturingTask} from "./manufacturingTask";
 export interface Product {
   id?: number;
   name: string;
@@ -6,4 +7,5 @@ export interface Product {
   quantity: number;
   price: number;
   materials: Material[];
+  manufacturingTasks: ManufacturingTask[];
 }
