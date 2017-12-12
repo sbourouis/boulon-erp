@@ -1,5 +1,5 @@
 {
-  "name": "command",
+  "name": "Command",
   "plural": "commands",
   "base": "PersistedModel",
   "idInjection": true,
@@ -21,18 +21,20 @@
   "relations": {
     "customer": {
       "type": "belongsTo",
-      "model": "customer",
-      "foreignKey": "",
+      "model": "Customer",
+      "foreignKey": "idCustomer",
       "options": {
-        "nestRemoting": true
+        "nestRemoting": true,
+        "disableInclude": true
       }
     },
     "products": {
       "type": "hasOne",
-      "model": "product",
-      "foreignKey": "",
+      "model": "Product",
+      "foreignKey": "idProduct",
       "options": {
-        "nestRemoting": true
+        "nestRemoting": true,
+        "disableInclude": true
       }
     }
   },

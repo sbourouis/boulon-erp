@@ -1,5 +1,5 @@
 {
-  "name": "erp-api",
+  "name": "back",
   "version": "1.0.0",
   "main": "server/server.js",
   "engines": {
@@ -17,8 +17,9 @@
     "loopback-boot": "^2.6.5",
     "serve-favicon": "^2.0.1",
     "strong-error-handler": "^2.0.0",
-    "loopback-component-explorer": "^4.0.0",
-    "loopback": "^3.0.0"
+    "loopback-datasource-juggler": "^2.39.0",
+    "loopback-component-explorer": "^2.4.0",
+    "loopback": "^2.22.0"
   },
   "devDependencies": {
     "eslint": "^3.17.1",
@@ -30,5 +31,5 @@
     "url": ""
   },
   "license": "UNLICENSED",
-  "description": "erp-api"
+  "description": "back"
 }

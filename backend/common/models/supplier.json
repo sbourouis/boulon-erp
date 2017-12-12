@@ -1,5 +1,6 @@
 {
   "name": "Supplier",
+  "plural": "suppliers",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
@@ -31,6 +32,16 @@
   },
   "validations": [],
   "relations": {
+    "materials": {
+      "type": "hasMany",
+      "model": "Material",
+      "foreignKey": "idMaterial",
+      "options": {
+        "nestRemoting": true,
+        "disableInclude": true
+      },
+      "through": "Material"
+    }
   },
   "acls": [],
   "methods": {}

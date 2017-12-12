@@ -35,19 +35,23 @@
     "dataSource": "db",
     "public": false
   },
-  "customer": {
+  "Customer": {
     "dataSource": "db",
     "public": true
   },
-  "command": {
+  "Supplier": {
     "dataSource": "db",
     "public": true
   },
-  "product": {
+  "Command": {
     "dataSource": "db",
     "public": true
   },
-  "material": {
+  "Material": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Product": {
     "dataSource": "db",
     "public": true
   }
