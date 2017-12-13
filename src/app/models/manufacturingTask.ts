@@ -9,5 +9,5 @@ export interface ManufacturingTask {
   materials: [{
     material: Material;
     quantityUsed: number;
-  }]
+  }];
 }

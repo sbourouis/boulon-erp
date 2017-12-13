@@ -17,15 +17,16 @@ export class HomeComponent implements OnInit {
       supplier:
         {
           id: 0,
-    type: 'Particulier',
-    name: 'supplier 0',
-    address: 'adresse',
-    position: 'position',
-    phoneNumber: '0632796707',
-    isCustomer: true,
-    email: 'test@gmail.com',
-    comment: '',
-    deliveryTime: 2,
+          type: 'Particulier',
+          name: 'supplier 0',
+          address: 'adresse',
+          position: 'position',
+          phoneNumber: '0632796707',
+          isCustomer: true,
+          email: 'test@gmail.com',
+          comment: '',
+          materials: undefined,
+          deliveryTime: 2,
         },
       commandLines: [{
         id: 0,
@@ -47,16 +48,17 @@ export class HomeComponent implements OnInit {
             materials:
               [
                 {
-                  id: 0,
-                  name: 'article',
-                  price: 0
+                  material: {
+                    id: 0,
+                    name: 'article',
+                    price: 0,
+                    securityStock: 1,
+                    maxStock: 50
+                  },
+                  quantityUsed: 1
                 }
               ],
-            quantity: 1000,
-            quantityUsed:
-            [
-              1
-            ]
+            quantity: 1000
           }
         ]
       },
@@ -73,7 +75,9 @@ export class HomeComponent implements OnInit {
           {
             id: 0,
             name: 'article',
-            price: 0
+            price: 0,
+            securityStock: 1,
+            maxStock: 50
           },
         quantity: 9,
         date: new Date()

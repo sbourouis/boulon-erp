@@ -14,6 +14,7 @@ export class UtilsService {
     let max: number, quantityUsed: number;
     let neededMachines = this.getNeededMachines(commands);
     let inStock: number;
+    let newStock: Stock[];
     for (const command of commands) {
       for (const line of command.commandLines) {
         lastDuration = 0;
@@ -23,17 +24,15 @@ export class UtilsService {
            * stock management
            */
           quantityUsed = 0;
-          for (let i = 0; i < task.materials.length && i < task.quantityUsed.length; i++) {
-            quantityUsed = (line.quantity / task.quantity) * task.quantityUsed[i];
+          for (let material of task.materials) {
+            quantityUsed = (line.quantity / task.quantity) * material.quantityUsed;
             inStock = 0;
             for ( let stock of tmpStocks) {
               if (stock.article.id === line.article.id) {
                 inStock += stock.quantity;
               }
             }
-            if (inStock >= quantityUsed) {
-              // stock.quantity -= quantityUsed;
-            } else {
+            if (inStock < quantityUsed) {
               return false;
             }
           }
@@ -60,6 +59,21 @@ export class UtilsService {
       }
     }
     return true;
+  }
+
+  getStockNeeded(commands: Command[], curDate: Date, curStock: Stock[]): Stock[] {
+    let res: Stock[] = curStock;
+    let quantity: number;
+    for (const command of commands) {
+      for (const line of command.commandLines) {
+        for (const task of line.article.manufacturingTasks) {
+          for (const material of task.materials) {
+
+          }
+        }
+      }
+    }
+    return res;
   }
 
   // get an array of the machine which are needed to answer the orders

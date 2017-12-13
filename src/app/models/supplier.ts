@@ -1,3 +1,5 @@
+import {Material} from "./material";
+
 export interface Supplier {
   id?: number;
   type: 'Particulier'|'Société';
@@ -9,4 +11,9 @@ export interface Supplier {
   email?: string;
   comment?: string;
   deliveryTime: number;
+  materials:
+    {
+      material: Material,
+      price: number
+    };
 }
