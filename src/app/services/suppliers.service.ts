@@ -5,6 +5,7 @@ import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import * as fromRoot from '../store';
 import {Store} from '@ngrx/store';
+import {Material} from "../models/material";
 
 @Injectable()
 export class SuppliersService {
@@ -39,5 +40,10 @@ export class SuppliersService {
 
   destroy(id: number): Observable<Supplier> {
     return this.http.delete<Supplier>(`${environment.appApi.baseUrl}/${this.route}/${id}`);
+  }
+
+  getMaterials(idSupplier: number) : Observable<Material[]> {
+    return this.route === 'suppliers' ?
+      this.http.get<Material[]>(`${environment.appApi.baseUrl}/${this.route}/${idSupplier}/materials`) : null;
   }
 }
