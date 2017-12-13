@@ -5,9 +5,9 @@ export interface ManufacturingTask {
   id?: number;
   machine: Machine;
   duration: number;
-  quantity: number;
-  materials: [{
+  quantity: number; // quantité produite
+  materials: Array<{
     material: Material;
     quantityUsed: number;
-  }];
+  }>;
 }

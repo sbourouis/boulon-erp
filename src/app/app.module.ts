@@ -18,13 +18,6 @@ import {EffectsModule} from "@ngrx/effects";
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import * as fromRoot from './store';
 import {SharedModule} from './modules/shared.module';
-import { ProductDetailsComponent } from './components/products/product-details/product-details.component';
-import { ProductListComponent } from './components/products/product-list/product-list.component';
-import { ProductFormComponent } from './components/products/product-form/product-form.component';
-import { ProductIndexComponent } from './views/products/product-index/product-index.component';
-import { ProductEditComponent } from './views/products/product-edit/product-edit.component';
-import { ProductDetailComponent } from './views/products/product-detail/product-detail.component';
-import { ProductNewComponent } from './views/products/product-new/product-new.component';
 
 @NgModule({
   declarations: [

@@ -23,7 +23,7 @@ export class SupplierFormComponent implements OnInit, OnChanges {
     position: '',
     comment: '',
     deliveryTime: 0,
-    materials: undefined
+    materials: []
   };
 
   @Output() onSubmit = new EventEmitter<Supplier>();

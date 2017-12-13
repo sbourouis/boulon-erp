@@ -11,9 +11,8 @@ export interface Supplier {
   email?: string;
   comment?: string;
   deliveryTime: number;
-  materials:
-    {
-      material: Material,
-      price: number
-    };
+  materials: Array<{
+    material: Material,
+    price: number
+  }>;
 }
