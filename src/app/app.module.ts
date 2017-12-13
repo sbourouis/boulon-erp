@@ -10,7 +10,6 @@ import {
 import {AppRoutingModule} from "./app-routing.module";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatIconModule, MatToolbarModule, MatButtonModule} from "@angular/material";
-import { InvoicesComponent } from './components/invoices/invoices.component';
 import { StocksComponent } from './components/stocks/stocks.component';
 import { AutomatesComponent } from './components/automates/automates.component';
 import {StoreModule} from "@ngrx/store";
@@ -25,7 +24,6 @@ import {SharedModule} from './modules/shared.module';
     ErrorPageComponent,
     HomeComponent,
     HeaderComponent,
-    InvoicesComponent,
     StocksComponent,
     AutomatesComponent
   ],

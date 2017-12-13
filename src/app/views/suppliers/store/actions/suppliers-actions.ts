@@ -82,7 +82,7 @@ export class Failure implements Action {
 }
 
 export type All =
-    | SetCurrentSupplierId
+    SetCurrentSupplierId
     | LoadAll
     | Load
     | Create
