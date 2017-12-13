@@ -1,37 +1,23 @@
 {
-  "name": "ManufacturingTask",
-  "plural": "manufacturingTasks",
+  "name": "MaterialUsed",
+  "plural": "materialsUsed",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
   "properties": {
-    "duration": {
+    "quantityUsed": {
       "type": "number",
       "required": true,
       "default": 0
-    },
-    "quantity": {
-      "type": "number",
-      "required": true,
-      "default": 1000
     }
   },
   "validations": [],
   "relations": {
-    "machine": {
+    "material": {
       "type": "belongsTo",
-      "model": "Machine",
-      "foreignKey": "",
-      "options": {
-        "nestRemoting": true,
-        "disableInclude": true
-      }
-    },
-    "materials": {
-      "type": "hasMany",
-      "model": "MaterialUsed",
+      "model": "Material",
       "foreignKey": "",
       "options": {
         "nestRemoting": true,

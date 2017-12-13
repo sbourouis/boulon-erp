@@ -22,7 +22,7 @@
     "article": {
       "type": "belongsTo",
       "model": "Product",
-      "foreignKey": "idProduct",
+      "foreignKey": "",
       "options": {
         "nestRemoting": true,
         "disableInclude": true

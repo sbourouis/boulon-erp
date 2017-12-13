@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UtilsService} from "../../services/utils.service";
 import {Command} from "../../models/command";
 
@@ -30,23 +30,20 @@ export class HomeComponent implements OnInit {
         },
       commandLines: [{
         id: 0,
-      article: {
-        id: 0,
-        name: 'product',
-        price: 10,
+        article: {
+          id: 0,
+          name: 'product',
+          price: 10,
 
-        manufacturingTasks:
-        [
-          {
-            id: 0,
-            machine:
+          manufacturingTasks: [
             {
               id: 0,
-              name: 'machine'
-            },
-            duration: 2,
-            materials:
-              [
+              machine: {
+                id: 0,
+                name: 'machine'
+              },
+              duration: 2,
+              materials: [
                 {
                   material: {
                     id: 0,
@@ -85,7 +82,7 @@ export class HomeComponent implements OnInit {
     ];
     cmds.push(cmd);
     console.log(util.IsOrderPossible(cmds, new Date('December 7, 2017 11:13:00'), stocks));
-   // console.log(util.businessDaysBetweenDates(new Date('December 11, 2017 11:13:00'), new Date()));
+    // console.log(util.businessDaysBetweenDates(new Date('December 11, 2017 11:13:00'), new Date()));
   }
 
   ngOnInit() {

@@ -11,10 +11,6 @@
       "type": "string",
       "required": true
     },
-    "quantity": {
-      "type": "number",
-      "default": 0
-    },
     "price": {
       "type": "number",
       "default": 0
@@ -22,15 +18,6 @@
   },
   "validations": [],
   "relations": {
-    "materials": {
-      "type": "hasMany",
-      "model": "Material",
-      "foreignKey": "",
-      "options": {
-        "nestRemoting": true,
-        "disableInclude": true
-      }
-    },
     "manufacturingTasks": {
       "type": "hasMany",
       "model": "ManufacturingTask",

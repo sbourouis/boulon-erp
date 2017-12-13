@@ -66,5 +66,13 @@
   "CommandLine": {
     "dataSource": "db",
     "public": true
+  },
+  "Stock": {
+    "dataSource": "db",
+    "public": true
+  },
+  "MaterialUsed": {
+    "dataSource": "db",
+    "public": true
   }
 }
