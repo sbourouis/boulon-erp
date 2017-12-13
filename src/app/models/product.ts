@@ -3,7 +3,7 @@ import {ManufacturingTask} from "./manufacturingTask";
 export interface Product {
   id?: number;
   name: string;
-  article: any;
+  // article: any; // TODO: ASK WHY
   quantity: number;
   price: number;
   materials: Material[];

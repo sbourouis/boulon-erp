@@ -7,5 +7,5 @@ export interface Command {
   dateLivraison: any;
   supplier: Supplier;
   commandLines: CommandLine[];
-  discount: number;
+  discount?: number;
 }
