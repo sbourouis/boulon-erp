@@ -1,37 +1,26 @@
 {
-  "name": "ManufacturingTask",
-  "plural": "manufacturingTasks",
+  "name": "Stock",
+  "plural": "stocks",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
   "properties": {
-    "duration": {
-      "type": "number",
-      "required": true,
-      "default": 0
+    "date": {
+      "type": "date"
     },
     "quantity": {
       "type": "number",
       "required": true,
-      "default": 1000
+      "default": 0
     }
   },
   "validations": [],
   "relations": {
-    "machine": {
+    "product": {
       "type": "belongsTo",
-      "model": "Machine",
-      "foreignKey": "",
-      "options": {
-        "nestRemoting": true,
-        "disableInclude": true
-      }
-    },
-    "materials": {
-      "type": "hasMany",
-      "model": "MaterialUsed",
+      "model": "Product",
       "foreignKey": "",
       "options": {
         "nestRemoting": true,

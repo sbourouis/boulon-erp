@@ -29,7 +29,7 @@
     "customer": {
       "type": "belongsTo",
       "model": "Customer",
-      "foreignKey": "idCustomer",
+      "foreignKey": "",
       "options": {
         "nestRemoting": true,
         "disableInclude": true
