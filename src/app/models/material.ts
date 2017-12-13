@@ -1,5 +1,5 @@
-export interface Material {
-  id?: number;
-  name: string;
-  price: number;
+import {Article} from "./article";
+
+export class Material extends Article{
+
 }
