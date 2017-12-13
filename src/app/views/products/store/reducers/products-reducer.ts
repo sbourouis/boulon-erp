@@ -23,26 +23,26 @@ export function reducer(
 ){
   switch (type) {
     case productsActions.SET_CURRENT_PRODUCT_ID : {
-      return {...state, currentProductId: payload}
+      return {...state, currentProductId: payload};
     }
 
     case productsActions.LOAD_ALL_SUCCESS : {
-      return {...state, ...productsAdapter.addAll(payload as Product[], state)}
+      return {...state, ...productsAdapter.addAll(payload as Product[], state)};
     }
 
     case productsActions.LOAD_SUCCESS || productsActions.CREATE_SUCCESS : {
-      return {...state, ...productsAdapter.addOne(payload as Product, state)}
+      return {...state, ...productsAdapter.addOne(payload as Product, state)};
     }
 
     case productsActions.PATCH_SUCCESS : {
       return {
         ...state,
         ...productsAdapter.updateOne(payload as Update<Product>, state)
-      }
+      };
     }
 
     case productsActions.DELETE_SUCCESS : {
-      return {...state, ...productsAdapter.removeOne(payload as number, state)}
+      return {...state, ...productsAdapter.removeOne(payload as number, state)};
     }
 
     default: {
