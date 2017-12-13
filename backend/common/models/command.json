@@ -15,6 +15,13 @@
       "type": "number",
       "required": true,
       "default": 1000
+    },
+    "dateLivraison": {
+      "type": "date",
+      "required": true
+    },
+    "discount": {
+      "type": "number"
     }
   },
   "validations": [],
@@ -28,10 +35,10 @@
         "disableInclude": true
       }
     },
-    "products": {
-      "type": "hasOne",
-      "model": "Product",
-      "foreignKey": "idProduct",
+    "commandLines": {
+      "type": "hasMany",
+      "model": "CommandLine",
+      "foreignKey": "idCommandLines",
       "options": {
         "nestRemoting": true,
         "disableInclude": true

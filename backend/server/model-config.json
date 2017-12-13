@@ -54,5 +54,17 @@
   "Product": {
     "dataSource": "db",
     "public": true
+  },
+  "ManufacturingTask": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Machine": {
+    "dataSource": "db",
+    "public": true
+  },
+  "CommandLine": {
+    "dataSource": "db",
+    "public": true
   }
 }

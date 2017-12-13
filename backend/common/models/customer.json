@@ -32,8 +32,8 @@
     },
     "deliveryTime": {
       "type": "number",
-      "default": 0,
-      "required": true
+      "required": true,
+      "default": 0
     }
   },
   "validations": [],

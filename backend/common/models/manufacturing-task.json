@@ -1,0 +1,30 @@
+{
+  "name": "ManufacturingTask",
+  "plural": "manufacturingTasks",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "duration": {
+      "type": "number",
+      "required": true,
+      "default": 0
+    }
+  },
+  "validations": [],
+  "relations": {
+    "machine": {
+      "type": "belongsTo",
+      "model": "Machine",
+      "foreignKey": "idMachine",
+      "options": {
+        "nestRemoting": true,
+        "disableInclude": true
+      }
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

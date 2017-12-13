@@ -1,18 +1,15 @@
 {
-  "name": "Product",
-  "plural": "products",
+  "name": "CommandLine",
+  "plural": "commandLines",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
   "properties": {
-    "name": {
-      "type": "string",
-      "required": true
-    },
     "quantity": {
       "type": "number",
+      "required": true,
       "default": 0
     },
     "price": {
@@ -22,19 +19,10 @@
   },
   "validations": [],
   "relations": {
-    "materials": {
-      "type": "hasMany",
-      "model": "Material",
-      "foreignKey": "",
-      "options": {
-        "nestRemoting": true,
-        "disableInclude": true
-      }
-    },
-    "manufacturingTasks": {
-      "type": "hasMany",
-      "model": "ManufacturingTask",
-      "foreignKey": "",
+    "article": {
+      "type": "belongsTo",
+      "model": "Product",
+      "foreignKey": "idProduct",
       "options": {
         "nestRemoting": true,
         "disableInclude": true
