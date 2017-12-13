@@ -13,7 +13,6 @@ export class ProductFormComponent implements OnInit, OnChanges {
   @Input() product: Product = {
     id: undefined,
     name: '',
-    article: '',
     quantity: 0,
     price: 0,
     materials: [],
@@ -31,7 +30,6 @@ export class ProductFormComponent implements OnInit, OnChanges {
       'name': [this.product.name, Validators.required],
       'quantity': [this.product.quantity],
       'price': [this.product.price],
-      'article': [this.product.article],
       'materials': [this.product.materials],
       'manufacturingTasks': [this.product.manufacturingTasks],
     });
