@@ -6,6 +6,8 @@ export interface ManufacturingTask {
   machine: Machine;
   duration: number;
   quantity: number;
-  materials: Material[];
-  quantityUsed: number[];
+  materials: [{
+    material: Material;
+    quantityUsed: number;
+  }]
 }
