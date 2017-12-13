@@ -1,11 +1,6 @@
 import {Material} from "./material";
 import {ManufacturingTask} from "./manufacturingTask";
-export interface Product {
-  id?: number;
-  name: string;
-  // article: any; // TODO: ASK WHY
-  quantity: number;
-  price: number;
-  materials: Material[];
+import {Article} from "./article";
+export interface Product extends Article {
   manufacturingTasks: ManufacturingTask[];
 }

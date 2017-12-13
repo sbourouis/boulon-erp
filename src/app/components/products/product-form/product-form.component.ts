@@ -13,10 +13,8 @@ export class ProductFormComponent implements OnInit, OnChanges {
   @Input() product: Product = {
     id: undefined,
     name: '',
-    quantity: 0,
     price: 0,
-    materials: [],
-    manufacturingTasks: []
+    manufacturingTasks: undefined
   };
 
   @Output() onSubmit = new EventEmitter<Product>();
@@ -28,10 +26,8 @@ export class ProductFormComponent implements OnInit, OnChanges {
     this.form = this.formBuilder.group({
       'id': [this.product.id],
       'name': [this.product.name, Validators.required],
-      'quantity': [this.product.quantity],
       'price': [this.product.price],
-      'materials': [this.product.materials],
-      'manufacturingTasks': [this.product.manufacturingTasks],
+      'manufacturingTasks': [this.product.manufacturingTasks]
     });
   }
 
