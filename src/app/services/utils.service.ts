@@ -1,12 +1,16 @@
 
 import {Command, Stock} from '@app-models';
+import {Material} from "../models/material";
+import {Machine} from "../models/machine";
 
 export class UtilsService {
   constructor() {}
 
+  // return boolean that tell us if the commands can be ordered
   IsOrderPossible(commands: Command[], curDate: Date, stocks: Stock[]): boolean {
     let numberOfHours: number;
     console.log(stocks);
+    let previsionalCommands: Command[] = [];
     let tmpStocks = stocks;
     let lastDuration: number;
     let max: number, quantityUsed: number;
@@ -37,6 +41,7 @@ export class UtilsService {
           /*
            * end stock management
            */
+
           neededMachines[task.machine.id] = (line.quantity / task.quantity) * task.duration + lastDuration;
           lastDuration += task.duration;
         }
@@ -58,7 +63,6 @@ export class UtilsService {
     }
     return true;
   }
-
   getStockNeeded(commands: Command[], curDate: Date, curStock: Stock[]): Stock[] {
     let res: Stock[] = curStock;
     let quantity: number;
@@ -74,19 +78,48 @@ export class UtilsService {
     return res;
   }
 
+  getPrevisionalCommands(commands: Command[]): Command {
+    let previsionalCommands: Command[] = [];
+    for (const command of commands) {
+      for (const line of command.commandLines) {
+        // for (const line)
+      }
+    }
+    return previsionalCommands;
+  }
+
   // get an array of the machine which are needed to answer the orders
   getNeededMachines(commands: Command[]): any {
-    let res = [];
+    let res: [{
+      machine: Machine,
+      dateEnd: Date,
+      duration: number
+    }] = [];
+
+    let tmpArray: [{
+      machine: Machine,
+      dateEnd: Date,
+      duration: number
+    }] = [];
+    let tmpDate = new Date();
+    // loop on the orders to add infos in res
     for (const command of commands) {
       for (const line of command.commandLines) {
         for (const task of line.article.manufacturingTasks) {
-          if (res[task.machine.id] === undefined) {
+          tmpArray = res.filter( o => o.machine.id === task.machine.id );
+          if (tmpArray.length === 0) {
 
             res.push(
             {
-              key : task.machine.id,
-              value: 0
+              machine: task.machine,
+              dateEnd: command.dateLivraison,
+              duration: 0
             });
+          } else {
+            tmpDate.setDate(command.dateLivraison.getDate() - command.supplier.deliveryTime);
+            if (tmpArray[0].dateEnd < command.dateLivraison) {
+              tmpArray[0].dateEnd = tmpDate ;
+            }
           }
         }
       }
@@ -181,6 +214,37 @@ export class UtilsService {
 
   SimulateOrder(): number {
     return 0;
+  }
+
+  createSequence(commands: Command[], curDate: Date): any {
+    let numberOfHours: number;
+    let lastDuration: number;
+    let max: number, quantityUsed: number;
+    let neededMachines = this.getNeededMachines(commands);
+    for (const command of commands) {
+      for (const line of command.commandLines) {
+        lastDuration = 0;
+        for (const task of line.article.manufacturingTasks) {
+          neededMachines[task.machine.id] = (line.quantity / task.quantity) * task.duration + lastDuration;
+          lastDuration += task.duration;
+        }
+      }
+
+      numberOfHours = (this.businessDaysBetweenDates(curDate, command.dateLivraison ) - command.supplier.deliveryTime) * 7  ;
+
+      if (neededMachines.length > 1) {
+        max = +Object.keys(neededMachines).reduce(function (a, b) {
+
+          return neededMachines[a] > neededMachines[b] ? neededMachines[a] : neededMachines[b];
+        });
+      } else if (neededMachines.length === 1) {
+        max = +Object.values(neededMachines)[0];
+      }
+      if (numberOfHours < max) {
+        return false;
+      }
+    }
+    return true;
   }
 
 }
