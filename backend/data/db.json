@@ -1,0 +1,39 @@
+{
+  "ids": {
+    "User": 1,
+    "AccessToken": 1,
+    "ACL": 1,
+    "RoleMapping": 1,
+    "Role": 1,
+    "Customer": 3,
+    "Supplier": 1,
+    "Command": 1,
+    "Material": 1,
+    "Product": 1,
+    "ManufacturingTask": 1,
+    "Machine": 1,
+    "CommandLine": 1,
+    "Stock": 1,
+    "MaterialUsed": 1
+  },
+  "models": {
+    "User": {},
+    "AccessToken": {},
+    "ACL": {},
+    "RoleMapping": {},
+    "Role": {},
+    "Customer": {
+      "1": "{\"name\":\"ALZTOM\",\"type\":\"Société\",\"email\":\"\",\"phoneNumber\":\"\",\"address\":\"\",\"comment\":\"\",\"position\":\"\",\"deliveryTime\":2,\"id\":1,\"isCustomer\":true,\"materials\":[]}",
+      "2": "{\"name\":\"TOMY\",\"type\":\"Société\",\"email\":\"\",\"phoneNumber\":\"\",\"address\":\"\",\"comment\":\"\",\"position\":\"\",\"deliveryTime\":3,\"id\":2,\"isCustomer\":true,\"materials\":[]}"
+    },
+    "Supplier": {},
+    "Command": {},
+    "Material": {},
+    "Product": {},
+    "ManufacturingTask": {},
+    "Machine": {},
+    "CommandLine": {},
+    "Stock": {},
+    "MaterialUsed": {}
+  }
+}
