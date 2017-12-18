@@ -3,6 +3,8 @@ import { Supplier } from '@app-models';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import * as fromRoot from '@app-root-store';
 import {Store} from '@ngrx/store';
+import {Observable} from 'rxjs/Observable';
+import {Material} from '../../../models/material';
 
 @Component({
   selector: 'app-supplier-form',
@@ -27,11 +29,14 @@ export class SupplierFormComponent implements OnInit, OnChanges {
   };
 
   @Output() onSubmit = new EventEmitter<Supplier>();
+  materials$: Observable<Material[]>;
 
   form: FormGroup;
 
   constructor(public formBuilder: FormBuilder, private store: Store<fromRoot.State>) {
     this.store.select(fromRoot.getIsCustomer).subscribe(isCustomer => this.supplier.isCustomer = isCustomer);
+    this.materials$ = this.store.select(fromRoot.getMaterials);
+    // this.store.emit(new ) //TODO
     this.form = this.formBuilder.group({
       'id': [this.supplier.id],
       'type': [this.supplier.type],
