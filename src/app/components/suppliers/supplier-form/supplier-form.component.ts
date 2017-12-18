@@ -14,7 +14,7 @@ export class SupplierFormComponent implements OnInit, OnChanges {
 
   @Input() supplier: Supplier = {
     id: undefined,
-    type: 'Particulier',
+    type: 'Société',
     name: '',
     address: '',
     email: '',
