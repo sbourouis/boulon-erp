@@ -38,9 +38,9 @@
   "validations": [],
   "relations": {
     "materials": {
-      "type": "hasMany",
-      "model": "Material",
-      "foreignKey": "idMaterial",
+      "type": "belongsTo",
+      "model": "MaterialLine",
+      "foreignKey": "",
       "options": {
         "nestRemoting": true,
         "disableInclude": true

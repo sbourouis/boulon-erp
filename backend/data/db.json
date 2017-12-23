@@ -6,15 +6,16 @@
     "RoleMapping": 1,
     "Role": 1,
     "Customer": 3,
-    "Supplier": 1,
+    "Supplier": 2,
     "Command": 1,
-    "Material": 1,
+    "Material": 2,
     "Product": 1,
     "ManufacturingTask": 1,
     "Machine": 1,
     "CommandLine": 1,
     "Stock": 1,
-    "MaterialUsed": 1
+    "MaterialUsed": 1,
+    "MaterialLine": 4
   },
   "models": {
     "User": {},
@@ -26,14 +27,21 @@
       "1": "{\"name\":\"ALZTOM\",\"type\":\"Société\",\"email\":\"\",\"phoneNumber\":\"\",\"address\":\"\",\"comment\":\"\",\"position\":\"\",\"deliveryTime\":2,\"id\":1,\"isCustomer\":true,\"materials\":[]}",
       "2": "{\"name\":\"TOMY\",\"type\":\"Société\",\"email\":\"\",\"phoneNumber\":\"\",\"address\":\"\",\"comment\":\"\",\"position\":\"\",\"deliveryTime\":3,\"id\":2,\"isCustomer\":true,\"materials\":[]}"
     },
-    "Supplier": {},
+    "Supplier": {
+      "1": "{\"type\":\"Société\",\"name\":\"ACELOR\",\"deliveryTime\":10,\"id\":1,\"materialsId\":1}"
+    },
     "Command": {},
-    "Material": {},
+    "Material": {
+      "1": "{\"name\":\"acier\",\"id\":1}"
+    },
     "Product": {},
     "ManufacturingTask": {},
     "Machine": {},
     "CommandLine": {},
     "Stock": {},
-    "MaterialUsed": {}
+    "MaterialUsed": {},
+    "MaterialLine": {
+      "1": "{\"price\":10000,\"growth\":0.02,\"date\":\"1969-10-01T00:00:00.074Z\",\"materialId\":1,\"id\":1}"
+    }
   }
 }

@@ -74,5 +74,9 @@
   "MaterialUsed": {
     "dataSource": "db",
     "public": true
+  },
+  "MaterialLine": {
+    "dataSource": "db",
+    "public": true
   }
 }

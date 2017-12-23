@@ -1,0 +1,39 @@
+{
+  "name": "MaterialLine",
+  "plural": "materialLines",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "price": {
+      "type": "number",
+      "required": true,
+      "default": 10000
+    },
+    "growth": {
+      "type": "number",
+      "required": true,
+      "default": 0.02
+    },
+    "date": {
+      "type": "date",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "material": {
+      "type": "belongsTo",
+      "model": "Material",
+      "foreignKey": "",
+      "options": {
+        "nestRemoting": true,
+        "disableInclude": true
+      }
+    }
+  },
+  "acls": [],
+  "methods": {}
+}
