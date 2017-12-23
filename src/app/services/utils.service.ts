@@ -7,6 +7,7 @@ import {Product} from '../models/product';
 import {Article} from '../models/article';
 import {Supplier} from '../models/supplier';
 
+
 export class UtilsService {
   workHours: number;
   dayWorked: number;
@@ -678,6 +679,10 @@ export class UtilsService {
       }
     }
     return res;
+  }
+
+  getPrice(commands$: Command[], stocks$: Array<Stock>, suppliers$: Array<Supplier>, hourCost: number, margin: number): number {
+    return this.getCost(commands$, stocks$, suppliers$, hourCost) * (1 + margin);
   }
 
   getMonthBetween(date1: Date, date2: Date): number {

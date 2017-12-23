@@ -4,6 +4,8 @@ import {Command} from "../../models/command";
 import {utils} from "protractor";
 import {Stock} from "../../models/stock";
 import {Supplier} from "../../models/supplier";
+import {CommandsService} from "../../services/commands.services";
+import {SuppliersService} from "../../services/suppliers.service";
 
 @Component({
   selector: 'app-home',
@@ -12,7 +14,7 @@ import {Supplier} from "../../models/supplier";
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private util: UtilsService) {
+  constructor(private util: UtilsService, private cs: CommandsService, private ss: SuppliersService) {
     let cmd: Command = {
       id: 0,
       date: new Date('10/23/2015'),
@@ -275,7 +277,11 @@ export class HomeComponent implements OnInit {
           date: new Date('10/12/2013')
          }
     ]}];
-    console.log(util.getMonthBetween(new Date('1/12/2014'), new Date('9/12/2015') ));
+    cs.index().subscribe( res => cmds = res);
+    ss.index().subscribe( res => suppliers$ = res);
+    // cmds = cs.index();
+
+    // console.log(util.getMonthBetween(new Date('1/12/2014'), new Date('9/12/2015') ));
     console.log(util.getOrdersDates(cmds, stocks, suppliers$));
     // console.log(util.getTasksFromProduct(product, 1000, new Date));
     // util.getTasksFromCommands(cmds)); // util.IsOrderPossible(cmds, new Date('December 7, 2017 11:13:00'), stocks));

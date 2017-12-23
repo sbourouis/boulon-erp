@@ -17,8 +17,8 @@ import {EffectsModule} from "@ngrx/effects";
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import * as fromRoot from './store';
 import {SharedModule} from './modules/shared.module';
-import {CommandsService} from "./services/commands.service";
 import {StocksService} from "./services/stocks.service";
+import {CommandsService} from "./services/commands.services";
 
 @NgModule({
   declarations: [
