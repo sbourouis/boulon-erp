@@ -17,6 +17,8 @@ import {EffectsModule} from "@ngrx/effects";
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import * as fromRoot from './store';
 import {SharedModule} from './modules/shared.module';
+import {CommandsService} from "./services/commands.service";
+import {StocksService} from "./services/stocks.service";
 
 @NgModule({
   declarations: [
@@ -39,7 +41,7 @@ import {SharedModule} from './modules/shared.module';
     EffectsModule.forRoot([]), /* Start monitoring app's side effects */
     StoreDevtoolsModule.instrument({ maxAge: 50 })
   ],
-  providers: [],
+  providers: [CommandsService, StocksService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
