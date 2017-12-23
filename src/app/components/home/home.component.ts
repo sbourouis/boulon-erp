@@ -6,6 +6,7 @@ import {Stock} from "../../models/stock";
 import {Supplier} from "../../models/supplier";
 import {CommandsService} from "../../services/commands.service";
 import {SuppliersService} from "../../services/suppliers.service";
+import {StocksService} from "../../services/stocks.service";
 
 @Component({
   selector: 'app-home',
@@ -14,16 +15,22 @@ import {SuppliersService} from "../../services/suppliers.service";
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private util: UtilsService, private cs: CommandsService, private ss: SuppliersService) {
+  constructor(private util: UtilsService, private cs: CommandsService, private ss: SuppliersService, private sts: StocksService) {
 
     let cmds: Command[] = [];
     let stocks: Stock[] = [ ];
 
     let suppliers$: Supplier[] = [];
-    cs.index().subscribe( res => cmds = res);
+    cs.index().map((commandes: Command[]) => cmds = commandes);
     ss.index().subscribe( res => suppliers$ = res);
-    // cmds = cs.index();
+    sts.index().subscribe(res => stocks = res);
 
+    console.log(cmds);
+    // cmds = cs.index();
+    let test = new Date();
+    console.log(test);
+    test.setHours(test.getHours() + 10);
+    console.log(test);
     // console.log(util.getMonthBetween(new Date('1/12/2014'), new Date('9/12/2015') ));
     console.log(util.getOrdersDates(cmds, stocks, suppliers$));
     // console.log(util.getTasksFromProduct(product, 1000, new Date));

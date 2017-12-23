@@ -458,6 +458,7 @@ export class UtilsService {
     let res$: Array<{task: ManufacturingTask, launchDate: Date, date: Date }> = [];
     //  sort orders
     commands.sort(this.compareCommands);
+    console.log(commands);
     for (const command of commands) {
       res$ = this.mergeTaskArray(res$, this.getTasksFromCommand(command)); // res$.concat(this.getTasksFromCommand(command));
     }
@@ -506,7 +507,8 @@ export class UtilsService {
       neededDays = Math.trunc(task.duration / this.workHours);
       tmpDate = this.substractDays(tmpDateTask, neededDays);
       neededDays = Math.ceil(task.duration % this.workHours);
-      tmpDate.setHours(tmpDateTask.getHours() - neededDays);
+      // to change day if not enough hours available in that day
+      tmpDate.setHours(tmpDateTask.getHours() - (neededDays * 24 / this.workHours));
       tmpDateTask = tmpDate;
       console.log('tmp : ' + tmpDateTask);
       /*
@@ -528,7 +530,8 @@ export class UtilsService {
           neededDays = Math.trunc(res$[res$.length - 1].task.duration / this.workHours);
           tmpDate = this.substractDays(res$[res$.length - 1].date, neededDays);
           neededDays = Math.ceil(res$[res$.length - 1].task.duration % this.workHours);
-          tmpDate.setHours(res$[res$.length - 1].date.getHours() - neededDays);
+          // to change day if not enough hours available in that day
+          tmpDate.setHours(res$[res$.length - 1].date.getHours() - (neededDays * 24 / this.workHours ));
           tmpDateTask = tmpDate;
         }
       }
@@ -626,6 +629,7 @@ export class UtilsService {
           date: date });
       }
     }
+    console.log(dates$);
     return dates$;
   }
 
