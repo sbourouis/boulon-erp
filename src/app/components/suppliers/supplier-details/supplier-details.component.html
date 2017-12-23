@@ -7,11 +7,12 @@
     <div class="card-body">
       <p>Type: <span class="badge badge-primary">{{supplier.type}}</span></p>
       <p>Nom: <span class="badge badge-primary">{{supplier.name}}</span></p>
-      <p>E-mail:  <span class="badge badge-primary">{{supplier.email}}</span></p>
-      <p>Téléphone:  <span class="badge badge-primary">{{supplier.phoneNumber}}</span></p>
-      <p>Adresse: <span class="badge badge-primary">{{supplier.address}}</span></p>
-      <p>Poste:  <span class="badge badge-primary">{{supplier.position}}</span></p>
-      <p>Notes:  <span class="badge badge-primary">{{supplier.comment}}</span></p>
+      <p *ngIf="supplier.deliveryTime">Temps de livraison: <span class="badge badge-primary">{{supplier.deliveryTime}}</span></p>
+      <p *ngIf="supplier.email">E-mail:  <span class="badge badge-primary">{{supplier.email}}</span></p>
+      <p *ngIf="supplier.phoneNumber">Téléphone:  <span class="badge badge-primary">{{supplier.phoneNumber}}</span></p>
+      <p *ngIf="supplier.address">Adresse: <span class="badge badge-primary">{{supplier.address}}</span></p>
+      <p *ngIf="supplier.position">Poste:  <span class="badge badge-primary">{{supplier.position}}</span></p>
+      <p *ngIf="supplier.comment">Notes:  <span class="badge badge-primary">{{supplier.comment}}</span></p>
     </div>
     <div class="card-footer text-muted">
       <span class="float-md-right ">
