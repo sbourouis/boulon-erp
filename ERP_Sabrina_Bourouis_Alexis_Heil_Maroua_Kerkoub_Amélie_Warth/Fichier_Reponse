@@ -18,10 +18,17 @@ Il est toutefois possible de proposer au client de livrer les commandes en plusi
 
 3. Contrat 1 :
       12h pour fabriquer 1000 boulons, le contrat 1 comporte 90 000 boulons = 12 * 90 * 1 000 = 1 080 000 €
-      12 commandes en Septembre + 
-      Nombre de commandes au mois de septembre 1969 = (103 * 7) / 6 = 121 commandes d'une bobine
+      12 commandes passée en Septembre * (10000/1.02) = 117 647.06
+      + 27 commandes en Octobre * 10000 = 27 000
+      + 23 commandes en Novembre * 10000 * 1.02 = 234 600
+      + 27 commandes en décembre * 10000 * 1.02^2 = 280 908
+      + 1 commande en janvier * 10000 * 1.02^3 = 10 612.08
+      Coût de revient = 1 080 000 + 117 647.06 + 27 000 + 234 600 + 280 908 + 10 612.08 = 1 750 767.14 €
+      Prix contrat = Coût de revient * 1.7 = 2 976 304.138 €
    Contrat 2 :
        12h pour fabriquer 1000 boulons, le contrat 2 comporte 30 000 boulons = 12 * 30 * 1 000 = 360 000 €
-
-
+       25 commandes en janvier * 10 000 * 1.02^3 = 265 302
+       + 5 commandes en février * 10 000 * 1.02^4 = 54 121.61
+      Coût de revient = 360 000 + 265 302 + 54 121.61 = 679 423.61 €
+      Prix contrat = Coût de revient * 1.7 = 1 155 020.14 €
 4.
