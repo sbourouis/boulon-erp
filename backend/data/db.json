@@ -9,11 +9,11 @@
     "Supplier": 2,
     "Command": 13,
     "Material": 2,
-    "Product": 6,
-    "ManufacturingTask": 1,
-    "Machine": 1,
+    "Product": 2,
+    "ManufacturingTask": 5,
+    "Machine": 5,
     "Stock": 1,
-    "MaterialUsed": 1,
+    "MaterialUsed": 5,
     "MaterialLine": 4
   },
   "models": {
@@ -44,19 +44,33 @@
       "12": "{\"date\":\"1969-10-01T00:00:00.470Z\",\"quantity\":5000,\"dateLivraison\":\"1970-02-25T00:00:00.470Z\",\"discount\":0,\"customerId\":2,\"id\":12,\"productId\":1}"
     },
     "Material": {
-      "1": "{\"name\":\"acier\",\"id\":1}"
+      "1": "{\"name\":\"acier\",\"securityStock\":1,\"maxStock\":2,\"id\":1}"
     },
     "Product": {
       "1": "{\"name\":\"boulon\",\"price\":0,\"id\":1}",
       "2": "{\"name\":\"Résultat Machine 1\",\"price\":0,\"id\":2}",
       "3": "{\"name\":\"Résultat Machine 2\",\"price\":0,\"id\":3}",
-      "4": "{\"name\":\"Résultat Machine 3\",\"price\":0,\"id\":4}",
-      "5": "{\"name\":\"Résultat Machine 4\",\"price\":0,\"id\":5}"
+      "4": "{\"name\":\"Résultat Machine 3\",\"price\":0,\"id\":4}"
     },
-    "ManufacturingTask": {},
-    "Machine": {},
+    "ManufacturingTask": {
+      "1": "{\"duration\":2,\"quantity\":1000,\"productId\":2,\"machineId\":1,\"id\":1}",
+      "2": "{\"duration\":6,\"quantity\":1000,\"productId\":3,\"machineId\":2,\"id\":2}",
+      "3": "{\"duration\":2,\"quantity\":1000,\"productId\":4,\"machineId\":3,\"id\":3}",
+      "4": "{\"duration\":2,\"quantity\":1000,\"productId\":1,\"machineId\":4,\"id\":4}"
+    },
+    "Machine": {
+      "1": "{\"name\":\"Machine de découpe\",\"id\":1}",
+      "2": "{\"name\":\"Machine de forgeage / filetage\",\"id\":2}",
+      "3": "{\"name\":\"Machine de traitement de surface\",\"id\":3}",
+      "4": "{\"name\":\"Machine d'emballage\",\"id\":4}"
+    },
     "Stock": {},
-    "MaterialUsed": {},
+    "MaterialUsed": {
+      "1": "{\"quantityUsed\":1,\"materialId\":1,\"manufacturingTaskId\":1,\"id\":1}",
+      "2": "{\"quantityUsed\":0,\"materialId\":1,\"manufacturingTaskId\":2,\"id\":2}",
+      "3": "{\"quantityUsed\":0,\"materialId\":1,\"manufacturingTaskId\":3,\"id\":3}",
+      "4": "{\"quantityUsed\":0,\"materialId\":1,\"manufacturingTaskId\":4,\"id\":4}"
+    },
     "MaterialLine": {
       "1": "{\"price\":10000,\"growth\":0.02,\"date\":\"1969-10-01T00:00:00.074Z\",\"materialId\":1,\"id\":1}"
     }

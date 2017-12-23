@@ -5,6 +5,7 @@ import {Article} from "./article";
 
 export interface ManufacturingTask {
   id?: number;
+  name: string;
   machine: Machine;
   duration: number;
   quantity: number; // quantité produite

@@ -10,6 +10,16 @@
     "name": {
       "type": "string",
       "required": true
+    },
+    "securityStock": {
+      "type": "number",
+      "required": true,
+      "default": 1
+    },
+    "maxStock": {
+      "type": "number",
+      "required": true,
+      "default": 2
     }
   },
   "validations": [],
