@@ -1,11 +1,12 @@
-import {CommandLine} from "./commandLine";
 import {Supplier} from "./supplier";
+import {Product} from "./product";
 
 export interface Command {
   id?: number;
   date: any;
   dateLivraison: any;
   supplier: Supplier;
-  commandLines: CommandLine[];
+  product: Product;
+  quantity: number;
   discount?: number;
 }
