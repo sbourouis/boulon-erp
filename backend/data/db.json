@@ -7,7 +7,7 @@
     "Role": 1,
     "Customer": 3,
     "Supplier": 2,
-    "Command": 1,
+    "Command": 13,
     "Material": 2,
     "Product": 1,
     "ManufacturingTask": 1,
@@ -30,7 +30,20 @@
     "Supplier": {
       "1": "{\"type\":\"Société\",\"name\":\"ACELOR\",\"deliveryTime\":10,\"id\":1,\"materialsId\":1}"
     },
-    "Command": {},
+    "Command": {
+      "1": "{\"date\":\"1969-10-01T00:00:00.470Z\",\"quantity\":15000,\"dateLivraison\":\"1969-11-15T00:00:00.470Z\",\"discount\":0,\"customerId\":1,\"id\":1}",
+      "2": "{\"date\":\"1969-10-01T00:00:00.470Z\",\"quantity\":15000,\"dateLivraison\":\"1969-12-01T00:00:00.470Z\",\"discount\":0,\"customerId\":1,\"id\":2}",
+      "3": "{\"date\":\"1969-10-01T00:00:00.470Z\",\"quantity\":15000,\"dateLivraison\":\"1969-12-15T00:00:00.470Z\",\"discount\":0,\"customerId\":1,\"id\":3}",
+      "4": "{\"date\":\"1969-10-01T00:00:00.470Z\",\"quantity\":15000,\"dateLivraison\":\"1970-01-01T00:00:00.470Z\",\"discount\":0,\"customerId\":1,\"id\":4}",
+      "5": "{\"date\":\"1969-10-01T00:00:00.470Z\",\"quantity\":15000,\"dateLivraison\":\"1970-01-15T00:00:00.470Z\",\"discount\":0,\"customerId\":1,\"id\":5}",
+      "6": "{\"date\":\"1969-10-01T00:00:00.470Z\",\"quantity\":15000,\"dateLivraison\":\"1970-02-01T00:00:00.470Z\",\"discount\":0,\"customerId\":1,\"id\":6}",
+      "7": "{\"date\":\"1969-10-01T00:00:00.470Z\",\"quantity\":5000,\"dateLivraison\":\"1970-02-01T00:00:00.470Z\",\"discount\":0,\"customerId\":2,\"id\":7}",
+      "8": "{\"date\":\"1969-10-01T00:00:00.470Z\",\"quantity\":5000,\"dateLivraison\":\"1970-02-05T00:00:00.470Z\",\"discount\":0,\"customerId\":2,\"id\":8}",
+      "9": "{\"date\":\"1969-10-01T00:00:00.470Z\",\"quantity\":5000,\"dateLivraison\":\"1970-02-10T00:00:00.470Z\",\"discount\":0,\"customerId\":2,\"id\":9}",
+      "10": "{\"date\":\"1969-10-01T00:00:00.470Z\",\"quantity\":5000,\"dateLivraison\":\"1970-02-15T00:00:00.470Z\",\"discount\":0,\"customerId\":2,\"id\":10}",
+      "11": "{\"date\":\"1969-10-01T00:00:00.470Z\",\"quantity\":5000,\"dateLivraison\":\"1970-02-20T00:00:00.470Z\",\"discount\":0,\"customerId\":2,\"id\":11}",
+      "12": "{\"date\":\"1969-10-01T00:00:00.470Z\",\"quantity\":5000,\"dateLivraison\":\"1970-02-25T00:00:00.470Z\",\"discount\":0,\"customerId\":2,\"id\":12}"
+    },
     "Material": {
       "1": "{\"name\":\"acier\",\"id\":1}"
     },
