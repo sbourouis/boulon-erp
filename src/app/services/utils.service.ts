@@ -471,11 +471,9 @@ export class UtilsService {
     console.log(command);
     let res$: Array<{task: ManufacturingTask, launchDate: Date, date: Date }> = [];
     let tmpDate = new Date();
-    for (let line of command.commandLines) {
+
       tmpDate.setDate(command.dateLivraison.getDate() - command.supplier.deliveryTime);
-      res$ = this.mergeTaskArray(res$, this.getTasksFromProduct(line.article, line.quantity, tmpDate, command.date));
-      tmpDate = new Date();
-    }
+      res$ = this.mergeTaskArray(res$, this.getTasksFromProduct(command.product, command.quantity, tmpDate, command.date));
     return res$;
   }
 

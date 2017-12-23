@@ -18,7 +18,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import * as fromRoot from './store';
 import {SharedModule} from './modules/shared.module';
 import {StocksService} from "./services/stocks.service";
-import {CommandsService} from "./services/commands.services";
+import {CommandsService} from "./services/commands.service";
 
 @NgModule({
   declarations: [
