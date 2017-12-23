@@ -569,13 +569,14 @@ export class UtilsService {
     return true;
   }
 
-  getOrdersDates(commands$: Command[], stocks$: Array<Stock>, suppliers$: Array<Supplier>): Array<Date> {
+  getOrdersDates(commands$: Command[], stocks$: Array<Stock>, suppliers$: Array<Supplier>):
+  Array<{material: Material, supplier: Supplier, date: Date}> {
     return this.getOrderDatesTask(this.getTasksFromCommands(commands$), stocks$, suppliers$);
   }
 
   getOrderDatesTask(tasks$: Array<{task: ManufacturingTask, launchDate: Date, date: Date }>, stocks$: Array<Stock>,
-                suppliers$: Array<Supplier>): Array<Date> {
-    let dates$: Array<Date> = [];
+                suppliers$: Array<Supplier>): Array<{material: Material, supplier: Supplier, date: Date}> {
+    let dates$: Array<{material: Material, supplier: Supplier, date: Date}> = [];
     let supplier: Supplier;
     let date: Date;
     let tmpTasks$ = tasks$.slice();
@@ -606,7 +607,9 @@ export class UtilsService {
 
             // if we haven't enough stock, order
             supplier = this.getSupplier(suppliers$, <Material> material.material);
-            dates$.push(this.substractDays(date, supplier.deliveryTime));
+            dates$.push({ date: this.substractDays(date, supplier.deliveryTime),
+                          supplier: supplier,
+                          material: material.material});
             console.log('Commande ' + date);
             stocks$.push({
               article: material.material,
@@ -654,9 +657,33 @@ export class UtilsService {
     return this.getOrdersDates(commands$, stocks$, suppliers$).length > 0;
   }
   //
-  // getCost(commands$: Command[]): number {
-  //   let res = 0;
-  //   for
-  //   return res;
-  // }
+  getCost(commands$: Command[], stocks$: Array<Stock>, suppliers$: Array<Supplier>, hourCost: number): number {
+    let res = 0;
+    let numberOfMonth = 0;
+    let tasks$: Array<{task: ManufacturingTask, launchDate: Date, date: Date }> = this.getTasksFromCommands(commands$);
+    let materials: Array<{
+      material: Material,
+      price: number,
+      growth: number,
+      date: Date
+    }>;
+    for (let task of tasks$) {
+      res += hourCost * task.task.duration;
+    }
+    for (let order of this.getOrdersDates(commands$, stocks$, suppliers$)) {
+      materials = order.supplier.materials.filter( o => o.material.id === order.material.id);
+      if (materials.length > 0){
+        numberOfMonth = this.getMonthBetween(materials[0].date, order.date);
+        res += materials[0].price * Math.pow((1 + materials[0].growth), (numberOfMonth < 0 ? 1 / numberOfMonth : numberOfMonth));
+      }
+    }
+    return res;
+  }
+
+  getMonthBetween(date1: Date, date2: Date): number {
+    let res = 0;
+    res += (date2.getFullYear() - date1.getFullYear()) * 12;
+    res += date2.getMonth() - date1.getMonth();
+    return res;
+  }
 }

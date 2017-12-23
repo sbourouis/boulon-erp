@@ -13,6 +13,8 @@ export interface Supplier {
   deliveryTime: number;
   materials: Array<{
     material: Material,
-    price: number
+    price: number,
+    growth: number,
+    date: Date
   }>;
 }

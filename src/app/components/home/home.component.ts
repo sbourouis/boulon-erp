@@ -270,9 +270,12 @@ export class HomeComponent implements OnInit {
             securityStock: 1,
             maxStock: 50
           } ,
-          price: 100
+          price: 100,
+          growth: 0.2,
+          date: new Date('10/12/2013')
          }
     ]}];
+    console.log(util.getMonthBetween(new Date('1/12/2014'), new Date('9/12/2015') ));
     console.log(util.getOrdersDates(cmds, stocks, suppliers$));
     // console.log(util.getTasksFromProduct(product, 1000, new Date));
     // util.getTasksFromCommands(cmds)); // util.IsOrderPossible(cmds, new Date('December 7, 2017 11:13:00'), stocks));
