@@ -676,7 +676,11 @@ export class UtilsService {
       materials = order.supplier.materials.filter( o => o.material.id === order.material.id);
       if (materials.length > 0){
         numberOfMonth = this.getMonthBetween(new Date(materials[0].date), order.date);
-        res += materials[0].price * Math.pow((1 + materials[0].growth), (numberOfMonth < 0 ? 1 / numberOfMonth : numberOfMonth));
+        if (numberOfMonth < 0) {
+          res += materials[0].price / Math.pow((1 + materials[0].growth), -numberOfMonth);
+        } else {
+          res += materials[0].price * Math.pow((1 + materials[0].growth),  numberOfMonth);
+        }
       }
     }
     return res;
