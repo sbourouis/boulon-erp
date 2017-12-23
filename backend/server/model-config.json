@@ -63,10 +63,6 @@
     "dataSource": "db",
     "public": true
   },
-  "CommandLine": {
-    "dataSource": "db",
-    "public": true
-  },
   "Stock": {
     "dataSource": "db",
     "public": true

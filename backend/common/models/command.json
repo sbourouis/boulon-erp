@@ -35,10 +35,10 @@
         "disableInclude": true
       }
     },
-    "commandLines": {
-      "type": "hasMany",
-      "model": "CommandLine",
-      "foreignKey": "idCommandLines",
+    "product": {
+      "type": "belongsTo",
+      "model": "Product",
+      "foreignKey": "",
       "options": {
         "nestRemoting": true,
         "disableInclude": true
