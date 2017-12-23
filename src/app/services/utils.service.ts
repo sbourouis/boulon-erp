@@ -149,13 +149,13 @@ export class UtilsService {
     to know which command had to be done first
    */
   compareCommands(command1: Command, command2: Command): number {
-    if (command1.dateLivraison < command2.dateLivraison) {
+    if (new Date(command1.dateLivraison) < new Date(command2.dateLivraison)) {
       return -1;
-    } else if (command1.dateLivraison > command2.dateLivraison) {
+    } else if (new Date(command1.dateLivraison) > new Date(command2.dateLivraison)) {
       return 1;
-    } else if (command1.date < command2.date) {
+    } else if (new Date(command1.date) < new Date(command2.date)) {
         return -1;
-    } else if (command1.date > command2.date) {
+    } else if (new Date(command1.date) > new Date(command2.date)) {
         return 1;
     }
     return 0;
@@ -472,9 +472,8 @@ export class UtilsService {
     console.log(command);
     let res$: Array<{task: ManufacturingTask, launchDate: Date, date: Date }> = [];
     let tmpDate = new Date();
-
-      tmpDate.setDate(command.dateLivraison.getDate() - command.supplier.deliveryTime);
-      res$ = this.mergeTaskArray(res$, this.getTasksFromProduct(command.product, command.quantity, tmpDate, command.date));
+      tmpDate.setDate(new Date(command.dateLivraison).getDate() - command.supplier.deliveryTime);
+      res$ = this.mergeTaskArray(res$, this.getTasksFromProduct(command.product, command.quantity, tmpDate, new Date(command.date)));
     return res$;
   }
 
@@ -635,7 +634,7 @@ export class UtilsService {
 
   getStockFromArticle(stocks$: Array<Stock>, material: Article, date: Date): number {
     let stock = 0;
-    const stockFilterd$ = stocks$.filter(o => o.article.id === material.id && o.date <= date);
+    const stockFilterd$ = stocks$.filter(o => o.article.id === material.id && new Date(o.date) <= date);
     console.log('%c Stock filtere ' + date, 'color:green');
     console.log(stockFilterd$);
     stockFilterd$.forEach(function (elem) {
@@ -676,7 +675,7 @@ export class UtilsService {
     for (let order of this.getOrdersDates(commands$, stocks$, suppliers$)) {
       materials = order.supplier.materials.filter( o => o.material.id === order.material.id);
       if (materials.length > 0){
-        numberOfMonth = this.getMonthBetween(materials[0].date, order.date);
+        numberOfMonth = this.getMonthBetween(new Date(materials[0].date), order.date);
         res += materials[0].price * Math.pow((1 + materials[0].growth), (numberOfMonth < 0 ? 1 / numberOfMonth : numberOfMonth));
       }
     }

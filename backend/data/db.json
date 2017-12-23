@@ -9,7 +9,7 @@
     "Supplier": 2,
     "Command": 13,
     "Material": 2,
-    "Product": 2,
+    "Product": 6,
     "ManufacturingTask": 1,
     "Machine": 1,
     "Stock": 1,
@@ -47,7 +47,11 @@
       "1": "{\"name\":\"acier\",\"id\":1}"
     },
     "Product": {
-      "1": "{\"name\":\"boulon\",\"price\":0,\"id\":1}"
+      "1": "{\"name\":\"boulon\",\"price\":0,\"id\":1}",
+      "2": "{\"name\":\"Résultat Machine 1\",\"price\":0,\"id\":2}",
+      "3": "{\"name\":\"Résultat Machine 2\",\"price\":0,\"id\":3}",
+      "4": "{\"name\":\"Résultat Machine 3\",\"price\":0,\"id\":4}",
+      "5": "{\"name\":\"Résultat Machine 4\",\"price\":0,\"id\":5}"
     },
     "ManufacturingTask": {},
     "Machine": {},

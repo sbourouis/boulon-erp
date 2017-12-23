@@ -16,12 +16,15 @@ import {Observable} from "rxjs";
 })
 export class HomeComponent implements OnInit {
   cmds$: Observable<Command[]>;
-  cmd: Command[];
+
 
   constructor(private util: UtilsService, private cs: CommandsService, private ss: SuppliersService, private sts: StocksService) {
-
-    cs.index().subscribe(cmds => this.cmd = cmds);
+    console.log(util.businessDaysBetweenDates(new Date('October 1, 1969 11:13:00'), new Date('February 20, 1970 11:13:00')));
+    cs.index().subscribe(cmds =>
+      ss.index().subscribe( suppliers =>
+        sts.index().subscribe(stocks => console.log(util.getOrdersDates(cmds, stocks, suppliers)))));
     this.cmds$ = cs.index();
+
     // let cmds: Command[] = [];
     // let stocks: Stock[] = [ ];
     //
@@ -40,7 +43,7 @@ export class HomeComponent implements OnInit {
     // console.log(util.getOrdersDates(cmds, stocks, suppliers$));
     // console.log(util.getTasksFromProduct(product, 1000, new Date));
     // util.getTasksFromCommands(cmds)); // util.IsOrderPossible(cmds, new Date('December 7, 2017 11:13:00'), stocks));
-    // console.log(util.businessDaysBetweenDates(new Date('December 11, 2017 11:13:00'), new Date()));
+
   }
 
   ngOnInit() {

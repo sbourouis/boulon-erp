@@ -4,7 +4,7 @@ import {Product} from "./product";
 export interface Command {
   id?: number;
   date: any;
-  dateLivraison: any;
+  dateLivraison: Date;
   supplier: Supplier;
   product: Product;
   quantity: number;
