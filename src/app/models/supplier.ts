@@ -2,7 +2,7 @@ import {Material} from "./material";
 
 export interface Supplier {
   id?: number;
-  type: 'Particulier'|'Société';
+  type?: 'Particulier'|'Société';
   name: string;
   address?: string;
   position?: string;

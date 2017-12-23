@@ -1,5 +1,7 @@
 import {Machine} from "./machine";
 import {Material} from "./material";
+import {Product} from "./product";
+import {Article} from "./article";
 
 export interface ManufacturingTask {
   id?: number;
@@ -7,7 +9,7 @@ export interface ManufacturingTask {
   duration: number;
   quantity: number; // quantité produite
   materials: Array<{
-    material: Material;
+    material: Article;
     quantityUsed: number;
   }>;
 }
