@@ -457,11 +457,11 @@ export class UtilsService {
   getTasksFromCommands(commands: Command[]): Array<{task: ManufacturingTask, launchDate: Date, date: Date }> {
     let res$: Array<{task: ManufacturingTask, launchDate: Date, date: Date }> = [];
     //  sort orders
-    commands.sort(UtilsService.compareCommands);
-    console.log(commands);
+    commands.sort(this.compareCommands);
     for (const command of commands) {
       res$ = this.mergeTaskArray(res$, this.getTasksFromCommand(command)); // res$.concat(this.getTasksFromCommand(command));
     }
+    console.log(res$);
     return res$;
   }
 
@@ -489,6 +489,8 @@ export class UtilsService {
     let tmpTasks = product.manufacturingTasks;
     let ratio = 0;
     tmpTasks.reverse();
+    console.log('produit');
+    console.log(product);
     /*
       loop on the manufacturingTasks
      */
@@ -516,8 +518,9 @@ export class UtilsService {
       task.materials.reverse();
       for (const material of task.materials) {
         material.quantityUsed *= ratio;
-
-        if ('manufacturingTasks' in  material.material ) {
+        console.log('%c TODO find date' + material.material['manufacturingTasks'], 'color : pink');
+        console.log(material.material);
+        if (material.material['manufacturingTasks'] ) {
            console.log('TODO find date' +  material.quantityUsed);
           res$ = this.mergeTaskArray(res$, this.getTasksFromProduct(<Product> material.material, material.quantityUsed,
               tmpDateTask, launchDate));
@@ -598,10 +601,10 @@ export class UtilsService {
         console.log(' Material ');
         console.log(material.material.id);
 
-        console.log(' Stock ');
+        console.log(' Stock ' + (<Material> material.material).maxStock);
         console.log(stocks$);
         tmpStock = this.getStockFromArticle(stocks$, material.material, date);
-        console.log('%c stock' + tmpStock, 'color : red');
+        console.log('%c stock' + ((<Material> material.material).maxStock - tmpStock), 'color : red');
         if (tmpStock < material.quantityUsed) {
           console.log('Should Command');
           if (material.material instanceof Material) {
@@ -623,11 +626,13 @@ export class UtilsService {
             return [];
           }
         }
+        console.log('push in stock');
         stocks$.push({ article: material.material,
           quantity: -material.quantityUsed,
           date: date });
       }
     }
+    console.log('dates');
     console.log(dates$);
     return dates$;
   }
