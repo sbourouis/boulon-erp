@@ -457,7 +457,7 @@ export class UtilsService {
   getTasksFromCommands(commands: Command[]): Array<{task: ManufacturingTask, launchDate: Date, date: Date }> {
     let res$: Array<{task: ManufacturingTask, launchDate: Date, date: Date }> = [];
     //  sort orders
-    commands.sort(this.compareCommands);
+    commands.sort(UtilsService.compareCommands);
     for (const command of commands) {
       res$ = this.mergeTaskArray(res$, this.getTasksFromCommand(command)); // res$.concat(this.getTasksFromCommand(command));
     }
