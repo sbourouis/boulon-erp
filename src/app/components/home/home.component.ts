@@ -72,7 +72,7 @@ export class HomeComponent implements OnInit {
                   product.manufacturingTasks = mt.filter(task => task['productId'] == product.id);
                 });
                 pu.map(product => {
-                  product.product = products.filter(p => p.id == product['productId'])[0];
+                  product.material = products.filter(p => p.id == product['productId'])[0];
                 });
                 mt.map(task => {
                   task.materials = task.materials.concat(pu.filter(prod => prod['manufacturingTaskId'] == task.id));
