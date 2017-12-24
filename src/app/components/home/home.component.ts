@@ -55,8 +55,7 @@ export class HomeComponent implements OnInit {
   }
 
   prepareData(): Observable<{commands: Array<Command>, stock: Array<Stock>, customers: Array<Supplier>}> {
-    const observable =
-    Observable.create( obs => {
+    return Observable.create( obs => {
       this.ss.route = 'customers';
       this.ps.getMaterials().subscribe(materials => {
         this.ps.getProductsUsed().subscribe(pu => {
@@ -67,11 +66,16 @@ export class HomeComponent implements OnInit {
             this.ps.getManufacturingTasks().subscribe(mt => {
               mt.map(task => {
                 task.materials = mu.filter(material => material['manufacturingTaskId'] == task.id);
-                task.materials.concat(pu.filter(prod => prod['manufacturingTaskId'] == task.id));
               });
               this.ps.index().subscribe(products => {
                 products.map(product => {
                   product.manufacturingTasks = mt.filter(task => task['productId'] == product.id);
+                });
+                pu.map(product => {
+                  product.product = products.filter(p => p.id == product['productId'])[0];
+                });
+                mt.map(task => {
+                  task.materials = task.materials.concat(pu.filter(prod => prod['manufacturingTaskId'] == task.id));
                 });
                 this.ss.index().subscribe(customers => {
                   this.cs.index().subscribe(cmds => {
@@ -85,15 +89,14 @@ export class HomeComponent implements OnInit {
                       });
                       this.sts.getMaterialsStock().subscribe(materialStock => {
                         materialStock.map(ms => {
-                          console.log(materials);
-                          console.log(ms);
+                          console.log(mt);
                           ms.article = materials.filter(material => material.id == ms['materialId'])[0];
                           if (ms.id === materialStock.length) {
-                            obs.next({
-                              commands: cmds,
-                              stock: materialStock.concat(productStock),
-                              customers: customers
-                            });
+                            // obs.next({
+                            //   commands: cmds,
+                            //   stock: materialStock.concat(productStock),
+                            //   customers: customers
+                            // });
                           }
                         });
                       });
@@ -105,8 +108,7 @@ export class HomeComponent implements OnInit {
           });
         });
       });
-      });
-    return observable;
+    });
   }
 
 }

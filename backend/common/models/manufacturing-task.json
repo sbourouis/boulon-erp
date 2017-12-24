@@ -37,6 +37,15 @@
         "nestRemoting": true,
         "disableInclude": true
       }
+    },
+    "products": {
+      "type": "hasMany",
+      "model": "ProductUsed",
+      "foreignKey": "",
+      "options": {
+        "nestRemoting": true,
+        "disableInclude": true
+      }
     }
   },
   "acls": [],

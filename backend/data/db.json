@@ -16,7 +16,7 @@
     "StockMaterial": 2,
     "MaterialUsed": 5,
     "MaterialLine": 4,
-    "ProductUsed": 4
+    "ProductUsed": 7
   },
   "models": {
     "User": {},
@@ -76,18 +76,15 @@
       "1": "{\"date\":\"1969-10-01T08:00:00.186Z\",\"quantity\":2,\"materialId\":1,\"id\":1}"
     },
     "MaterialUsed": {
-      "1": "{\"quantityUsed\":1,\"materialId\":1,\"manufacturingTaskId\":1,\"id\":1}",
-      "2": "{\"quantityUsed\":0,\"materialId\":1,\"manufacturingTaskId\":2,\"id\":2}",
-      "3": "{\"quantityUsed\":0,\"materialId\":1,\"manufacturingTaskId\":3,\"id\":3}",
-      "4": "{\"quantityUsed\":0,\"materialId\":1,\"manufacturingTaskId\":4,\"id\":4}"
+      "1": "{\"quantityUsed\":1,\"materialId\":1,\"manufacturingTaskId\":1,\"id\":1}"
     },
     "MaterialLine": {
       "1": "{\"price\":10000,\"growth\":0.02,\"date\":\"1969-10-01T00:00:00.074Z\",\"materialId\":1,\"id\":1}"
     },
     "ProductUsed": {
-      "1": "{\"quantityUsed\":1,\"productId\":2,\"manufacturingTaskId\":1,\"id\":1}",
-      "2": "{\"quantityUsed\":0,\"productId\":3,\"manufacturingTaskId\":2,\"id\":2}",
-      "3": "{\"quantityUsed\":0,\"productId\":4,\"manufacturingTaskId\":3,\"id\":3}"
+      "4": "{\"quantityUsed\":1,\"productId\":2,\"manufacturingTaskId\":2,\"id\":4}",
+      "5": "{\"quantityUsed\":1,\"productId\":3,\"manufacturingTaskId\":3,\"id\":5}",
+      "6": "{\"quantityUsed\":1,\"productId\":4,\"manufacturingTaskId\":4,\"id\":6}"
     }
   }
 }
