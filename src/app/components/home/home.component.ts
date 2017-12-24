@@ -89,14 +89,13 @@ export class HomeComponent implements OnInit {
                       });
                       this.sts.getMaterialsStock().subscribe(materialStock => {
                         materialStock.map(ms => {
-                          console.log(mt);
                           ms.article = materials.filter(material => material.id == ms['materialId'])[0];
                           if (ms.id === materialStock.length) {
-                            // obs.next({
-                            //   commands: cmds,
-                            //   stock: materialStock.concat(productStock),
-                            //   customers: customers
-                            // });
+                            obs.next({
+                              commands: cmds,
+                              stock: materialStock.concat(productStock),
+                              customers: customers
+                            });
                           }
                         });
                       });
