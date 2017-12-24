@@ -42,8 +42,7 @@ export class SuppliersService {
     return this.http.delete<Supplier>(`${environment.appApi.baseUrl}/${this.route}/${id}`);
   }
 
-  getMaterials(idSupplier: number) : Observable<Material[]> {
-    return this.route === 'suppliers' ?
-      this.http.get<Material[]>(`${environment.appApi.baseUrl}/${this.route}/${idSupplier}/materials`) : null;
+  getMaterialLines() : Observable<any[]> {
+    return this.http.get<Material[]>(`${environment.appApi.baseUrl}/materialLines`);
   }
 }
