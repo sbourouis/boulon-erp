@@ -79,15 +79,15 @@ export class UtilsService {
     return holidays.indexOf(monthNegWeekDay) === -1;
   }
 
-  compareTasks(task1: {task: ManufacturingTask, launchDate: Date, date: Date},
-               task2: {task: ManufacturingTask, launchDate: Date, date: Date}) {
-    if (new Date(task1.date) > new Date(task2.date)) {
+  compareTasks(task1: {task: ManufacturingTask, launchDate: Date, date: Date, product: Product},
+               task2: {task: ManufacturingTask, launchDate: Date, date: Date, product: Product}) {
+    if (new Date(task1.date).getTime() > new Date(task2.date).getTime()) {
       return -1;
-    } else if (new Date(task1.date) < new Date(task2.date)) {
+    } else if (new Date(task1.date).getTime() < new Date(task2.date).getTime()) {
       return 1;
-    } else if (new Date(task1.launchDate) > new Date(task2.launchDate)) {
+    } else if (new Date(task1.launchDate).getTime() > new Date(task2.launchDate).getTime()) {
       return -1;
-    } else if (new Date(task1.launchDate) < new Date(task2.launchDate)) {
+    } else if (new Date(task1.launchDate).getTime() < new Date(task2.launchDate).getTime()) {
       return 1;
     }
     return 0;
@@ -96,16 +96,16 @@ export class UtilsService {
   /*
    merge TaskArray to know which task has to be done before another
    */
-  mergeTaskArray(tab1: Array<{task: ManufacturingTask, launchDate: Date, date: Date }>,
-                 tab2: Array<{task: ManufacturingTask, launchDate: Date, date: Date }>): Array<{task: ManufacturingTask, launchDate: Date, date: Date }> {
+  mergeTaskArray(tab1: Array<{task: ManufacturingTask, launchDate: Date, date: Date, product: Product }>,
+                 tab2: Array<{task: ManufacturingTask, launchDate: Date, date: Date, product: Product }>): Array<{task: ManufacturingTask, launchDate: Date, date: Date, product: Product }> {
     return tab1.slice().concat(tab2).sort(this.compareTasks);
   }
 
   /*
    get an array of each tasks that are needed to make the orders
    */
-  getTasksFromCommands(commands: Command[]): Array<{task: ManufacturingTask, launchDate: Date, date: Date }> {
-    let res: Array<{task: ManufacturingTask, launchDate: Date, date: Date }> = [];
+  getTasksFromCommands(commands: Command[]): Array<{task: ManufacturingTask, launchDate: Date, date: Date, product: Product }> {
+    let res: Array<{task: ManufacturingTask, launchDate: Date, date: Date, product: Product }> = [];
     //  sort orders
     commands.sort(UtilsService.compareCommands);
     for (const command of commands) {
@@ -117,8 +117,8 @@ export class UtilsService {
   /*
    get an array of each tasks that are needed to make the order
    */
-  getTasksFromCommand(command: Command): Array<{task: ManufacturingTask, launchDate: Date, date: Date }> {
-    let res: Array<{task: ManufacturingTask, launchDate: Date, date: Date }> = [];
+  getTasksFromCommand(command: Command): Array<{task: ManufacturingTask, launchDate: Date, date: Date, product: Product }> {
+    let res: Array<{task: ManufacturingTask, launchDate: Date, date: Date, product: Product }> = [];
     let tmpDate = this.substractDays(new Date(command.dateLivraison), command.supplier.deliveryTime);
     res = this.mergeTaskArray(res, this.getTasksFromProduct(command.product, command.quantity, tmpDate, new Date(command.date)));
     return res;
@@ -127,8 +127,8 @@ export class UtilsService {
   /*
    get an array of each tasks that are needed to create the product
    */
-  getTasksFromProduct(product: Product, quantity: number, date: Date, launchDate: Date): Array<{task: ManufacturingTask, launchDate: Date, date: Date }> {
-    let res: Array<{task: ManufacturingTask, launchDate: Date, date: Date}> = [];
+  getTasksFromProduct(product: Product, quantity: number, date: Date, launchDate: Date): Array<{task: ManufacturingTask, launchDate: Date, date: Date, product: Product }> {
+    let res: Array<{task: ManufacturingTask, launchDate: Date, date: Date, product: Product}> = [];
     let tmpDateTask = date;
     let tmpDate: Date;
     let neededDays: number;
@@ -143,7 +143,7 @@ export class UtilsService {
       ratio = quantity / task.quantity;
       task.quantity *= ratio;
       task.duration *= ratio;
-      res.push({task: task, date: tmpDateTask, launchDate});
+      res.push({task: task, date: tmpDateTask, launchDate, product: product});
 
       // duration of the current task
       neededDays = Math.trunc(task.duration / this.workHours);
@@ -211,13 +211,14 @@ export class UtilsService {
     return this.getOrderDatesTask(this.getTasksFromCommands(commands), stocks, suppliers);
   }
 
-  getOrderDatesTask(tasks: Array<{task: ManufacturingTask, launchDate: Date, date: Date }>, stocks: Stock[],
+  getOrderDatesTask(tasks: Array<{task: ManufacturingTask, launchDate: Date, date: Date, product: Product }>, stocks: Stock[],
                     suppliers: Supplier[]): Array<{material: Material, supplier: Supplier, date: Date}> {
     let dates: Array<{material: Material, supplier: Supplier, date: Date}> = [];
     let supplier: Supplier;
     let date: Date;
     let tmpTasks = tasks.slice();
-    let currentTask: {task: ManufacturingTask, launchDate: Date, date: Date };
+    tmpTasks = tmpTasks.sort(this.compareTasks);
+    let currentTask: {task: ManufacturingTask, launchDate: Date, date: Date, product: Product };
     let tmpStock: number;
     if (!this.checkIfOrderPossibleWithoutStocks(tasks)) {
       console.log('order is not possible, time is too short');
@@ -226,15 +227,19 @@ export class UtilsService {
     console.log('tasks ', tasks);
     while (tmpTasks.length > 0) {
       currentTask = tmpTasks.pop();
-      console.log('current task ');
-      console.log(currentTask);
+      // console.log('current task ');
+      // console.log(currentTask);
       date = this.substractDays(currentTask.date, Math.trunc(currentTask.task.duration / this.workHours));
       for (const material of currentTask.task.materials) {
-        console.log(' Stock ' + (<Material> material.material).maxStock);
-        console.log(stocks);
+        // console.log(' Stock ' + (<Material> material.material).maxStock);
+        // console.log(stocks);
+        console.log( '%c' + material.material.name + date, 'color: orange');
         tmpStock = this.getStockFromArticle(stocks, material.material, date);
+
         if (tmpStock < material.quantityUsed) {
+          console.log( '%c' + date + 'tmpStock ' + tmpStock + ' material ' + material.quantityUsed, 'color: red');
           if (material.material['securityStock']) {
+            console.log('Commande ' + date);
             // if we haven't enough stock, order
             supplier = this.getSupplier(suppliers, <Material> material.material);
             dates.push({
@@ -242,13 +247,15 @@ export class UtilsService {
               supplier: supplier,
               material: <Material>material.material
             });
-            console.log('Commande ' + date);
+            console.log(material.quantityUsed);
             stocks.push({
               article: material.material,
-              quantity: (<Material> material.material).maxStock - tmpStock,
+              quantity: material.quantityUsed,
+              // quantity: (<Material> material.material).maxStock - tmpStock,
               date: date
             });
           } else {
+            console.log('unable to produce enough products');
             return [];
           }
         }
@@ -257,7 +264,13 @@ export class UtilsService {
           quantity: -material.quantityUsed,
           date: date
         });
+        console.log(stocks);
       }
+      stocks.push({
+        article: currentTask.product,
+        quantity: currentTask.task.quantity,
+        date: date
+      });
     }
     console.log('dates', dates);
     return dates;
@@ -265,7 +278,7 @@ export class UtilsService {
 
   getStockFromArticle(stocks: Stock[], material: Article, date: Date): number {
     let stock = 0;
-    const stockFilterd = stocks.filter(o => o.article.id === material.id && new Date(o.date) <= date);
+    const stockFilterd = stocks.filter(o => (material['productId'] ? o['productId'] : !o['productId']) && o.article.id === material.id && new Date(o.date).getTime() <= date.getTime());
     stockFilterd.forEach(function (elem) {
       stock += elem.quantity;
     });
