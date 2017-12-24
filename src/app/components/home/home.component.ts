@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
               private ss: SuppliersService,
               private sts: StocksService,
               private ps: ProductsService) {
-    console.log(util.businessDaysBetweenDates(new Date('October 1, 1969 11:13:00'), new Date('February 20, 1970 11:13:00')));
+    // console.log(util.businessDaysBetweenDates(new Date('October 1, 1969 11:13:00'), new Date('February 20, 1970 11:13:00')));
 
     this.cmds$ = cs.index();
     this.prepareData().subscribe(data => {
@@ -59,44 +59,47 @@ export class HomeComponent implements OnInit {
     Observable.create( obs => {
       this.ss.route = 'customers';
       this.ps.getMaterials().subscribe(materials => {
-        this.ps.getMaterialsUsed().subscribe(mu => {
-          mu.map(mat => {
-            mat.material = materials.filter(material => material.id == mat.materialId)[0];
-          });
-          this.ps.getManufacturingTasks().subscribe(mt => {
-            mt.map(task => {
-              task.materials = mu.filter(material => material['manufacturingTaskId'] == task.id);
+        this.ps.getProductsUsed().subscribe(pu => {
+          this.ps.getMaterialsUsed().subscribe(mu => {
+            mu.map(mat => {
+              mat.material = materials.filter(material => material.id == mat.materialId)[0];
             });
-            this.ps.index().subscribe(products => {
-              products.map(product => {
-                product.manufacturingTasks = mt.filter(task => task['productId'] == product.id);
+            this.ps.getManufacturingTasks().subscribe(mt => {
+              mt.map(task => {
+                task.materials = mu.filter(material => material['manufacturingTaskId'] == task.id);
+                task.materials.concat(pu.filter(prod => prod['manufacturingTaskId'] == task.id));
               });
-              this.ss.index().subscribe(customers => {
-                this.cs.index().subscribe(cmds => {
-                  cmds.map(cmd => {
-                    cmd.supplier = customers.filter(supplier => supplier.id == cmd['customerId'])[0];
-                    cmd.product = products.filter(product => product.id == cmd['productId'])[0];
-                  });
-                  this.sts.getProductsStock().subscribe(productStock => {
-                    productStock.map(ps => {
-                      ps.article = products.filter(product => product.id == ps['productId'])[0];
+              this.ps.index().subscribe(products => {
+                products.map(product => {
+                  product.manufacturingTasks = mt.filter(task => task['productId'] == product.id);
+                });
+                this.ss.index().subscribe(customers => {
+                  this.cs.index().subscribe(cmds => {
+                    cmds.map(cmd => {
+                      cmd.supplier = customers.filter(supplier => supplier.id == cmd['customerId'])[0];
+                      cmd.product = products.filter(product => product.id == cmd['productId'])[0];
                     });
-                    this.sts.getMaterialsStock().subscribe(materialStock => {
-                      materialStock.map(ms => {
-                        console.log(materials);
-                        console.log(ms);
-                        ms.article = materials.filter(material => material.id == ms['materialId'])[0];
-                        if (ms.id === materialStock.length) {
-                          obs.next({
-                            commands: cmds,
-                            stock: materialStock.concat(productStock),
-                            customers: customers
-                          });
-                        }
+                    this.sts.getProductsStock().subscribe(productStock => {
+                      productStock.map(ps => {
+                        ps.article = products.filter(product => product.id == ps['productId'])[0];
+                      });
+                      this.sts.getMaterialsStock().subscribe(materialStock => {
+                        materialStock.map(ms => {
+                          console.log(materials);
+                          console.log(ms);
+                          ms.article = materials.filter(material => material.id == ms['materialId'])[0];
+                          if (ms.id === materialStock.length) {
+                            obs.next({
+                              commands: cmds,
+                              stock: materialStock.concat(productStock),
+                              customers: customers
+                            });
+                          }
+                        });
                       });
                     });
-                  })
-                })
+                  });
+                });
               });
             });
           });

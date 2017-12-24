@@ -36,6 +36,11 @@ export class ProductsService {
         .get<any[]>(`${environment.appApi.baseUrl}/materialsUsed`);
   }
 
+  getProductsUsed(): Observable<any[]> {
+    return this.http
+      .get<any[]>(`${environment.appApi.baseUrl}/productsUsed`);
+  }
+
   getMaterials(): Observable<Material[]> {
     return this.http
       .get<Material[]>(`${environment.appApi.baseUrl}/materials`);

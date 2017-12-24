@@ -446,8 +446,8 @@ export class UtilsService {
       res.push(tab2[count2]);
       count2++;
     }
-    console.log('res');
-    console.log(res);
+    // console.log('res');
+    // console.log(res);
     return res;
   }
 
@@ -461,7 +461,7 @@ export class UtilsService {
     for (const command of commands) {
       res$ = this.mergeTaskArray(res$, this.getTasksFromCommand(command)); // res$.concat(this.getTasksFromCommand(command));
     }
-    console.log(res$);
+    // console.log(res$);
     return res$;
   }
 
@@ -469,7 +469,7 @@ export class UtilsService {
   get an array of each tasks that are needed to make the order
  */
   getTasksFromCommand(command: Command): Array<{task: ManufacturingTask, launchDate: Date, date: Date }> {
-    console.log(command);
+    // console.log(command);
     let res$: Array<{task: ManufacturingTask, launchDate: Date, date: Date }> = [];
     let tmpDate = new Date();
       tmpDate.setDate(new Date(command.dateLivraison).getDate() - command.supplier.deliveryTime);
@@ -511,7 +511,7 @@ export class UtilsService {
       // to change day if not enough hours available in that day
       tmpDate.setHours(tmpDateTask.getHours() - (neededDays * 24 / this.workHours));
       tmpDateTask = tmpDate;
-      console.log('tmp : ' + tmpDateTask);
+      // console.log('tmp : ' + tmpDateTask);
       /*
           loop on the materials to add tasks to produce this material
       */
@@ -521,7 +521,7 @@ export class UtilsService {
         console.log('%c TODO find date' + material.material['manufacturingTasks'], 'color : pink');
         console.log(material.material);
         if (material.material['manufacturingTasks'] ) {
-           console.log('TODO find date' +  material.quantityUsed);
+           // console.log('TODO find date' +  material.quantityUsed);
           res$ = this.mergeTaskArray(res$, this.getTasksFromProduct(<Product> material.material, material.quantityUsed,
               tmpDateTask, launchDate));
           /*
@@ -562,9 +562,9 @@ export class UtilsService {
   checkIfOrderPossibleWithoutStocks(tasks$: Array<{task: ManufacturingTask, launchDate: Date, date: Date }>): boolean {
     let date: Date;
     for (const task of tasks$) {
-      console.log('%c date Task : ' + task.date, 'color : blue');
+      // console.log('%c date Task : ' + task.date, 'color : blue');
       date = this.substractDays(task.date, Math.trunc(task.task.duration / this.workHours) );
-      console.log('%c date : ' + date, 'color : blue');
+      // console.log('%c date : ' + date, 'color : blue');
       if (date < task.launchDate) {
         console.log('%c date Launch : ' + task.launchDate, 'color : blue');
         return false;
@@ -573,6 +573,9 @@ export class UtilsService {
     return true;
   }
 
+  /*
+    get the dates on which we should order, the supplier by whom we should order and stock at the end
+   */
   getOrdersDates(commands$: Command[], stocks$: Array<Stock>, suppliers$: Array<Supplier>):
   Array<{material: Material, supplier: Supplier, date: Date}> {
     return this.getOrderDatesTask(this.getTasksFromCommands(commands$), stocks$, suppliers$);
@@ -594,19 +597,19 @@ export class UtilsService {
     console.log(tasks$);
     while (tmpTasks$.length > 0 ) {
       currentTask = tmpTasks$.pop();
-      console.log(' current task ');
-      console.log(currentTask);
+      // console.log(' current task ');
+      // console.log(currentTask);
       date = this.substractDays(currentTask.date, Math.trunc(currentTask.task.duration / this.workHours) );
       for (const material of currentTask.task.materials) {
-        console.log(' Material ');
-        console.log(material.material.id);
+        // console.log(' Material ');
+        // console.log(material.material.id);
 
-        console.log(' Stock ' + (<Material> material.material).maxStock);
-        console.log(stocks$);
+        // console.log(' Stock ' + (<Material> material.material).maxStock);
+        // console.log(stocks$);
         tmpStock = this.getStockFromArticle(stocks$, material.material, date);
-        console.log('%c stock' + ((<Material> material.material).maxStock - tmpStock), 'color : red');
+        // console.log('%c stock' + ((<Material> material.material).maxStock - tmpStock), 'color : red');
         if (tmpStock < material.quantityUsed) {
-          console.log('Should Command');
+          // console.log('Should Command');
           if (material.material instanceof Material) {
 
             // if we haven't enough stock, order
@@ -614,19 +617,19 @@ export class UtilsService {
             dates$.push({ date: this.substractDays(date, supplier.deliveryTime),
                           supplier: supplier,
                           material: material.material});
-            console.log('Commande ' + date);
+            // console.log('Commande ' + date);
             stocks$.push({
               article: material.material,
               quantity: (<Material> material.material).maxStock - tmpStock,
               date: date
             });
           } else {
-            console.log('Stock de produits fabriqués insuffisant');
-            console.log(tmpStock);
+            // console.log('Stock de produits fabriqués insuffisant');
+            // console.log(tmpStock);
             return [];
           }
         }
-        console.log('push in stock');
+        // console.log('push in stock');
         stocks$.push({ article: material.material,
           quantity: -material.quantityUsed,
           date: date });
@@ -640,8 +643,8 @@ export class UtilsService {
   getStockFromArticle(stocks$: Array<Stock>, material: Article, date: Date): number {
     let stock = 0;
     const stockFilterd$ = stocks$.filter(o => o.article.id === material.id && new Date(o.date) <= date);
-    console.log('%c Stock filtere ' + date, 'color:green');
-    console.log(stockFilterd$);
+    // console.log('%c Stock filtere ' + date, 'color:green');
+    // console.log(stockFilterd$);
     stockFilterd$.forEach(function (elem) {
       stock += elem.quantity;
     });

@@ -15,7 +15,8 @@
     "StockProduct": 7,
     "StockMaterial": 2,
     "MaterialUsed": 5,
-    "MaterialLine": 4
+    "MaterialLine": 4,
+    "ProductUsed": 4
   },
   "models": {
     "User": {},
@@ -82,6 +83,11 @@
     },
     "MaterialLine": {
       "1": "{\"price\":10000,\"growth\":0.02,\"date\":\"1969-10-01T00:00:00.074Z\",\"materialId\":1,\"id\":1}"
+    },
+    "ProductUsed": {
+      "1": "{\"quantityUsed\":1,\"productId\":2,\"manufacturingTaskId\":1,\"id\":1}",
+      "2": "{\"quantityUsed\":0,\"productId\":3,\"manufacturingTaskId\":2,\"id\":2}",
+      "3": "{\"quantityUsed\":0,\"productId\":4,\"manufacturingTaskId\":3,\"id\":3}"
     }
   }
 }
