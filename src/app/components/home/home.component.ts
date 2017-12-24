@@ -24,47 +24,22 @@ export class HomeComponent implements OnInit {
               private sts: StocksService,
               private ps: ProductsService) {
     console.log(util.businessDaysBetweenDates(new Date('October 1, 1969 11:13:00'), new Date('February 20, 1970 11:13:00')));
-    ss.route = 'customers';
-    ps.getMaterials().subscribe(materials => {
-      ps.getMaterialsUsed().subscribe(mu => {
-        mu.map(mat => {
-          mat.material = materials.filter(material => material.id == mat.materialId)[0];
-        });
-        ps.getManufacturingTasks().subscribe(mt => {
-          mt.map(task => {
-            task.materials = mu.filter(material => material['manufacturingTaskId'] == task.id);
-          });
-          ps.index().subscribe(products => {
-            products.map(product => {
-                product.manufacturingTasks = mt.filter(task => task['productId'] == product.id);
-            });
-            ss.index().subscribe(customers => {
-              cs.index().subscribe(cmds => {
-                cmds.map(cmd => {
-                  cmd.supplier = customers.filter(supplier => supplier.id == cmd['customerId'])[0];
-                  cmd.product = products.filter(product => product.id == cmd['productId'])[0];
-                });
-                sts.index().subscribe(stocks => {
-                  console.log(util.getOrdersDates(cmds, stocks, customers))
-                })
-              })
-            });
-          });
-        });
-      });
-    });
+
     this.cmds$ = cs.index();
+    this.prepareData().subscribe(data => {
+      console.log(util.getOrdersDates(data.commands, data.stock, data.customers));
+    });
 
     // let cmds: Command[] = [];
     // let stocks: Stock[] = [ ];
     //
     // let suppliers$: Supplier[] = [];
-    // cs.index().map((commandes: Command[]) => cmds = commandes);
-    // ss.index().subscribe( res => suppliers$ = res);
-    // sts.index().subscribe(res => stocks = res);
+    // cs.getProductsStock().map((commandes: Command[]) => cmds = commandes);
+    // ss.getProductsStock().subscribe( res => suppliers$ = res);
+    // sts.getProductsStock().subscribe(res => stocks = res);
     //
     // console.log(cmds);
-    // // cmds = cs.index();
+    // // cmds = cs.getProductsStock();
     // let test = new Date();
     // console.log(test);
     // test.setHours(test.getHours() + 10);
@@ -77,6 +52,58 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  prepareData(): Observable<{commands: Array<Command>, stock: Array<Stock>, customers: Array<Supplier>}> {
+    const observable =
+    Observable.create( obs => {
+      this.ss.route = 'customers';
+      this.ps.getMaterials().subscribe(materials => {
+        this.ps.getMaterialsUsed().subscribe(mu => {
+          mu.map(mat => {
+            mat.material = materials.filter(material => material.id == mat.materialId)[0];
+          });
+          this.ps.getManufacturingTasks().subscribe(mt => {
+            mt.map(task => {
+              task.materials = mu.filter(material => material['manufacturingTaskId'] == task.id);
+            });
+            this.ps.index().subscribe(products => {
+              products.map(product => {
+                product.manufacturingTasks = mt.filter(task => task['productId'] == product.id);
+              });
+              this.ss.index().subscribe(customers => {
+                this.cs.index().subscribe(cmds => {
+                  cmds.map(cmd => {
+                    cmd.supplier = customers.filter(supplier => supplier.id == cmd['customerId'])[0];
+                    cmd.product = products.filter(product => product.id == cmd['productId'])[0];
+                  });
+                  this.sts.getProductsStock().subscribe(productStock => {
+                    productStock.map(ps => {
+                      ps.article = products.filter(product => product.id == ps['productId'])[0];
+                    });
+                    this.sts.getMaterialsStock().subscribe(materialStock => {
+                      materialStock.map(ms => {
+                        console.log(materials);
+                        console.log(ms);
+                        ms.article = materials.filter(material => material.id == ms['materialId'])[0];
+                        if (ms.id === materialStock.length) {
+                          obs.next({
+                            commands: cmds,
+                            stock: materialStock.concat(productStock),
+                            customers: customers
+                          });
+                        }
+                      });
+                    });
+                  })
+                })
+              });
+            });
+          });
+        });
+      });
+      });
+    return observable;
   }
 
 }

@@ -12,7 +12,8 @@
     "Product": 2,
     "ManufacturingTask": 5,
     "Machine": 5,
-    "Stock": 1,
+    "StockProduct": 7,
+    "StockMaterial": 2,
     "MaterialUsed": 5,
     "MaterialLine": 4
   },
@@ -64,7 +65,15 @@
       "3": "{\"name\":\"Machine de traitement de surface\",\"id\":3}",
       "4": "{\"name\":\"Machine d'emballage\",\"id\":4}"
     },
-    "Stock": {},
+    "StockProduct": {
+      "1": "{\"date\":\"1969-10-01T08:00:00.184Z\",\"quantity\":0,\"productId\":1,\"id\":1}",
+      "2": "{\"date\":\"1969-10-01T08:00:00.184Z\",\"quantity\":0,\"productId\":2,\"id\":2}",
+      "3": "{\"date\":\"1969-10-01T08:00:00.184Z\",\"quantity\":0,\"productId\":3,\"id\":3}",
+      "4": "{\"date\":\"1969-10-01T08:00:00.184Z\",\"quantity\":0,\"productId\":4,\"id\":4}"
+    },
+    "StockMaterial": {
+      "1": "{\"date\":\"1969-10-01T08:00:00.186Z\",\"quantity\":2,\"materialId\":1,\"id\":1}"
+    },
     "MaterialUsed": {
       "1": "{\"quantityUsed\":1,\"materialId\":1,\"manufacturingTaskId\":1,\"id\":1}",
       "2": "{\"quantityUsed\":0,\"materialId\":1,\"manufacturingTaskId\":2,\"id\":2}",

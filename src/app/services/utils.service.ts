@@ -148,7 +148,7 @@ export class UtilsService {
   /*
     to know which command had to be done first
    */
-  compareCommands(command1: Command, command2: Command): number {
+  static compareCommands(command1: Command, command2: Command): number {
     if (new Date(command1.dateLivraison) < new Date(command2.dateLivraison)) {
       return -1;
     } else if (new Date(command1.dateLivraison) > new Date(command2.dateLivraison)) {
@@ -383,23 +383,23 @@ export class UtilsService {
   //   dateEnd: Date,
   //   days: Array<Array<number>>
   // }, dayArray$: Array<Array<number>>, workHour: number, lastDayIndex: number): number {
-  //   let index = lastDayIndex;
-  //   console.log('%c index ' + index, 'color : orange');
+  //   let getProductsStock = lastDayIndex;
+  //   console.log('%c getProductsStock ' + getProductsStock, 'color : orange');
   //   console.log(dayArray$);
   //   // check if there are more days than the start of the next task
-  //   if (machine.days.length >= index) {
+  //   if (machine.days.length >= getProductsStock) {
   //     // start from the beginning of the next task and go to the past
-  //     for (; index < machine.days.length; index++) {
-  //       console.log('%c machine loop : ' + index + 'day Array ' + dayArray$.length, 'color : orange');
-  //       // if dayArray is empty return the index
+  //     for (; getProductsStock < machine.days.length; getProductsStock++) {
+  //       console.log('%c machine loop : ' + getProductsStock + 'day Array ' + dayArray$.length, 'color : orange');
+  //       // if dayArray is empty return the getProductsStock
   //       if ( dayArray$.length > 0) {
-  //         for ( ; machine.days[index].length < workHour && dayArray$.length > 0; ) {
-  //           machine.days[index].push(machine.days[index].length - 1 >= 0 ? machine.days[index].length - 1 : 0);
+  //         for ( ; machine.days[getProductsStock].length < workHour && dayArray$.length > 0; ) {
+  //           machine.days[getProductsStock].push(machine.days[getProductsStock].length - 1 >= 0 ? machine.days[getProductsStock].length - 1 : 0);
   //           dayArray$[0].pop();
   //         }
   //       } else {
   //         console.log('%c else', 'color : red')
-  //         return index - 1 ;
+  //         return getProductsStock - 1 ;
   //       }
   //     }
   //   } else {
@@ -413,9 +413,9 @@ export class UtilsService {
   //   console.log(machine.days);
   //   machine.days = dayArray$.concat(machine.days);
   //   console.log(machine.days);
-  //   index = machine.days.length;
-  //   console.log('%c machine end ' + index, 'color : orange');
-  //   return index;
+  //   getProductsStock = machine.days.length;
+  //   console.log('%c machine end ' + getProductsStock, 'color : orange');
+  //   return getProductsStock;
   // }
   // isOrderPossible(commands: Command[], date: Date): boolean {
   //   let res = false;
@@ -457,7 +457,7 @@ export class UtilsService {
   getTasksFromCommands(commands: Command[]): Array<{task: ManufacturingTask, launchDate: Date, date: Date }> {
     let res$: Array<{task: ManufacturingTask, launchDate: Date, date: Date }> = [];
     //  sort orders
-    commands.sort(this.compareCommands);
+    commands.sort(UtilsService.compareCommands);
     console.log(commands);
     for (const command of commands) {
       res$ = this.mergeTaskArray(res$, this.getTasksFromCommand(command)); // res$.concat(this.getTasksFromCommand(command));

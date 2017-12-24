@@ -1,6 +1,6 @@
 {
-  "name": "Stock",
-  "plural": "stocks",
+  "name": "StockProduct",
+  "plural": "stockProducts",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {

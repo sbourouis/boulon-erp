@@ -63,7 +63,11 @@
     "dataSource": "db",
     "public": true
   },
-  "Stock": {
+  "StockProduct": {
+    "dataSource": "db",
+    "public": true
+  },
+  "StockMaterial": {
     "dataSource": "db",
     "public": true
   },
