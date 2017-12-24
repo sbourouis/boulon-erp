@@ -111,6 +111,7 @@ export class UtilsService {
     for (const command of commands) {
       res = this.mergeTaskArray(res, this.getTasksFromCommand(command));
     }
+    // console.log('task', res);
     return res;
   }
 
@@ -140,39 +141,42 @@ export class UtilsService {
      */
     for (let task of tmpTasks) {
       // repeat each task to get the right quantity
-      ratio = quantity / task.quantity;
-      task.quantity *= ratio;
-      task.duration *= ratio;
-      res.push({task: task, date: tmpDateTask, launchDate, product: product});
+      for (let c = 0; c < quantity / task.quantity; c++) {
+        // ratio = quantity / task.quantity;
+        // task.quantity *= ratio;
+        // task.duration *= ratio;
 
-      // duration of the current task
-      neededDays = Math.trunc(task.duration / this.workHours);
-      tmpDate = this.substractDays(tmpDateTask, neededDays);
-      neededDays = Math.ceil(task.duration % this.workHours);
-      // to change day if not enough hours available in that day
-      tmpDate.setHours(tmpDateTask.getHours() - (neededDays * 24 / this.workHours));
-      tmpDateTask = tmpDate;
-      /*
-       loop on the materials to add tasks to produce this material
-       */
-      task.materials.reverse();
-      for (const material of task.materials) {
-        material.quantityUsed *= ratio;
-        if (material.material['manufacturingTasks']) {
-          res = this.mergeTaskArray(res, this.getTasksFromProduct(<Product>material.material, material.quantityUsed,
-            tmpDateTask, launchDate));
-          /*
-           get the time needed to do all tasks
-           */
-          neededDays = Math.trunc(res[res.length - 1].task.duration / this.workHours);
-          tmpDate = this.substractDays(res[res.length - 1].date, neededDays);
-          neededDays = Math.ceil(res[res.length - 1].task.duration % this.workHours);
-          // to change day if not enough hours available in that day
-          tmpDate.setHours(res[res.length - 1].date.getHours() - (neededDays * 24 / this.workHours));
-          tmpDateTask = tmpDate;
+        res.push({task: task, date: tmpDateTask, launchDate, product: product});
+
+        // duration of the current task
+        neededDays = Math.trunc(task.duration / this.workHours);
+        tmpDate = this.substractDays(tmpDateTask, neededDays);
+        neededDays = Math.ceil(task.duration % this.workHours);
+        // to change day if not enough hours available in that day
+        tmpDate.setHours(tmpDateTask.getHours() - (neededDays * 24 / this.workHours));
+        tmpDateTask = tmpDate;
+        /*
+         loop on the materials to add tasks to produce this material
+         */
+        task.materials.reverse();
+        for (const material of task.materials) {
+          // material.quantityUsed *= ratio;
+          if (material.material['manufacturingTasks']) {
+            res = this.mergeTaskArray(res, this.getTasksFromProduct(<Product>material.material, material.quantityUsed,
+              tmpDateTask, launchDate));
+            /*
+             get the time needed to do all tasks
+             */
+            neededDays = Math.trunc(res[res.length - 1].task.duration / this.workHours);
+            tmpDate = this.substractDays(res[res.length - 1].date, neededDays);
+            neededDays = Math.ceil(res[res.length - 1].task.duration % this.workHours);
+            // to change day if not enough hours available in that day
+            tmpDate.setHours(res[res.length - 1].date.getHours() - (neededDays * 24 / this.workHours));
+            tmpDateTask = tmpDate;
+          }
         }
+        task.materials.reverse();
       }
-      task.materials.reverse();
     }
     return res;
   }
@@ -182,7 +186,7 @@ export class UtilsService {
    */
   substractDays(date: Date, days: number): Date {
     let res = new Date(date.getTime());
-    for (let i = 0; i <= days; i++) {
+    for (let i = 0; i < days; i++) {
       res.setDate(res.getDate() - 1);
       if (!this.isBusinessDay(res)) {
         i--;
@@ -207,16 +211,17 @@ export class UtilsService {
   /*
    get the dates on which we should order, the supplier by whom we should order and stock at the end
    */
-  getOrdersDates(commands: Command[], stocks: Stock[], suppliers: Supplier[]): Array<{material: Material, supplier: Supplier, date: Date}> {
+  getOrdersDates(commands: Command[], stocks: Stock[], suppliers: Supplier[]): Array<{material: Material, supplier: Supplier, date: Date, quantity: number}> {
     return this.getOrderDatesTask(this.getTasksFromCommands(commands), stocks, suppliers);
   }
 
   getOrderDatesTask(tasks: Array<{task: ManufacturingTask, launchDate: Date, date: Date, product: Product }>, stocks: Stock[],
-                    suppliers: Supplier[]): Array<{material: Material, supplier: Supplier, date: Date}> {
-    let dates: Array<{material: Material, supplier: Supplier, date: Date}> = [];
+                    suppliers: Supplier[]): Array<{material: Material, supplier: Supplier, date: Date, quantity: number}> {
+    let dates: Array<{material: Material, supplier: Supplier, date: Date, quantity: number}> = [];
     let supplier: Supplier;
     let date: Date;
     let tmpTasks = tasks.slice();
+    let securityStock = 0;
     tmpTasks = tmpTasks.sort(this.compareTasks);
     let currentTask: {task: ManufacturingTask, launchDate: Date, date: Date, product: Product };
     let tmpStock: number;
@@ -224,7 +229,7 @@ export class UtilsService {
       console.log('order is not possible, time is too short');
       return dates;
     }
-    console.log('tasks ', tasks);
+    // console.log('tasks ', tmpTasks);
     while (tmpTasks.length > 0) {
       currentTask = tmpTasks.pop();
       // console.log('current task ');
@@ -233,27 +238,30 @@ export class UtilsService {
       for (const material of currentTask.task.materials) {
         // console.log(' Stock ' + (<Material> material.material).maxStock);
         // console.log(stocks);
-        console.log( '%c' + material.material.name + date, 'color: orange');
+        // console.log( '%c' + material.material.name + date, 'color: orange');
         tmpStock = this.getStockFromArticle(stocks, material.material, date);
+        // console.log( '%c' + date + 'tmpStock ' + tmpStock + ' material ' + material.material.name, 'color: red');
+        securityStock = material.material['securityStock'] ? material.material['securityStock'] : 0;
+        if (tmpStock  < material.quantityUsed + securityStock) {
 
-        if (tmpStock < material.quantityUsed) {
-          console.log( '%c' + date + 'tmpStock ' + tmpStock + ' material ' + material.quantityUsed, 'color: red');
           if (material.material['securityStock']) {
-            console.log('Commande ' + date);
+            // console.log('Commande ' + date);
             // if we haven't enough stock, order
             supplier = this.getSupplier(suppliers, <Material> material.material);
             dates.push({
               date: this.substractDays(date, supplier.deliveryTime),
               supplier: supplier,
-              material: <Material>material.material
+              material: <Material>material.material,
+              quantity: (<Material> material.material).maxStock - tmpStock
             });
-            console.log(material.quantityUsed);
+            // console.log(material.quantityUsed);
             stocks.push({
               article: material.material,
-              quantity: material.quantityUsed,
-              // quantity: (<Material> material.material).maxStock - tmpStock,
+              // quantity: material.quantityUsed,
+              quantity: (<Material> material.material).maxStock - tmpStock,
               date: date
             });
+            // console.log('acier ' + this.getStockFromArticle(stocks, material.material, date));
           } else {
             console.log('unable to produce enough products');
             return [];
@@ -264,7 +272,7 @@ export class UtilsService {
           quantity: -material.quantityUsed,
           date: date
         });
-        console.log(stocks);
+        // console.log(stocks);
       }
       stocks.push({
         article: currentTask.product,
@@ -278,7 +286,8 @@ export class UtilsService {
 
   getStockFromArticle(stocks: Stock[], material: Article, date: Date): number {
     let stock = 0;
-    const stockFilterd = stocks.filter(o => (material['productId'] ? o['productId'] : !o['productId']) && o.article.id === material.id && new Date(o.date).getTime() <= date.getTime());
+    const stockFilterd = stocks.filter(o => o.article.id === material.id && o.article.name === material.name && new Date(o.date).getTime() <= date.getTime());
+    // console.log('acier', stockFilterd);
     stockFilterd.forEach(function (elem) {
       stock += elem.quantity;
     });
