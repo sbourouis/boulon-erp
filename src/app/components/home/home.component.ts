@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
 
     this.cmds$ = cs.index();
     this.prepareData().subscribe(data => {
-      console.log(util.getOrdersDates(data.commands, data.stock, data.customers));
+      console.log(util.getOrdersDates(data.commands , data.stock, data.customers));
     });
 
     // let cmds: Command[] = [];
