@@ -20,6 +20,8 @@ import {SharedModule} from './modules/shared.module';
 import {StocksService} from "./services/stocks.service";
 import {CommandsService} from "./services/commands.service";
 
+import {NgxDatatableModule} from '@swimlane/ngx-datatable';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,6 +39,7 @@ import {CommandsService} from "./services/commands.service";
     MatToolbarModule,
     MatButtonModule,
     SharedModule,
+    NgxDatatableModule,
     StoreModule.forRoot(fromRoot.reducers), /* Initialise the Central Store with Application's main reducer*/
     EffectsModule.forRoot([]), /* Start monitoring app's side effects */
     StoreDevtoolsModule.instrument({ maxAge: 50 })

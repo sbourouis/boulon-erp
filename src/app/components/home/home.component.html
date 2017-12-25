@@ -1,3 +1,30 @@
-<p>
-  home works!
-</p>
+<div class="card ">
+  <div class="card-header">
+    <span>Question 1</span>
+  </div>
+  <div class="card-block" style="padding: 0">
+    <ngx-datatable
+  class="material" *ngIf="orderDates; else loading"
+  [rows]="orderDates.rows"
+  [columnMode]="'force'"
+  [headerHeight]="50"
+  [footerHeight]="50"
+  [rowHeight]="'auto'"
+  [limit]="10">
+  <ngx-datatable-column prop="date">
+    <ng-template let-value="value" ngx-datatable-cell-template>
+      {{value | date: 'dd/MM/yyyy'}}
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column *ngFor="let column of orderDates.columns" [prop]="column.prop" [name]="column.name">
+    <ng-template let-value="value" ngx-datatable-cell-template>
+      {{value}}
+    </ng-template>
+  </ngx-datatable-column>
+</ngx-datatable>
+  </div>
+</div>
+
+<ng-template #loading>
+  <span>chargement...</span>
+</ng-template>

@@ -17,13 +17,25 @@ import {Product} from "../../models/product";
   styleUrls: ['home.component.css']
 })
 export class HomeComponent implements OnInit {
+
+  orderDates: {rows: Array<{material: Material, supplier: Supplier, date: Date, quantity: number}>, columns:any}
+  = {
+    rows: [],
+    columns: {}
+  };
+
   constructor(private util: UtilsService,
               private cs: CommandsService,
               private ss: SuppliersService,
               private sts: StocksService,
               private ps: ProductsService) {
+    this.orderDates.columns = [
+      {name:'Matière première', prop:'material.name'},
+      {name:'Fournisseur', prop:'supplier.name'},
+      {name:'Quantité',prop:'quantity'}
+      ];
     this.prepareData().subscribe(data => {
-      console.log(util.getOrdersDates(data.commands, data.stock, data.suppliers));
+      this.orderDates.rows = util.getOrdersDates(data.commands, data.stock, data.suppliers);
     });
   }
 
