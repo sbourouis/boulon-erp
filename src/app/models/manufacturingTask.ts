@@ -6,7 +6,7 @@ import {Article} from "./article";
 export interface ManufacturingTask {
   id?: number;
   name: string;
-  machine: Machine;
+  machineId: number;
   duration: number;
   quantity: number; // quantité produite
   materials: Array<{

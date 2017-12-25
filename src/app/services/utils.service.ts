@@ -96,21 +96,26 @@ export class UtilsService {
   /*
    merge TaskArray to know which task has to be done before another
    */
-  mergeTaskArray(tab1: Array<{task: ManufacturingTask, launchDate: Date, date: Date, product: Product }>,
-                 tab2: Array<{task: ManufacturingTask, launchDate: Date, date: Date, product: Product }>): Array<{task: ManufacturingTask, launchDate: Date, date: Date, product: Product }> {
+  mergeTaskArray(tab1: Array<{task: ManufacturingTask, launchDate: Date, date: Date, product: Product, sequence: number }>,
+                 tab2: Array<{task: ManufacturingTask, launchDate: Date, date: Date, product: Product, sequence: number }>): Array<{task: ManufacturingTask, launchDate: Date, date: Date, product: Product, sequence: number }> {
     return tab1.slice().concat(tab2).sort(this.compareTasks);
   }
 
   /*
    get an array of each tasks that are needed to make the orders
    */
-  getTasksFromCommands(commands: Command[]): Array<{task: ManufacturingTask, launchDate: Date, date: Date, product: Product }> {
-    let res: Array<{task: ManufacturingTask, launchDate: Date, date: Date, product: Product }> = [];
+  getTasksFromCommands(commands: Command[]): Array<{task: ManufacturingTask, launchDate: Date, date: Date, product: Product, sequence: number }> {
+    let res: Array<{task: ManufacturingTask, launchDate: Date, date: Date, product: Product, sequence: number }> = [];
+    let sequence = 0;
     //  sort orders
     commands.sort(UtilsService.compareCommands);
     for (const command of commands) {
-      res = this.mergeTaskArray(res, this.getTasksFromCommand(command));
+      res = this.mergeTaskArray(res, this.getTasksFromCommand(command, sequence));
+      sequence++;
     }
+    console.log(res);
+    // res = this.checkMachines(res);
+
     // console.log('task', res);
     return res;
   }
@@ -118,18 +123,18 @@ export class UtilsService {
   /*
    get an array of each tasks that are needed to make the order
    */
-  getTasksFromCommand(command: Command): Array<{task: ManufacturingTask, launchDate: Date, date: Date, product: Product }> {
-    let res: Array<{task: ManufacturingTask, launchDate: Date, date: Date, product: Product }> = [];
+  getTasksFromCommand(command: Command, sequence: number): Array<{task: ManufacturingTask, launchDate: Date, date: Date, product: Product, sequence: number }> {
+    let res: Array<{task: ManufacturingTask, launchDate: Date, date: Date, product: Product, sequence: number }> = [];
     let tmpDate = this.substractDays(new Date(command.dateLivraison), command.supplier.deliveryTime);
-    res = this.mergeTaskArray(res, this.getTasksFromProduct(command.product, command.quantity, tmpDate, new Date(command.date)));
+    res = this.mergeTaskArray(res, this.getTasksFromProduct(command.product, command.quantity, tmpDate, new Date(command.date), sequence));
     return res;
   }
 
   /*
    get an array of each tasks that are needed to create the product
    */
-  getTasksFromProduct(product: Product, quantity: number, date: Date, launchDate: Date): Array<{task: ManufacturingTask, launchDate: Date, date: Date, product: Product }> {
-    let res: Array<{task: ManufacturingTask, launchDate: Date, date: Date, product: Product}> = [];
+  getTasksFromProduct(product: Product, quantity: number, date: Date, launchDate: Date, sequence: number): Array<{task: ManufacturingTask, launchDate: Date, date: Date, product: Product, sequence: number }> {
+    let res: Array<{task: ManufacturingTask, launchDate: Date, date: Date, product: Product, sequence: number}> = [];
     let tmpDateTask = date;
     let tmpDate: Date;
     let neededDays: number;
@@ -145,15 +150,20 @@ export class UtilsService {
         // ratio = quantity / task.quantity;
         // task.quantity *= ratio;
         // task.duration *= ratio;
+        if(!this.isBusinessDay(tmpDateTask)) {
+          tmpDateTask = this.substractDays(tmpDateTask, 1);
+        }
+        res.push({task: task, date: tmpDateTask, launchDate: launchDate, product: product, sequence: sequence});
 
-        res.push({task: task, date: tmpDateTask, launchDate, product: product});
-
+        tmpDate = new Date(tmpDateTask.getTime());
         // duration of the current task
-        neededDays = Math.trunc(task.duration / this.workHours);
-        tmpDate = this.substractDays(tmpDateTask, neededDays);
         neededDays = Math.ceil(task.duration % this.workHours);
         // to change day if not enough hours available in that day
-        tmpDate.setHours(tmpDateTask.getHours() - (neededDays * 24 / this.workHours));
+        tmpDate.setHours(tmpDate.getHours() - (neededDays * 24 / this.workHours));
+
+        neededDays = Math.trunc(task.duration / this.workHours);
+        tmpDate = this.substractDays(tmpDate, neededDays);
+
         tmpDateTask = tmpDate;
         /*
          loop on the materials to add tasks to produce this material
@@ -163,7 +173,7 @@ export class UtilsService {
           // material.quantityUsed *= ratio;
           if (material.material['manufacturingTasks']) {
             res = this.mergeTaskArray(res, this.getTasksFromProduct(<Product>material.material, material.quantityUsed,
-              tmpDateTask, launchDate));
+              tmpDateTask, launchDate, sequence));
             /*
              get the time needed to do all tasks
              */
@@ -181,17 +191,79 @@ export class UtilsService {
     return res;
   }
 
+  getFreeMachineDate(tasks: Array<{task: ManufacturingTask, launchDate: Date, date: Date, product: Product, sequence: number }>, taskToAdd: ManufacturingTask,
+      date: Date, launchDate: Date): Date {
+    let res = new Date(date.getTime());
+    let neededDays: number;
+    let tmpTasks: Array<{task: ManufacturingTask, launchDate: Date, date: Date, product: Product, sequence: number }> = tasks.slice();
+    while (tmpTasks.length > 0) {
+
+      // console.log('getFreeMachineDate', tmpTasks);
+      tmpTasks = tmpTasks.filter(o => o.task.machineId === taskToAdd.machineId &&
+        o.date.getTime() > this.substractDays(res, taskToAdd.duration).getTime() && o.date.getTime() < res.getTime());
+      for(let task of tmpTasks) {
+        res = new Date(task.date.getTime());
+        neededDays = Math.ceil(task.task.duration % this.workHours);
+        // to change day if not enough hours available in that day
+        res.setHours(task.date.getHours() - (neededDays * 24 / this.workHours));
+        neededDays = Math.trunc(task.task.duration / this.workHours);
+        res = this.substractDays(res, neededDays);
+
+      }
+      // if(tmpTasks.length > 0) {
+      //   console.log('did not find anything', taskToAdd);
+      // }
+    }
+    if (res.getTime() < launchDate.getTime()) {
+      res = null;
+    }
+    return res;
+  }
+  checkMachines(tasks: Array<{task: ManufacturingTask, launchDate: Date, date: Date, product: Product, sequence: number }>): Array<{task: ManufacturingTask, launchDate: Date, date: Date, product: Product, sequence: number }> {
+    let tmpTasks = tasks.slice();
+    let tmpTasks2 = [];
+    let currentTask, currentTask2: {task: ManufacturingTask, launchDate: Date, date: Date, product: Product, sequence: number };
+    let tmpDate: Date;
+    console.log(tasks.length);
+    for (let count = 0; count < tmpTasks.length; count++) {
+      currentTask = tmpTasks.pop();
+      tmpDate = this.getFreeMachineDate(tmpTasks, currentTask.task, currentTask.date , currentTask.launchDate);
+      if (tmpDate.getTime() !== currentTask.date.getTime()) {
+        // tmpTasks2 = tmpTasks.filter(o => o.sequence === currentTask.sequence && o.date.getTime() < currentTask.date.getTime() );
+        // for (let count2 = 0; count2 < tmpTasks2.length; count2++) {
+        //   currentTask2 = tmpTasks2.pop();
+        //   currentTask2.date = this.getFreeMachineDate(tmpTasks, currentTask2.task, this.getDateForNextTask(currentTask.task, tmpDate ), currentTask.launchDate );
+        //   tmpTasks2.unshift(currentTask2);
+        //   console.log('task2 ');
+        // }
+        currentTask.date = tmpDate;
+        console.log('task3 ');
+      }
+      tmpTasks.unshift(currentTask);
+
+    }
+    return tmpTasks;
+  }
+
+  getDateForNextTask( currentTask: ManufacturingTask, date: Date): Date {
+    let res = new Date(date.getTime());
+    let neededDays = Math.ceil(currentTask.duration % this.workHours);
+    // to change day if not enough hours available in that day
+    res.setHours(res.getHours() - (neededDays * 24 / this.workHours));
+    neededDays = Math.trunc(currentTask.duration / this.workHours);
+    res = this.substractDays(date, neededDays);
+    return res;
+  }
   /*
    substract business days from date
    */
   substractDays(date: Date, days: number): Date {
     let res = new Date(date.getTime());
     for (let i = 0; i < days; i++) {
-      res.setDate(res.getDate() - 1);
       if (!this.isBusinessDay(res)) {
         i--;
-        res.setDate(res.getDate() - 1);
       }
+      res.setDate(res.getDate() - 1);
     }
     return res;
   }
@@ -263,7 +335,7 @@ export class UtilsService {
             });
             // console.log('acier ' + this.getStockFromArticle(stocks, material.material, date));
           } else {
-            console.log('unable to produce enough products');
+            console.log('unable to produce enough products' + tmpStock + ' ' + securityStock, stocks );
             return [];
           }
         }
