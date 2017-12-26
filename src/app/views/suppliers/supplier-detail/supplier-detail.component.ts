@@ -7,6 +7,7 @@ import {Subscription} from 'rxjs/Subscription';
 
 import * as suppliersActions from '../store/actions/suppliers-actions'
 import * as fromRoot from '../store';
+import {Material} from "../../../models/material";
 
 @Component({
   selector: 'app-supplier-details',
@@ -17,6 +18,8 @@ import * as fromRoot from '../store';
 export class SupplierDetailComponent implements OnInit, OnDestroy {
 
   supplier$: Observable<Supplier>;
+  materialLines$: Observable<any[]>;
+  materials$: Observable<Material[]>;
   redirectSub: Subscription;
   route = '/suppliers';
 
@@ -25,13 +28,21 @@ export class SupplierDetailComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private actionsSubject: ActionsSubject
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.supplier$ = this.store.select(fromRoot.getCurrentSupplier);
+    this.materials$ = this.store.select(fromRoot.getAllMaterials);
+    this.materialLines$ = this.store.select(fromRoot.getSelectedSupplierMaterials);
     this.supplier$.subscribe(supplier => {
       if (supplier) {
-        this.route = supplier.isCustomer ? '/customers' : '/suppliers';
+        if (supplier.isCustomer) {
+          this.route = '/customers';
+        } else {
+          this.route = '/suppliers';
+          this.store.dispatch(new suppliersActions.GetSupplierMaterials(supplier.id));
+        }
       }
     });
 

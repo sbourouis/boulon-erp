@@ -2,6 +2,7 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output}
 import { Supplier } from '@app-models';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../../../store';
+import {Material} from "../../../models/material";
 
 @Component({
   selector: 'app-supplier-details-container',
@@ -12,6 +13,8 @@ import * as fromRoot from '../../../store';
 export class SupplierDetailsContainerComponent implements OnInit {
 
   @Input() supplier: Supplier;
+  @Input() materialLines: any;
+  @Input() materials: Material[];
   @Output() onEdit = new EventEmitter<Supplier>();
   @Output() onDelete = new EventEmitter<Supplier>();
   type = 'Supplier';
@@ -21,7 +24,10 @@ export class SupplierDetailsContainerComponent implements OnInit {
   }
 
   ngOnInit() {
-
   }
 
+  getMaterialName(id): string {
+    const material = this.materials.filter(material => material.id == id)[0];
+    return material ? material.name : '';
+  }
 }

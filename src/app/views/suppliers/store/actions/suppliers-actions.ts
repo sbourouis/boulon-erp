@@ -20,10 +20,22 @@ export const DELETE_SUCCESS = '[Suppliers] DELETE SUCCESS';
 export const FAILURE = '[Suppliers] FAILURE';
 
 export const SET_CURRENT_SUPPLIER_ID = '[Suppliers] SET CURRENT SUPPLIER ID';
+export const GET_SUPPLIER_MATERIALS = '[Suppliers] GET SUPPLIER MATERIALS';
+export const GET_SUPPLIER_MATERIALS_SUCCESS = '[Suppliers] GET SUPPLIER MATERIALS SUCCESS';
 
 export class SetCurrentSupplierId implements Action {
   readonly type = SET_CURRENT_SUPPLIER_ID;
   constructor(public payload: number) {}
+}
+
+export class GetSupplierMaterials implements Action {
+  readonly type = GET_SUPPLIER_MATERIALS;
+  constructor(public payload: number) {}
+}
+
+export class GetSupplierMaterialsSuccess implements Action {
+  readonly type = GET_SUPPLIER_MATERIALS_SUCCESS;
+  constructor(public payload: any) {}
 }
 
 export class LoadAll implements Action {
@@ -85,6 +97,8 @@ export type All =
     SetCurrentSupplierId
     | LoadAll
     | Load
+    | GetSupplierMaterials
+    | GetSupplierMaterialsSuccess
     | Create
     | Patch
     | Delete

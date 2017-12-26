@@ -1,5 +1,7 @@
 <app-supplier-details-container
   [supplier]="supplier$ | async"
+  [materialLines]="materialLines$ | async"
+  [materials]="materials$ | async"
   (onEdit)="editSupplier($event)"
   (onDelete)="deleteSupplier($event)"
 ></app-supplier-details-container>

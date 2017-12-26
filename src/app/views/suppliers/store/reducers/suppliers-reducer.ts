@@ -10,11 +10,13 @@ export const suppliersAdapter = createEntityAdapter<Supplier>({
 });
 
 export interface State extends EntityState<Supplier> {
-  currentSupplierId?: number
+  currentSupplierId?: number,
+  materials: any[]
 }
 
 export const INIT_STATE: State = suppliersAdapter.getInitialState({
-  currentSupplierId: undefined
+  currentSupplierId: undefined,
+  materials: []
 });
 
 export function reducer(
@@ -28,6 +30,10 @@ export function reducer(
 
     case suppliersActions.LOAD_ALL_SUCCESS : {
       return {...state, ...suppliersAdapter.addAll(payload as Supplier[], state)}
+    }
+
+    case suppliersActions.GET_SUPPLIER_MATERIALS_SUCCESS : {
+      return {...state, materials: payload}
     }
 
     case suppliersActions.LOAD_SUCCESS || suppliersActions.CREATE_SUCCESS : {
@@ -52,3 +58,4 @@ export function reducer(
 }
 
 export const getCurrentSupplierId = (state: State) => state.currentSupplierId;
+export const getCurrentSupplierMaterials = (state: State) => state.materials;

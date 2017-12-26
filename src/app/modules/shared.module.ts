@@ -7,10 +7,6 @@ import {SuppliersService} from '../services/suppliers.service';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
-import {ProductsService} from '../services/products.service';
-import {ProductListComponent} from "../components/products/product-list/product-list.component";
-import {ProductFormComponent} from "../components/products/product-form/product-form.component";
-import {ProductDetailsComponent} from "../components/products/product-details/product-details.component";
 import {UtilsService} from "../services/utils.service";
 
 @NgModule({
@@ -18,25 +14,19 @@ import {UtilsService} from "../services/utils.service";
     CommonModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RouterModule,
+    RouterModule
   ],
   declarations: [
     SupplierListComponent,
     SupplierDetailsContainerComponent,
     SupplierFormComponent,
-    ProductListComponent,
-    ProductDetailsComponent,
-    ProductFormComponent
   ],
   exports: [
     SupplierListComponent,
     SupplierDetailsContainerComponent,
     SupplierFormComponent,
-    RouterModule,
-    ProductListComponent,
-    ProductDetailsComponent,
-    ProductFormComponent
+    RouterModule
   ],
-  providers: [SuppliersService, ProductsService, UtilsService]
+  providers: [SuppliersService, UtilsService]
 })
 export class SharedModule { }

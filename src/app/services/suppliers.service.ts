@@ -42,7 +42,11 @@ export class SuppliersService {
     return this.http.delete<Supplier>(`${environment.appApi.baseUrl}/${this.route}/${id}`);
   }
 
+  getMaterials(idSupplier: number) : Observable<any> {
+    return this.http.get<any>(`${environment.appApi.baseUrl}/${this.route}/${idSupplier}/materials`);
+  }
+
   getMaterialLines() : Observable<any[]> {
-    return this.http.get<Material[]>(`${environment.appApi.baseUrl}/materialLines`);
+    return this.http.get<any[]>(`${environment.appApi.baseUrl}/materialLines`);
   }
 }

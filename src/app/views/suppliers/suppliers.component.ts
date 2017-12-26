@@ -1,7 +1,9 @@
 import {Component} from '@angular/core';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '@app-root-store';
+import * as fromSuppliersRoot from './store';
 import * as uiActions from '../../store/actions/ui-actions';
+import * as materialsActions from './store/actions/materials-actions';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({
@@ -17,6 +19,8 @@ export class SuppliersComponent {
     this.activatedRoute.data.subscribe(data => {
       this.route = data.isCustomer? '/customers' : '/suppliers';
       this.store.dispatch(new uiActions.SetIsCustomer(data.isCustomer));
+      this.store.dispatch(new materialsActions.LoadAll);
+      this.store.select(fromSuppliersRoot.getAllMaterials).subscribe(console.log);
     });
   }
 }

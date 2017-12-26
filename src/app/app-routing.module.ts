@@ -3,8 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import {
   ErrorPageComponent,
-  HomeComponent,
-  AutomatesComponent
+  HomeComponent
 } from './components';
 
 const appRoutes: Routes = [
@@ -13,11 +12,6 @@ const appRoutes: Routes = [
   {
     path: 'suppliers', loadChildren: 'app/views/suppliers/suppliers.module#SuppliersModule', data: {isCustomer: false}
   },
-  { path: 'automates', component: AutomatesComponent, pathMatch: 'full' },
-  { path: 'products', loadChildren: 'app/views/products/products.module#ProductsModule' },
-  // { path: 'users', component: UsersComponent, children: [
-  //   { path: ':id/:name', component: UserComponent }
-  // ] },
   { path: 'not-found', component: ErrorPageComponent, data: {message: 'Page not found!'} },
   { path: '**', redirectTo: '/not-found' }
 ];

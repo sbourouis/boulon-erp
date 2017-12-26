@@ -1,5 +1,4 @@
 <div class="supplier-details-container" *ngIf="supplier">
-
   <div class="card">
     <div class="card-header">
       {{ type }}
@@ -13,13 +12,16 @@
       <p *ngIf="supplier.address">Adresse: <span class="badge badge-primary">{{supplier.address}}</span></p>
       <p *ngIf="supplier.position">Poste:  <span class="badge badge-primary">{{supplier.position}}</span></p>
       <p *ngIf="supplier.comment">Notes:  <span class="badge badge-primary">{{supplier.comment}}</span></p>
+      <div *ngIf="type === 'Supplier'" && materialLines>
+        <p>Matériaux vendus:  <span class="badge badge-primary">{{getMaterialName(materialLines.materialId)}}</span></p>
+        <p>Prix: <span class="badge badge-primary">{{materialLines.price}}</span></p>
+      </div>
     </div>
     <div class="card-footer text-muted">
       <span class="float-md-right ">
         <button (click)="onEdit.emit(supplier)" class="btn btn-sm btn-outline-warning"> EDIT</button>
         <button (click)="onDelete.emit(supplier)"  class="btn btn-sm btn-outline-danger"> DELETE</button>
       </span>
-
     </div>
   </div>
 

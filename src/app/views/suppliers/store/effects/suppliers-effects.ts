@@ -39,6 +39,15 @@ export class SuppliersEffects {
       );
 
   @Effect()
+  getSupplierMaterials$: Observable<Action> = this.actions$
+    .ofType(suppliersActions.GET_SUPPLIER_MATERIALS)
+    .map( (action: suppliersActions.GetSupplierMaterials) => action.payload)
+    .switchMap((id) =>
+        this.suppliersService.getMaterials(id)
+        .map((materialLines) => new suppliersActions.GetSupplierMaterialsSuccess(materialLines))
+    );
+
+  @Effect()
   create$: Observable<Action> = this.actions$
       .ofType(suppliersActions.CREATE)
       .map((action: suppliersActions.Create) => action.payload)

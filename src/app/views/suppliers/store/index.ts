@@ -27,6 +27,10 @@ export const getSelectedSupplierId = createSelector(
   getSuppliersState,
   fromSuppliers.getCurrentSupplierId
 );
+export const getSelectedSupplierMaterials = createSelector(
+  getSuppliersState,
+  fromSuppliers.getCurrentSupplierMaterials
+);
 export const {
   selectAll: getAllSuppliers,
   selectEntities: getSupplierEntities
@@ -37,10 +41,8 @@ export const getCurrentSupplier = createSelector(
   (entities, id) => id && entities[id]
 );
 
-
-export const getMaterialsRootState = createFeatureSelector<SuppliersState>('materials');
 export const getMaterialsState = createSelector(
-  getMaterialsRootState,
+  getSuppliersRootState,
   state => state.materials
 );
 export const getSelectedMaterialId = createSelector(

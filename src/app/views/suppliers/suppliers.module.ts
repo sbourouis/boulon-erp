@@ -11,6 +11,8 @@ import {StoreModule} from '@ngrx/store';
 import * as fromSuppliers from './store'
 import {EffectsModule} from '@ngrx/effects';
 import {SuppliersEffects} from './store/effects/suppliers-effects';
+import {MaterialsEffects} from "./store/effects/materials-effects";
+import {MaterialsService} from "../../services/materials.service";
 
 @NgModule({
   imports: [
@@ -18,7 +20,7 @@ import {SuppliersEffects} from './store/effects/suppliers-effects';
     SharedModule,
     SuppliersRoutingModule,
     StoreModule.forFeature('suppliers', fromSuppliers.reducers),
-    EffectsModule.forFeature([SuppliersEffects])
+    EffectsModule.forFeature([SuppliersEffects, MaterialsEffects])
   ],
   declarations: [
     SuppliersComponent,
@@ -26,6 +28,9 @@ import {SuppliersEffects} from './store/effects/suppliers-effects';
     SupplierEditComponent,
     SupplierNewComponent,
     SupplierIndexComponent
+  ],
+  providers: [
+    MaterialsService
   ]
 })
 export class SuppliersModule { }
