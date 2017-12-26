@@ -1,9 +1,9 @@
-import {Command, Stock} from '@app-models';
-import {Material} from '../models/material';
-import {ManufacturingTask} from '../models/manufacturingTask';
-import {Product} from '../models/product';
-import {Article} from '../models/article';
-import {Supplier} from '../models/supplier';
+import {Command, Stock} from "@app-models";
+import {Material} from "../models/material";
+import {ManufacturingTask} from "../models/manufacturingTask";
+import {Product} from "../models/product";
+import {Article} from "../models/article";
+import {Supplier} from "../models/supplier";
 
 export class UtilsService {
   workHours: number;
@@ -28,18 +28,6 @@ export class UtilsService {
       return 1;
     }
     return 0;
-  }
-
-  businessDaysBetweenDates(dateDeb: Date, dateFin: Date): number {
-    let counter = 0;
-    let tmpDate = dateDeb;
-    while (tmpDate <= dateFin) {
-      if (this.isBusinessDay(tmpDate)) {
-        counter++;
-      }
-      tmpDate.setDate(tmpDate.getDate() + 1);
-    }
-    return counter;
   }
 
   /*
@@ -113,10 +101,6 @@ export class UtilsService {
       res = this.mergeTaskArray(res, this.getTasksFromCommand(command, sequence));
       sequence++;
     }
-    console.log(res);
-    // res = this.checkMachines(res);
-
-    // console.log('task', res);
     return res;
   }
 
@@ -139,7 +123,6 @@ export class UtilsService {
     let tmpDate: Date;
     let neededDays: number;
     let tmpTasks = product.manufacturingTasks;
-    let ratio: number;
     tmpTasks.reverse();
     /*
      loop on the manufacturingTasks
@@ -147,10 +130,7 @@ export class UtilsService {
     for (let task of tmpTasks) {
       // repeat each task to get the right quantity
       for (let c = 0; c < quantity / task.quantity; c++) {
-        // ratio = quantity / task.quantity;
-        // task.quantity *= ratio;
-        // task.duration *= ratio;
-        if(!this.isBusinessDay(tmpDateTask)) {
+        if (!this.isBusinessDay(tmpDateTask)) {
           tmpDateTask = this.substractDays(tmpDateTask, 1);
         }
         res.push({task: task, date: tmpDateTask, launchDate: launchDate, product: product, sequence: sequence});
@@ -191,69 +171,6 @@ export class UtilsService {
     return res;
   }
 
-  getFreeMachineDate(tasks: Array<{task: ManufacturingTask, launchDate: Date, date: Date, product: Product, sequence: number }>, taskToAdd: ManufacturingTask,
-      date: Date, launchDate: Date): Date {
-    let res = new Date(date.getTime());
-    let neededDays: number;
-    let tmpTasks: Array<{task: ManufacturingTask, launchDate: Date, date: Date, product: Product, sequence: number }> = tasks.slice();
-    while (tmpTasks.length > 0) {
-
-      // console.log('getFreeMachineDate', tmpTasks);
-      tmpTasks = tmpTasks.filter(o => o.task.machineId === taskToAdd.machineId &&
-        o.date.getTime() > this.substractDays(res, taskToAdd.duration).getTime() && o.date.getTime() < res.getTime());
-      for(let task of tmpTasks) {
-        res = new Date(task.date.getTime());
-        neededDays = Math.ceil(task.task.duration % this.workHours);
-        // to change day if not enough hours available in that day
-        res.setHours(task.date.getHours() - (neededDays * 24 / this.workHours));
-        neededDays = Math.trunc(task.task.duration / this.workHours);
-        res = this.substractDays(res, neededDays);
-
-      }
-      // if(tmpTasks.length > 0) {
-      //   console.log('did not find anything', taskToAdd);
-      // }
-    }
-    if (res.getTime() < launchDate.getTime()) {
-      res = null;
-    }
-    return res;
-  }
-  checkMachines(tasks: Array<{task: ManufacturingTask, launchDate: Date, date: Date, product: Product, sequence: number }>): Array<{task: ManufacturingTask, launchDate: Date, date: Date, product: Product, sequence: number }> {
-    let tmpTasks = tasks.slice();
-    let tmpTasks2 = [];
-    let currentTask, currentTask2: {task: ManufacturingTask, launchDate: Date, date: Date, product: Product, sequence: number };
-    let tmpDate: Date;
-    console.log(tasks.length);
-    for (let count = 0; count < tmpTasks.length; count++) {
-      currentTask = tmpTasks.pop();
-      tmpDate = this.getFreeMachineDate(tmpTasks, currentTask.task, currentTask.date , currentTask.launchDate);
-      if (tmpDate.getTime() !== currentTask.date.getTime()) {
-        // tmpTasks2 = tmpTasks.filter(o => o.sequence === currentTask.sequence && o.date.getTime() < currentTask.date.getTime() );
-        // for (let count2 = 0; count2 < tmpTasks2.length; count2++) {
-        //   currentTask2 = tmpTasks2.pop();
-        //   currentTask2.date = this.getFreeMachineDate(tmpTasks, currentTask2.task, this.getDateForNextTask(currentTask.task, tmpDate ), currentTask.launchDate );
-        //   tmpTasks2.unshift(currentTask2);
-        //   console.log('task2 ');
-        // }
-        currentTask.date = tmpDate;
-        console.log('task3 ');
-      }
-      tmpTasks.unshift(currentTask);
-
-    }
-    return tmpTasks;
-  }
-
-  getDateForNextTask( currentTask: ManufacturingTask, date: Date): Date {
-    let res = new Date(date.getTime());
-    let neededDays = Math.ceil(currentTask.duration % this.workHours);
-    // to change day if not enough hours available in that day
-    res.setHours(res.getHours() - (neededDays * 24 / this.workHours));
-    neededDays = Math.trunc(currentTask.duration / this.workHours);
-    res = this.substractDays(date, neededDays);
-    return res;
-  }
   /*
    substract business days from date
    */
@@ -301,23 +218,15 @@ export class UtilsService {
       console.log('order is not possible, time is too short');
       return dates;
     }
-    // console.log('tasks ', tmpTasks);
     while (tmpTasks.length > 0) {
       currentTask = tmpTasks.pop();
-      // console.log('current task ');
-      // console.log(currentTask);
       date = this.substractDays(currentTask.date, Math.trunc(currentTask.task.duration / this.workHours));
       for (const material of currentTask.task.materials) {
-        // console.log(' Stock ' + (<Material> material.material).maxStock);
-        // console.log(stocks);
-        // console.log( '%c' + material.material.name + date, 'color: orange');
         tmpStock = this.getStockFromArticle(stocks, material.material, date);
-        // console.log( '%c' + date + 'tmpStock ' + tmpStock + ' material ' + material.material.name, 'color: red');
         securityStock = material.material['securityStock'] ? material.material['securityStock'] : 0;
-        if (tmpStock  < material.quantityUsed + securityStock) {
+        if (tmpStock < material.quantityUsed + securityStock) {
 
           if (material.material['securityStock']) {
-            // console.log('Commande ' + date);
             // if we haven't enough stock, order
             supplier = this.getSupplier(suppliers, <Material> material.material);
             dates.push({
@@ -326,16 +235,13 @@ export class UtilsService {
               material: <Material>material.material,
               quantity: (<Material> material.material).maxStock - tmpStock
             });
-            // console.log(material.quantityUsed);
             stocks.push({
               article: material.material,
-              // quantity: material.quantityUsed,
               quantity: (<Material> material.material).maxStock - tmpStock,
               date: date
             });
-            // console.log('acier ' + this.getStockFromArticle(stocks, material.material, date));
           } else {
-            console.log('unable to produce enough products' + tmpStock + ' ' + securityStock, stocks );
+            console.log('unable to produce enough products' + tmpStock + ' ' + securityStock, stocks);
             return [];
           }
         }
@@ -344,7 +250,6 @@ export class UtilsService {
           quantity: -material.quantityUsed,
           date: date
         });
-        // console.log(stocks);
       }
       stocks.push({
         article: currentTask.product,
@@ -359,7 +264,6 @@ export class UtilsService {
   getStockFromArticle(stocks: Stock[], material: Article, date: Date): number {
     let stock = 0;
     const stockFilterd = stocks.filter(o => o.article.id === material.id && o.article.name === material.name && new Date(o.date).getTime() <= date.getTime());
-    // console.log('acier', stockFilterd);
     stockFilterd.forEach(function (elem) {
       stock += elem.quantity;
     });
@@ -403,6 +307,10 @@ export class UtilsService {
       }
     }
     return res;
+  }
+
+  getPriceFromCost(cost: number, margin: number): number {
+    return cost * (1 + margin);
   }
 
   getMonthBetween(date1: Date, date2: Date): number {

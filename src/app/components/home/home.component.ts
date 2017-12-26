@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit} from "@angular/core";
 import {UtilsService} from "../../services/utils.service";
 import {Command} from "../../models/command";
 import {Stock} from "../../models/stock";
@@ -14,23 +14,23 @@ import {Product} from "../../models/product";
 @Component({
   selector: 'app-home',
   templateUrl: 'home.component.html',
-  styleUrls: ['home.component.css']
+  styles: [``]
 })
 export class HomeComponent implements OnInit {
 
-  orderDates: {rows: Array<{material: Material, supplier: Supplier, date: Date, quantity: number}>, columns:any}
-  = {
+  orderDates: {rows: Array<{material: Material, supplier: Supplier, date: Date, quantity: number}>, columns: any}
+    = {
     rows: [],
     columns: {}
   };
-  orderDates2: {rows: Array<{material: Material, supplier: Supplier, date: Date, quantity: number}>, columns:any}
-  = {
+  orderDates2: {rows: Array<{material: Material, supplier: Supplier, date: Date, quantity: number}>, columns: any}
+    = {
     rows: [],
     columns: {}
   };
   areOrdersPossible: boolean;
   areOrdersPossible2: boolean;
-  cost = 0;
+  q3: [{name: string, cost: number, price: number}] = [];
 
   constructor(private util: UtilsService,
               private cs: CommandsService,
@@ -38,14 +38,24 @@ export class HomeComponent implements OnInit {
               private sts: StocksService,
               private ps: ProductsService) {
     this.orderDates.columns = [
-      {name:'Matière première', prop:'material.name'},
-      {name:'Fournisseur', prop:'supplier.name'},
-      {name:'Quantité',prop:'quantity'}
-      ];
+      {name: 'Matière première', prop: 'material.name'},
+      {name: 'Fournisseur', prop: 'supplier.name'},
+      {name: 'Quantité', prop: 'quantity'}
+    ];
     this.prepareData().subscribe(data => {
       this.orderDates.rows = util.getOrdersDates(data.commands, data.stock, data.suppliers);
       this.areOrdersPossible = util.areOrdersPossible(data.commands, data.stock, data.suppliers);
-      this.cost = util.getCost(data.commands, data.stock, data.suppliers, 1000);
+      data.customers.map(customer => {
+        const customerCommands = data.commands.filter(command => command['customerId'] === customer.id);
+        const cost = util.getCost(customerCommands, data.stock, data.suppliers, 1000);
+        if (customerCommands.length > 0) {
+          this.q3.push({
+            name: customer.name,
+            price: util.getPriceFromCost(cost, 0.7),
+            cost: cost
+          })
+        }
+      });
       const commands2 = [...data.commands];
       commands2.map(command => {
         command.quantity *= 1.1;
@@ -58,7 +68,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
   }
 
-  prepareData(): Observable<{commands: Array<Command>, stock: Array<Stock>, suppliers: Array<Supplier>}> {
+  prepareData(): Observable<{commands: Array<Command>, stock: Array<Stock>, suppliers: Array<Supplier>, customers: Array<Supplier>}> {
     return Observable.create(obs => {
       this.ss.route = 'customers';
       this.ps.getMaterials().subscribe((materials: Material[]) => {
@@ -102,6 +112,7 @@ export class HomeComponent implements OnInit {
                                 obs.next({
                                   commands: cmds,
                                   stock: materialStock.concat(productStock),
+                                  customers: customers,
                                   suppliers: suppliers
                                 });
                               }

@@ -35,12 +35,18 @@
 </div>
 
 
-<div class="card ">
+<div class="card">
   <div class="card-header">
     <span>Question 3</span>
   </div>
-  <div class="card-block" style="padding: 0">
-    Le coût de revient à un taux horaire de 1000€ est de : {{cost | currency:'EUR'}}.
+  <div class="card-block" *ngFor="let response of q3">
+    <div class="card-header">
+      <span>{{response.name}}</span>
+    </div>
+    <div class="card-block" style="padding: 0">
+      Le coût de revient à un taux horaire de 1000€ est de : {{response.cost | currency:'EUR':'symbol'}}. <br>
+      Pour faire une marge de 70%, il faut vendre les boulons à {{response.price | currency:'EUR':'symbol'}}.
+    </div>
   </div>
 </div>
 

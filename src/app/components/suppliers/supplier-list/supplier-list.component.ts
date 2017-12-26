@@ -1,7 +1,7 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import { Supplier } from '@app-models';
-import {Store} from '@ngrx/store';
-import * as fromRoot from '../../../store';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
+import {Supplier} from "@app-models";
+import {Store} from "@ngrx/store";
+import * as fromRoot from "../../../store";
 
 @Component({
   selector: 'app-supplier-list',
@@ -23,7 +23,8 @@ export class SupplierListComponent implements OnInit {
     this.store.select(fromRoot.getIsCustomer).subscribe(isCustomer => this.type = isCustomer ? 'customers' : 'suppliers');
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   showDetails(supplier: Supplier) {
     this.onShow.emit({type: this.type, data: supplier});

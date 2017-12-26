@@ -1,21 +1,18 @@
-import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import {environment} from '../../environments/environment';
-import {HttpClient} from '@angular/common/http';
+import {Injectable} from "@angular/core";
+import {Observable} from "rxjs/Observable";
+import {environment} from "../../environments/environment";
+import {HttpClient} from "@angular/common/http";
 import {Stock} from "../models/stock";
 
 @Injectable()
 export class StocksService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
-  /**
-   * Returns a list of suppliers
-   * @returns {Observable<Object>}
-   */
   getProductsStock(): Observable<Stock[]> {
     return this.http
-        .get<Stock[]>(`${environment.appApi.baseUrl}/stockProducts`);
+      .get<Stock[]>(`${environment.appApi.baseUrl}/stockProducts`);
   }
 
   getMaterialsStock(): Observable<Stock[]> {
@@ -25,7 +22,7 @@ export class StocksService {
 
   show(stockId: number): Observable<Stock> {
     return this.http
-        .get<Stock>(`${environment.appApi.baseUrl}/stockProducts/${stockId}`);
+      .get<Stock>(`${environment.appApi.baseUrl}/stockProducts/${stockId}`);
 
   }
 

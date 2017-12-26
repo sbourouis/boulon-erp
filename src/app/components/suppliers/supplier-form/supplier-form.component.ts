@@ -1,8 +1,8 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
-import { Supplier } from '@app-models';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import * as fromRoot from '@app-root-store';
-import {Store} from '@ngrx/store';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output} from "@angular/core";
+import {Supplier} from "@app-models";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import * as fromRoot from "@app-root-store";
+import {Store} from "@ngrx/store";
 
 @Component({
   selector: 'app-supplier-form',

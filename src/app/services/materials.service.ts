@@ -1,28 +1,23 @@
-import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import { Material } from '@app-models';
-import {environment} from '../../environments/environment';
-import {HttpClient} from '@angular/common/http';
-import * as fromRoot from '../store';
-import {Store} from '@ngrx/store';
+import {Injectable} from "@angular/core";
+import {Observable} from "rxjs/Observable";
+import {Material} from "@app-models";
+import {environment} from "../../environments/environment";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable()
 export class MaterialsService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
-  /**
-   * Returns a list of materials
-   * @returns {Observable<Object>}
-   */
   index(): Observable<Material[]> {
     return this.http
-        .get<Material[]>(`${environment.appApi.baseUrl}/materials`);
+      .get<Material[]>(`${environment.appApi.baseUrl}/materials`);
   }
 
   show(materialId: number): Observable<Material> {
     return this.http
-        .get<Material>(`${environment.appApi.baseUrl}/materials/${materialId}`);
+      .get<Material>(`${environment.appApi.baseUrl}/materials/${materialId}`);
 
   }
 

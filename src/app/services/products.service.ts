@@ -1,39 +1,36 @@
-import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import { Product } from '@app-models';
-import {environment} from '../../environments/environment';
-import {HttpClient} from '@angular/common/http';
+import {Injectable} from "@angular/core";
+import {Observable} from "rxjs/Observable";
+import {Product} from "@app-models";
+import {environment} from "../../environments/environment";
+import {HttpClient} from "@angular/common/http";
 import {ManufacturingTask} from "../models/manufacturingTask";
 import {Material} from "../models/material";
 
 @Injectable()
 export class ProductsService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
-  /**
-   * Returns a list of products
-   * @returns {Observable<Object>}
-   */
   index(): Observable<Product[]> {
     return this.http
-        .get<Product[]>(`${environment.appApi.baseUrl}/products`);
+      .get<Product[]>(`${environment.appApi.baseUrl}/products`);
   }
 
   show(productId: number): Observable<Product> {
     return this.http
-        .get<Product>(`${environment.appApi.baseUrl}/products/${productId}`);
+      .get<Product>(`${environment.appApi.baseUrl}/products/${productId}`);
 
   }
 
   getManufacturingTasks(): Observable<ManufacturingTask[]> {
     return this.http
-        .get<ManufacturingTask[]>(`${environment.appApi.baseUrl}/manufacturingTasks`);
+      .get<ManufacturingTask[]>(`${environment.appApi.baseUrl}/manufacturingTasks`);
   }
 
   getMaterialsUsed(): Observable<any[]> {
     return this.http
-        .get<any[]>(`${environment.appApi.baseUrl}/materialsUsed`);
+      .get<any[]>(`${environment.appApi.baseUrl}/materialsUsed`);
   }
 
   getProductsUsed(): Observable<any[]> {

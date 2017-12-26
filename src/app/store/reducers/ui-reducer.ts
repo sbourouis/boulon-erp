@@ -1,4 +1,4 @@
-import * as uiActions from '../actions/ui-actions';
+import * as uiActions from "../actions/ui-actions";
 
 export interface UiState {
   isCustomer: boolean;
@@ -7,7 +7,6 @@ export interface UiState {
 export const INIT_UI_STATE: UiState = {
   isCustomer: undefined
 };
-
 
 export function reducer(state: UiState = INIT_UI_STATE, {type, payload}: uiActions.All): UiState {
 
@@ -22,7 +21,6 @@ export function reducer(state: UiState = INIT_UI_STATE, {type, payload}: uiActio
     }
   }
 }
-
 
 
 // SELECTORS

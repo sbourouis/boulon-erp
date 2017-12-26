@@ -1,26 +1,23 @@
-import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import {environment} from '../../environments/environment';
-import {HttpClient} from '@angular/common/http';
+import {Injectable} from "@angular/core";
+import {Observable} from "rxjs/Observable";
+import {environment} from "../../environments/environment";
+import {HttpClient} from "@angular/common/http";
 import {Command} from "../models/command";
 
 @Injectable()
 export class CommandsService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
-  /**
-   * Returns a list of suppliers
-   * @returns {Observable<Object>}
-   */
   index(): Observable<Command[]> {
     return this.http
-        .get<Command[]>(`${environment.appApi.baseUrl}/commands`);
+      .get<Command[]>(`${environment.appApi.baseUrl}/commands`);
   }
 
   show(commandId: number): Observable<Command> {
     return this.http
-        .get<Command>(`${environment.appApi.baseUrl}/commands/${commandId}`);
+      .get<Command>(`${environment.appApi.baseUrl}/commands/${commandId}`);
 
   }
 

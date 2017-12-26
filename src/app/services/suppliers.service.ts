@@ -1,11 +1,10 @@
-import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import { Supplier } from '@app-models';
-import {environment} from '../../environments/environment';
-import {HttpClient} from '@angular/common/http';
-import * as fromRoot from '../store';
-import {Store} from '@ngrx/store';
-import {Material} from "../models/material";
+import {Injectable} from "@angular/core";
+import {Observable} from "rxjs/Observable";
+import {Supplier} from "@app-models";
+import {environment} from "../../environments/environment";
+import {HttpClient} from "@angular/common/http";
+import * as fromRoot from "../store";
+import {Store} from "@ngrx/store";
 
 @Injectable()
 export class SuppliersService {
@@ -15,18 +14,14 @@ export class SuppliersService {
     this.store.select(fromRoot.getIsCustomer).subscribe(isCustomer => this.route = isCustomer ? 'customers' : 'suppliers');
   }
 
-  /**
-   * Returns a list of suppliers
-   * @returns {Observable<Object>}
-   */
   index(): Observable<Supplier[]> {
     return this.http
-        .get<Supplier[]>(`${environment.appApi.baseUrl}/${this.route}`);
+      .get<Supplier[]>(`${environment.appApi.baseUrl}/${this.route}`);
   }
 
   show(supplierId: number): Observable<Supplier> {
     return this.http
-        .get<Supplier>(`${environment.appApi.baseUrl}/${this.route}/${supplierId}`);
+      .get<Supplier>(`${environment.appApi.baseUrl}/${this.route}/${supplierId}`);
 
   }
 
@@ -42,11 +37,11 @@ export class SuppliersService {
     return this.http.delete<Supplier>(`${environment.appApi.baseUrl}/${this.route}/${id}`);
   }
 
-  getMaterials(idSupplier: number) : Observable<any> {
+  getMaterials(idSupplier: number): Observable<any> {
     return this.http.get<any>(`${environment.appApi.baseUrl}/${this.route}/${idSupplier}/materials`);
   }
 
-  getMaterialLines() : Observable<any[]> {
+  getMaterialLines(): Observable<any[]> {
     return this.http.get<any[]>(`${environment.appApi.baseUrl}/materialLines`);
   }
 }
