@@ -257,7 +257,6 @@ export class UtilsService {
         date: date
       });
     }
-    console.log('dates', dates);
     return dates;
   }
 

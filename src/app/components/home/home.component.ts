@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit {
   };
   areOrdersPossible: boolean;
   areOrdersPossible2: boolean;
-  q3: [{name: string, cost: number, price: number}] = [];
+  q3: Array<{name: string, cost: number, price:number}> = [];
 
   constructor(private util: UtilsService,
               private cs: CommandsService,
