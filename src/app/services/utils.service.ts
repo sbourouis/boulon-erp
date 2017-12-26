@@ -378,7 +378,7 @@ export class UtilsService {
     return this.getOrdersDates(commands, stocks, suppliers).length > 0;
   }
 
-  getCost(commands: Command[], stocks: Stock[], suppliers: Supplier[], hourCost: number): number {
+  getCost(commands: Command[], stocks: Stock[], suppliers: Supplier[], hourCost: number = 1000): number {
     let res = 0;
     let numberOfMonth = 0;
     let tasks: Array<{task: ManufacturingTask, launchDate: Date, date: Date}> = this.getTasksFromCommands(commands);
@@ -392,7 +392,7 @@ export class UtilsService {
       res += hourCost * task.task.duration;
     }
     for (let order of this.getOrdersDates(commands, stocks, suppliers)) {
-      materials = order.supplier.materials.filter(o => o.material.id === order.material.id);
+      materials = order.supplier.materials.filter(o => o['materialId'] === order.material.id);
       if (materials.length > 0) {
         numberOfMonth = this.getMonthBetween(new Date(materials[0].date), order.date);
         if (numberOfMonth < 0) {

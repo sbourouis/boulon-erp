@@ -23,6 +23,8 @@ export class HomeComponent implements OnInit {
     rows: [],
     columns: {}
   };
+  areOrdersPossible: boolean;
+  cost = 0;
 
   constructor(private util: UtilsService,
               private cs: CommandsService,
@@ -36,6 +38,8 @@ export class HomeComponent implements OnInit {
       ];
     this.prepareData().subscribe(data => {
       this.orderDates.rows = util.getOrdersDates(data.commands, data.stock, data.suppliers);
+      this.areOrdersPossible = util.areOrdersPossible(data.commands, data.stock, data.suppliers);
+      this.cost = util.getCost(data.commands, data.stock, data.suppliers, 1000);
     });
   }
 
