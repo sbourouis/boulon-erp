@@ -30,6 +30,18 @@ export class UtilsService {
     return 0;
   }
 
+  businessDaysBetweenDates(dateDeb: Date, dateFin: Date): number {
+    let counter = 0;
+    let tmpDate = dateDeb;
+    while (tmpDate <= dateFin) {
+      if (this.isBusinessDay(tmpDate)) {
+        counter++;
+      }
+      tmpDate.setDate(tmpDate.getDate() + 1);
+    }
+    return counter;
+  }
+
   /*
    return true if it is a business day
    */
@@ -171,6 +183,65 @@ export class UtilsService {
     return res;
   }
 
+  getFreeMachineDate(tasks: Array<{task: ManufacturingTask, launchDate: Date, date: Date, product: Product, sequence: number }>, taskToAdd: ManufacturingTask,
+                     date: Date, launchDate: Date): Date {
+    let res = new Date(date.getTime());
+    let neededDays: number;
+    let tmpTasks: Array<{task: ManufacturingTask, launchDate: Date, date: Date, product: Product, sequence: number }> = tasks.slice();
+
+    tmpTasks = tmpTasks.filter(o => o.task.machineId === taskToAdd.machineId &&
+    o.date.getTime() > this.substractDays(res, taskToAdd.duration).getTime() && o.date.getTime() < res.getTime());
+    if (tmpTasks.length > 0) {
+      tmpTasks.sort(this.compareTasks);
+
+
+      res = new Date(tmpTasks[tmpTasks.length - 1].date.getTime());
+      neededDays = Math.ceil(tmpTasks[tmpTasks.length - 1].task.duration % this.workHours);
+      // to change day if not enough hours available in that day
+      res.setHours(tmpTasks[tmpTasks.length - 1].date.getHours() - (neededDays * 24 / this.workHours));
+      neededDays = Math.trunc(tmpTasks[tmpTasks.length - 1].task.duration / this.workHours);
+      res = this.substractDays(res, neededDays);
+      res = this.getFreeMachineDate(tmpTasks, taskToAdd, res, tmpTasks[tmpTasks.length - 1].launchDate);
+    }
+    return res;
+  }
+
+  checkMachines(tasks: Array<{task: ManufacturingTask, launchDate: Date, date: Date, product: Product, sequence: number }>): Array<{task: ManufacturingTask, launchDate: Date, date: Date, product: Product, sequence: number }> {
+    let tmpTasks = tasks.slice();
+    let tmpTasks2 = [];
+    let res = [];
+    let currentTask: {task: ManufacturingTask, launchDate: Date, date: Date, product: Product, sequence: number };
+    let tmpDate: Date;
+    tmpTasks.reverse();
+    while (tmpTasks.length > 0) {
+      currentTask = tmpTasks.pop();
+      tmpDate = this.getFreeMachineDate(res, currentTask.task, currentTask.date, currentTask.launchDate);
+      currentTask.date = tmpDate;
+      res.push(currentTask);
+      tmpTasks2 = tmpTasks.filter(o => o.sequence === currentTask.sequence && o.date.getTime() < currentTask.date.getTime());
+      while (tmpTasks2.length > 0) {
+        currentTask = tmpTasks2.pop();
+        tmpDate = this.getFreeMachineDate(tmpTasks, currentTask.task, currentTask.date, currentTask.launchDate);
+        currentTask.date = tmpDate;
+        res.push(currentTask);
+      }
+      res.sort(this.compareTasks);
+      tmpTasks = tmpTasks.filter(o => !o && !currentTask && o.sequence !== currentTask.sequence);
+
+    }
+    return res;
+  }
+
+  getDateForNextTask(currentTask: ManufacturingTask, date: Date): Date {
+    let res = new Date(date.getTime());
+    let neededDays = Math.ceil(currentTask.duration % this.workHours);
+    // to change day if not enough hours available in that day
+    res.setHours(res.getHours() - (neededDays * 24 / this.workHours));
+    neededDays = Math.trunc(currentTask.duration / this.workHours);
+    res = this.substractDays(date, neededDays);
+    return res;
+  }
+
   /*
    substract business days from date
    */
@@ -190,7 +261,6 @@ export class UtilsService {
     for (const task of tasks) {
       date = this.substractDays(task.date, Math.trunc(task.task.duration / this.workHours));
       if (date < task.launchDate) {
-        console.log('%c date Launch : ' + task.launchDate, 'color : blue');
         return false;
       }
     }
@@ -218,11 +288,15 @@ export class UtilsService {
       console.log('order is not possible, time is too short');
       return dates;
     }
+
     while (tmpTasks.length > 0) {
       currentTask = tmpTasks.pop();
+
       date = this.substractDays(currentTask.date, Math.trunc(currentTask.task.duration / this.workHours));
       for (const material of currentTask.task.materials) {
+
         tmpStock = this.getStockFromArticle(stocks, material.material, date);
+
         securityStock = material.material['securityStock'] ? material.material['securityStock'] : 0;
         if (tmpStock < material.quantityUsed + securityStock) {
 
@@ -241,7 +315,7 @@ export class UtilsService {
               date: date
             });
           } else {
-            console.log('unable to produce enough products' + tmpStock + ' ' + securityStock, stocks);
+            console.log('unable to produce enough products');
             return [];
           }
         }

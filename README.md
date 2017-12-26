@@ -1,6 +1,8 @@
 Consulter l'application : http://erp-boulons.surge.sh  
 API disponible ici : https://github.com/sbourouis/boulon-erp-api  
 
+Le fichier contenant les fonctions permettant de répondre aux questions est src/app/services/utils.service.ts  
+
 # Pré-requis  
 
 Installer npm, node et @angular/cli.  
