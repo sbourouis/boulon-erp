@@ -23,7 +23,13 @@ export class HomeComponent implements OnInit {
     rows: [],
     columns: {}
   };
+  orderDates2: {rows: Array<{material: Material, supplier: Supplier, date: Date, quantity: number}>, columns:any}
+  = {
+    rows: [],
+    columns: {}
+  };
   areOrdersPossible: boolean;
+  areOrdersPossible2: boolean;
   cost = 0;
 
   constructor(private util: UtilsService,
@@ -40,6 +46,12 @@ export class HomeComponent implements OnInit {
       this.orderDates.rows = util.getOrdersDates(data.commands, data.stock, data.suppliers);
       this.areOrdersPossible = util.areOrdersPossible(data.commands, data.stock, data.suppliers);
       this.cost = util.getCost(data.commands, data.stock, data.suppliers, 1000);
+      const commands2 = [...data.commands];
+      commands2.map(command => {
+        command.quantity *= 1.1;
+      });
+      this.orderDates2.rows = util.getOrdersDates(commands2, data.stock, data.suppliers);
+      this.areOrdersPossible2 = util.areOrdersPossible(commands2, data.stock, data.suppliers);
     });
   }
 

@@ -50,6 +50,26 @@
     <span>Question 4</span>
   </div>
   <div class="card-block" style="padding: 0">
+    Les dates de livraisons demandées par le client sont <span *ngIf="!areOrdersPossible">ir</span>réalisables.
+    <ngx-datatable
+      class="material" *ngIf="orderDates; else loading"
+      [rows]="orderDates2.rows"
+      [columnMode]="'force'"
+      [headerHeight]="50"
+      [footerHeight]="50"
+      [rowHeight]="'auto'"
+      [limit]="10">
+      <ngx-datatable-column prop="date">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          {{value | date: 'dd/MM/yyyy'}}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column *ngFor="let column of orderDates.columns" [prop]="column.prop" [name]="column.name">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          {{value}}
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
   </div>
 </div>
 
