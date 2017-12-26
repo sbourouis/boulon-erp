@@ -20,7 +20,6 @@ export class SuppliersComponent {
       this.route = data.isCustomer? '/customers' : '/suppliers';
       this.store.dispatch(new uiActions.SetIsCustomer(data.isCustomer));
       this.store.dispatch(new materialsActions.LoadAll);
-      this.store.select(fromSuppliersRoot.getAllMaterials).subscribe(console.log);
     });
   }
 }
