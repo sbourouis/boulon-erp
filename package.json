@@ -9,7 +9,6 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "erp:backend": "cd backend && npm i && npm start",
     "erp:frontend": "npm i && ng serve",
     "surge-deploy": "ng build --prod --build-optimizer  && cp dist/index.html dist/200.html && surge --domain erp-boulons.surge.sh --project ./dist",
     "surge-teardown": "surge teardown --domain erp-boulons.surge.sh"

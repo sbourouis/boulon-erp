@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
   appApi: {
-    baseUrl: 'http://localhost:3000/api'
+    baseUrl: 'https://stark-retreat-54812.herokuapp.com/api'
   }
 };

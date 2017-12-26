@@ -1,4 +1,5 @@
 Consulter l'application : http://erp-boulons.surge.sh  
+API disponible ici : https://github.com/sbourouis/boulon-erp-api  
 
 # Pré-requis  
 
@@ -9,9 +10,8 @@ Installer @angular/cli : `npm install -g @angular/cli`
 
 # Lancement de l'application  
 
-Lancez `npm run erp:backend` à partir de la racine.  
+Lancez `npm run erp:frontend` à partir de la racine.  
 Accédez à l'application à partir d'un navigateur : http://localhost:4200  
-Le backend tournera, quant à lui, sur le port 3000.  
 
 # Réponses aux questions  
 
