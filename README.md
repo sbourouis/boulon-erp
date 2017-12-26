@@ -1,3 +1,5 @@
+Projet réalisé par Sabrina BOUROUIS, Alexis HEIL, Maroua KERKOUB et Amélie WARTH (CNAM2015-2018), dans le cadre du module processus ERP.   
+
 Consulter l'application : http://erp-boulons.surge.sh  
 API disponible ici : https://github.com/sbourouis/boulon-erp-api  
 
@@ -44,5 +46,3 @@ Il est toutefois possible de proposer au client de livrer les commandes en plusi
 
 4. La question 4 a été effectuée depuis les données calculées par l'ERP. D'après ce dernier les demandes ne sont pas réalsables. Pour pouvoir afficher les dates de commandes, nous avons mis la date de lancement de la  
    commande au 1er septembre 1969.  
-
-Projet réalisé par Sabrina BOUROUIS, Alexis HEIL, Maroua KERKOUB et Amélie WARTH.   
